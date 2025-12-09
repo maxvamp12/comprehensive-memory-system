@@ -1,0 +1,40 @@
+{
+  "name": "comprehensive-memory-system",
+  "version": "1.0.0",
+  "description": "A context-aware memory system for automatic information detection and retrieval",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "dev": "nodemon src/index.js",
+    "lint": "eslint src/",
+    "lint:fix": "eslint src/ --fix"
+  },
+  "keywords": [
+    "memory",
+    "nlp",
+    "rag",
+    "context-aware",
+    "information-retrieval"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+"dependencies": {
+    "chromadb": "^1.7.0",
+    "winston": "^3.10.0",
+    "natural": "^6.5.0",
+    "compromise": "^14.10.0",
+    "node-cache": "^5.1.2"
+  },
+  "devDependencies": {
+    "jest": "^29.6.2",
+    "nodemon": "^3.0.1",
+    "eslint": "^8.45.0",
+    "supertest": "^6.3.3"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}
