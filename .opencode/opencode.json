@@ -1,0 +1,76 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "model": "glm/GLM-4.5-Air",
+  "small_model": "glm/GLM-4.5-Air",
+  "provider": {
+    "glm": {
+      "name": "GLM (SARK Cluster - vLLM)",
+      "npm": "@ai-sdk/openai-compatible",
+      "options": {
+        "baseURL": "http://192.168.68.69:8080/v1",
+        "apiKey": "not-needed"
+      },
+      "models": {
+        "GLM-4.5-Air": {
+          "id": "GLM-4.5-Air",
+          "name": "GLM-4.5-Air (SARK - Tensor Parallel)",
+          "temperature": true,
+          "reasoning": true,
+          "attachment": false,
+          "tool_call": true,
+          "cost": {
+            "input": 0,
+            "output": 0,
+            "cache_read": 0,
+            "cache_write": 0
+          },
+          "limit": {
+            "context": 131072,
+            "output": 131072
+          },
+          "modalities": {
+            "input": ["text"],
+            "output": ["text"]
+          },
+          "options": {}
+        }
+      }
+    }
+  },
+  "agent": {
+    "build": {
+      "model": "glm/GLM-4.5-Air",
+      "temperature": 0.7,
+      "description": "Full-access agent for development work using GLM-4.5-Air",
+      "permission": {
+        "edit": "allow",
+        "bash": "allow",
+        "webfetch": "allow",
+        "external_directory": "ask"
+      }
+    },
+    "plan": {
+      "model": "glm/GLM-4.5-Air",
+      "temperature": 0.5,
+      "description": "Read-only agent for code exploration and planning",
+      "permission": {
+        "edit": "deny",
+        "bash": "ask",
+        "webfetch": "allow",
+        "external_directory": "deny"
+      }
+    }
+  },
+  "disabled_providers": [
+    "opencode",
+    "anthropic",
+    "openai",
+    "google",
+    "github-copilot"
+  ],
+  "enabled_providers": [
+    "glm"
+  ],
+  "autoupdate": false,
+  "share": "manual"
+}

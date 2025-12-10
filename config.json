@@ -1,0 +1,35 @@
+{
+  "server": {
+    "host": "0.0.0.0",
+    "port": 3000,
+    "maxResults": 10,
+    "minSimilarity": 0.1
+  },
+  "storage": {
+    "dataDir": "./data",
+    "maxCacheSize": 1000
+  },
+  "embedding": {
+    "dimension": 768,
+    "cacheSize": 1000
+  },
+  "chroma": {
+    "host": "192.168.68.69",
+    "port": 8001,
+    "collection": "memories",
+    "auth": {
+      "username": "admin",
+      "password": "admin"
+    }
+  },
+  "opencode": {
+    "mcpPort": 8080,
+    "openaiCompatible": true,
+    "endpoints": {
+      "health": "/health",
+      "memories": "/api/memories",
+      "search": "/api/search",
+      "openai": "/api/v1/chat/completions"
+    }
+  }
+}

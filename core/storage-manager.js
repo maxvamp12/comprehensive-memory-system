@@ -1,6 +1,7 @@
 const winston = require('winston');
 const fs = require('fs').promises;
 const path = require('path');
+const ChromaDBService = require('./chromadb-service');
 
 class StorageManager {
     constructor(config = {}) {
@@ -19,6 +20,17 @@ class StorageManager {
         this.dataDir = config.dataDir || path.join(__dirname, '../../data');
         this.memoriesDir = path.join(this.dataDir, 'memories');
         this.indexesDir = path.join(this.dataDir, 'indexes');
+        this.embeddingsDir = path.join(this.dataDir, 'embeddings');
+        this.embeddingService = config.embeddingService;
+        this.chromaConfig = config.chroma || {};
+        this.chromaDBService = null;
+        
+        // Initialize ChromaDB service if configured
+        if (this.chromaConfig.host && this.chromaConfig.port) {
+            this.chromaDBService = new ChromaDBService(this.chromaConfig);
+        }
+
+        this.logger.info('StorageManager initialized', { dataDir: this.dataDir });
         
         // Initialize storage directories
         this.ensureDirectories();
@@ -30,8 +42,21 @@ class StorageManager {
         this.logger.info('StorageManager initialized', { dataDir: this.dataDir });
     }
 
+    async initialize() {
+        try {
+            // Initialize ChromaDB service if configured
+            if (this.chromaDBService) {
+                await this.chromaDBService.initialize();
+                this.logger.info('ChromaDB service initialized');
+            }
+        } catch (error) {
+            this.logger.error('Failed to initialize ChromaDB service', { error: error.message });
+            throw error;
+        }
+    }
+
     async ensureDirectories() {
-        const directories = [this.dataDir, this.memoriesDir, this.indexesDir];
+        const directories = [this.dataDir, this.memoriesDir, this.indexesDir, this.embeddingsDir];
         for (const dir of directories) {
             try {
                 await fs.mkdir(dir, { recursive: true });
@@ -81,9 +106,58 @@ class StorageManager {
             // Normalize categories to lowercase
             normalizedMemory.categories = normalizedMemory.categories.map(cat => cat.toLowerCase());
 
-            // Store memory file
+            // Store memory file first
             const memoryPath = path.join(this.dataDir, 'memories', `${normalizedMemory.id}.json`);
             await fs.writeFile(memoryPath, JSON.stringify(normalizedMemory, null, 2));
+
+            // Initialize embedding service if available
+            if (this.embeddingService) {
+                try {
+                    this.logger.info('Generating embedding for memory', { memoryId: normalizedMemory.id });
+                    // Generate and store embedding for the memory
+                    const memoryWithEmbedding = await this.embeddingService.generateMemoryEmbedding(normalizedMemory);
+                    this.logger.info('Embedding generated successfully', { 
+                        memoryId: normalizedMemory.id,
+                        embeddingDimensions: memoryWithEmbedding.embedding.length 
+                    });
+                    await this.storeMemoryEmbedding(normalizedMemory.id, memoryWithEmbedding.embedding);
+                    this.logger.info('Embedding stored successfully', { memoryId: normalizedMemory.id });
+                    // Remove embedding from memory file to avoid duplication
+                    delete memoryWithEmbedding.embedding;
+                    await fs.writeFile(memoryPath, JSON.stringify(memoryWithEmbedding, null, 2));
+                    this.logger.info('Memory file updated without embedding', { memoryId: normalizedMemory.id });
+                } catch (embeddingError) {
+                    this.logger.warn('Failed to generate embedding for memory', { 
+                        memoryId: normalizedMemory.id, 
+                        error: embeddingError.message 
+                    });
+                }
+            }
+
+            // Store embedding if provided
+            if (normalizedMemory.embedding) {
+                await this.storeMemoryEmbedding(normalizedMemory.id, normalizedMemory.embedding);
+                // Remove embedding from memory file to avoid duplication
+                delete normalizedMemory.embedding;
+                await fs.writeFile(memoryPath, JSON.stringify(normalizedMemory, null, 2));
+            }
+
+            // Store embedding in ChromaDB if configured
+            if (this.chromaDBService && normalizedMemory.embedding) {
+                try {
+                    // Add embedding to ChromaDB
+                    await this.chromaDBService.addMemory({
+                        ...normalizedMemory,
+                        embedding: normalizedMemory.embedding
+                    });
+                    this.logger.info('Memory embedding stored in ChromaDB', { memoryId: normalizedMemory.id });
+                } catch (error) {
+                    this.logger.warn('Failed to store embedding in ChromaDB', { 
+                        memoryId: normalizedMemory.id, 
+                        error: error.message 
+                    });
+                }
+            }
 
             // Update indexes
             await this.updateIndexes(normalizedMemory);
@@ -107,7 +181,23 @@ class StorageManager {
             // Load from disk
             const memoryPath = path.join(this.memoriesDir, `${memoryId}.json`);
             const memoryData = await fs.readFile(memoryPath, 'utf8');
-            const memory = JSON.parse(memoryData);
+            let memory = JSON.parse(memoryData);
+
+            // Load embedding from ChromaDB if configured
+            if (this.chromaDBService) {
+                try {
+                    const chromaMemory = await this.chromaDBService.getMemory ? 
+                        await this.chromaDBService.getMemory(memoryId) : null;
+                    if (chromaMemory && chromaMemory.embedding) {
+                        memory.embedding = chromaMemory.embedding;
+                    }
+                } catch (error) {
+                    this.logger.warn('Failed to load embedding from ChromaDB', { 
+                        memoryId, 
+                        error: error.message 
+                    });
+                }
+            }
             
             // Update last accessed timestamp
             memory.lastAccessed = new Date().toISOString();
@@ -131,11 +221,44 @@ class StorageManager {
                 category,
                 minImportance = 0,
                 dateRange,
-                entities
+                entities,
+                useSemanticSearch = false,
+                minSimilarity = 0.1
             } = options;
 
-            const allMemories = await this.getAllMemories();
-            let filteredMemories = allMemories;
+            let memories = [];
+            
+            // Use ChromaDB for semantic search if configured and requested
+            if (this.chromaDBService && useSemanticSearch && query) {
+                try {
+                    // Generate query embedding
+                    const queryEmbedding = await this.embeddingService.getEmbedding(query);
+                    
+                    // Search in ChromaDB
+                    const semanticResults = await this.chromaDBService.searchMemories(
+                        queryEmbedding, 
+                        limit, 
+                        minSimilarity
+                    );
+                    
+                    memories = semanticResults;
+                    this.logger.info('ChromaDB semantic search completed', { 
+                        query, 
+                        results: memories.length 
+                    });
+                } catch (error) {
+                    this.logger.warn('ChromaDB semantic search failed, falling back to file search', { 
+                        error: error.message 
+                    });
+                    memories = await this.getAllMemories();
+                }
+            } else {
+                // Fall back to file-based search
+                const allMemories = await this.getAllMemories();
+                memories = allMemories;
+            }
+            
+            let filteredMemories = memories;
 
             // Filter by category
             if (category) {
@@ -198,7 +321,7 @@ class StorageManager {
             const memories = [];
             const files = await fs.readdir(this.memoriesDir);
             
-            for (const file of files) {
+for (const file of files) {
                 if (file.endsWith('.json')) {
                     const memoryPath = path.join(this.memoriesDir, file);
                     try {
@@ -207,8 +330,8 @@ class StorageManager {
                             const memory = JSON.parse(memoryData);
                             memories.push(memory);
                         }
-                    } catch (parseError) {
-                        this.logger.warn(`Skipping invalid JSON file: ${file}`);
+                    } catch (error) {
+                        this.logger.warn('Failed to read memory file', { file, error: error.message });
                     }
                 }
             }
@@ -216,6 +339,71 @@ class StorageManager {
             return memories;
         } catch (error) {
             this.logger.error('Failed to get all memories', { error: error.message });
+            throw error;
+        }
+    }
+
+    // Embedding storage methods
+    async storeMemoryEmbedding(memoryId, embedding) {
+        try {
+            this.logger.info('Storing memory embedding', { memoryId, embeddingsDir: this.embeddingsDir });
+            const embeddingPath = path.join(this.embeddingsDir, `${memoryId}.embedding`);
+            const embeddingString = embedding.map(val => val.toFixed(6)).join(',');
+            this.logger.info('Writing embedding to file', { embeddingPath, stringLength: embeddingString.length });
+            await fs.writeFile(embeddingPath, embeddingString);
+            this.logger.debug('Memory embedding stored', { memoryId });
+        } catch (error) {
+            this.logger.error('Failed to store memory embedding', { memoryId, error: error.message });
+            throw error;
+        }
+    }
+
+    async retrieveMemoryEmbedding(memoryId) {
+        try {
+            const embeddingPath = path.join(this.embeddingsDir, `${memoryId}.embedding`);
+            const embeddingString = await fs.readFile(embeddingPath, 'utf8');
+            return new Float32Array(embeddingString.split(',').map(val => parseFloat(val)));
+        } catch (error) {
+            if (error.code === 'ENOENT') {
+                return null; // No embedding exists
+            }
+            this.logger.error('Failed to retrieve memory embedding', { memoryId, error: error.message });
+            throw error;
+        }
+    }
+
+    async deleteMemoryEmbedding(memoryId) {
+        try {
+            const embeddingPath = path.join(this.embeddingsDir, `${memoryId}.embedding`);
+            await fs.unlink(embeddingPath);
+            this.logger.debug('Memory embedding deleted', { memoryId });
+        } catch (error) {
+            if (error.code === 'ENOENT') {
+                return; // No embedding to delete
+            }
+            this.logger.error('Failed to delete memory embedding', { memoryId, error: error.message });
+            throw error;
+        }
+    }
+
+    async getAllMemoriesWithEmbeddings() {
+        try {
+            const memories = await this.getAllMemories();
+            const memoriesWithEmbeddings = [];
+
+            for (const memory of memories) {
+                const embedding = await this.retrieveMemoryEmbedding(memory.id);
+                if (embedding) {
+                    memoriesWithEmbeddings.push({
+                        ...memory,
+                        embedding: embedding
+                    });
+                }
+            }
+
+            return memoriesWithEmbeddings;
+        } catch (error) {
+            this.logger.error('Failed to get memories with embeddings', { error: error.message });
             throw error;
         }
     }
@@ -293,6 +481,39 @@ class StorageManager {
         }
         
         this.memoryCache.set(memoryId, memory);
+    }
+
+    async deleteMemory(memoryId) {
+        try {
+            // Delete memory file
+            const memoryPath = path.join(this.memoriesDir, `${memoryId}.json`);
+            await fs.unlink(memoryPath);
+            
+            // Delete embedding file
+            await this.deleteMemoryEmbedding(memoryId);
+            
+            // Delete from ChromaDB if configured
+            if (this.chromaDBService) {
+                try {
+                    await this.chromaDBService.deleteMemory(memoryId);
+                    this.logger.info('Memory deleted from ChromaDB', { memoryId });
+                } catch (error) {
+                    this.logger.warn('Failed to delete memory from ChromaDB', { 
+                        memoryId, 
+                        error: error.message 
+                    });
+                }
+            }
+            
+            // Remove from cache
+            this.memoryCache.delete(memoryId);
+            
+            this.logger.info('Memory deleted successfully', { memoryId });
+            
+        } catch (error) {
+            this.logger.error('Failed to delete memory', { memoryId, error: error.message });
+            throw error;
+        }
     }
 
     async createBackup() {

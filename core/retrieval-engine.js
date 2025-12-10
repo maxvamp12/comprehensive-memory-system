@@ -1,4 +1,5 @@
 const winston = require('winston');
+const VectorEmbeddingService = require('./vector-embedding-service');
 
 class RetrievalEngine {
     constructor(config = {}) {
@@ -17,6 +18,19 @@ class RetrievalEngine {
         this.storageManager = config.storageManager;
         this.maxResults = config.maxResults || 10;
         this.minSimilarity = config.minSimilarity || 0.5;
+        
+        // Initialize vector embedding service
+        this.embeddingService = config.embeddingService || new VectorEmbeddingService();
+        
+        // Pass embedding service to storage manager
+        if (this.storageManager && this.embeddingService) {
+            this.storageManager.embeddingService = this.embeddingService;
+        }
+        
+        // Initialize embedding service
+        this.embeddingService.initialize().catch(error => {
+            this.logger.error('Failed to initialize embedding service', { error: error.message });
+        });
 
         this.logger.info('RetrievalEngine initialized');
     }
@@ -110,22 +124,61 @@ class RetrievalEngine {
         return filtered;
     }
 
-    async semanticSearch(query, memories) {
-        // Simple semantic search implementation
-        // In a real implementation, this would use vector embeddings
-        const queryLower = query.toLowerCase();
-        
-        return memories.map(memory => {
-            // Calculate similarity score
-            const memoryContent = memory.content || memory.original || '';
-            const score = this.calculateSimilarity(queryLower, memoryContent.toLowerCase());
+async semanticSearch(query, memories) {
+        try {
+            this.logger.info('Starting vector semantic search', { query, memoriesCount: memories.length });
             
-            return {
+            // Generate query embedding
+            const queryEmbedding = await this.embeddingService.getEmbedding(query);
+            this.logger.debug('Query embedding generated', { query, dimensions: queryEmbedding.length });
+            
+            // Load embeddings from storage for all memories
+            const memoriesWithEmbeddings = await Promise.all(memories.map(async (memory) => {
+                try {
+                    const embedding = await this.storageManager.retrieveMemoryEmbedding(memory.id);
+                    if (embedding) {
+                        this.logger.debug('Loaded embedding from storage', { memoryId: memory.id });
+                        return { ...memory, embedding: embedding };
+}
+                    // If no embedding in storage, generate one
+                    return await this.embeddingService.generateMemoryEmbedding(memory);
+                } catch (error) {
+                    // Fallback to generating embedding if storage retrieval fails
+                    return await this.embeddingService.generateMemoryEmbedding(memory);
+                }
+            }));
+            
+            // Find similar memories using vector embeddings
+            const similarMemories = await this.embeddingService.findSimilarMemories(
+                queryEmbedding, 
+                memoriesWithEmbeddings, 
+                memories.length
+            );
+            
+            // Add relevance scores
+            return similarMemories.map(memory => ({
                 ...memory,
-                similarity: score,
                 relevance: this.calculateRelevance(memory, query)
-            };
-        }).filter(item => item.similarity >= this.minSimilarity);
+            }));
+            
+        } catch (error) {
+            this.logger.error('Vector semantic search failed, falling back to keyword search', { 
+                error: error.message 
+            });
+            
+            // Fallback to keyword search
+            const queryLower = query.toLowerCase();
+            return memories.map(memory => {
+                const memoryContent = memory.content || memory.original || '';
+                const score = this.calculateSimilarity(queryLower, memoryContent.toLowerCase());
+                
+                return {
+                    ...memory,
+                    similarity: score,
+                    relevance: this.calculateRelevance(memory, query)
+                };
+            }).filter(item => item.similarity >= this.minSimilarity);
+        }
     }
 
     keywordSearch(query, memories) {
