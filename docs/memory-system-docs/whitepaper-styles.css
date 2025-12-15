@@ -1,0 +1,239 @@
+/* Enhanced styles for the comprehensive memory system whitepaper */
+        
+/* Theory Sections - Blue Color Scheme */
+.concept-box {
+    background: linear-gradient(135deg, #e0f2fe 0%, #dbeafe 100%);
+    border: 2px solid #3b82f6;
+    border-radius: 12px;
+    padding: 2rem;
+    margin: 2rem 0;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+        
+.concept-box h4 {
+    color: #1e40af;
+    margin-bottom: 1rem;
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+        
+.concept-box p {
+    color: #1e3a8a;
+    line-height: 1.8;
+    margin-bottom: 1rem;
+}
+        
+/* Code Explanation Sections - Yellow Color Scheme */
+.code-explanation {
+    background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+    border: 2px solid #f59e0b;
+    border-radius: 12px;
+    padding: 2rem;
+    margin: 2rem 0;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+        
+.code-explanation h3 {
+    color: #92400e;
+    margin-bottom: 1rem;
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+        
+.code-explanation p {
+    color: #78350f;
+    line-height: 1.8;
+    margin-bottom: 1rem;
+}
+        
+/* Code Blocks - Dark Background with Syntax Highlighting */
+.code-block {
+    background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+    border: 2px solid #475569;
+    border-radius: 12px;
+    padding: 2rem;
+    margin: 2rem 0;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    overflow-x: auto;
+}
+        
+.code-block pre {
+    background: transparent;
+    color: #e2e8f0;
+    padding: 0;
+    margin: 0;
+    border-radius: 0;
+    border: none;
+    font-family: 'JetBrains Mono', 'Fira Code', 'Monaco', 'Consolas', monospace;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+        
+.code-block code {
+    background: transparent;
+    color: #e2e8f0;
+    padding: 0;
+    margin: 0;
+    border-radius: 0;
+    border: none;
+    font-family: 'JetBrains Mono', 'Fira Code', 'Monaco', 'Consolas', monospace;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+        
+/* Comprehensive JavaScript syntax highlighting */
+.code-block .code-comment { color: #64748b; font-style: italic; }
+.code-block .code-keyword { color: #f59e0b; font-weight: 600; }
+.code-block .code-string { color: #10b981; }
+.code-block .code-function { color: #3b82f6; font-weight: 500; }
+.code-block .code-variable { color: #e2e8f0; }
+.code-block .code-number { color: #f59e0b; }
+.code-block .code-operator { color: #8b5cf6; }
+.code-block .code-class { color: #8b5cf6; font-weight: 600; }
+.code-block .code-method { color: #3b82f6; }
+.code-block .code-property { color: #e2e8f0; }
+.code-block .code-bracket { color: #94a3b8; }
+.code-block .code-punctuation { color: #94a3b8; }
+.code-block .code-tag { color: #f59e0b; }
+.code-block .code-attribute { color: #10b981; }
+.code-block .code-boolean { color: #f59e0b; font-weight: 600; }
+.code-block .code-null { color: #f59e0b; font-weight: 600; }
+.code-block .code-undefined { color: #f59e0b; font-weight: 600; }
+.code-block .code-this { color: #8b5cf6; font-weight: 600; }
+.code-block .code-new { color: #8b5cf6; font-weight: 600; }
+.code-block .code-return { color: #8b5cf6; font-weight: 600; }
+.code-block .code-async { color: #8b5cf6; font-weight: 600; }
+.code-block .code-await { color: #8b5cf6; font-weight: 600; }
+.code-block .code-try { color: #8b5cf6; font-weight: 600; }
+.code-block .code-catch { color: #8b5cf6; font-weight: 600; }
+.code-block .code-finally { color: #8b5cf6; font-weight: 600; }
+.code-block .code-if { color: #8b5cf6; font-weight: 600; }
+.code-block .code-else { color: #8b5cf6; font-weight: 600; }
+.code-block .code-for { color: #8b5cf6; font-weight: 600; }
+.code-block .code-while { color: #8b5cf6; font-weight: 600; }
+.code-block .code-do { color: #8b5cf6; font-weight: 600; }
+.code-block .code-switch { color: #8b5cf6; font-weight: 600; }
+.code-block .code-case { color: #8b5cf6; font-weight: 600; }
+.code-block .code-break { color: #8b5cf6; font-weight: 600; }
+.code-block .code-continue { color: #8b5cf6; font-weight: 600; }
+.code-block .code-throw { color: #8b5cf6; font-weight: 600; }
+.code-block .code-import { color: #8b5cf6; font-weight: 600; }
+.code-block .code-export { color: #8b5cf6; font-weight: 600; }
+.code-block .code-from { color: #8b5cf6; font-weight: 600; }
+.code-block .code-as { color: #8b5cf6; font-weight: 600; }
+.code-block .code-require { color: #8b5cf6; font-weight: 600; }
+.code-block .code-module { color: #8b5cf6; font-weight: 600; }
+.code-block .code-const { color: #8b5cf6; font-weight: 600; }
+.code-block .code-let { color: #8b5cf6; font-weight: 600; }
+.code-block .code-var { color: #8b5cf6; font-weight: 600; }
+.code-block .code-function { color: #3b82f6; font-weight: 500; }
+.code-block .code-arrow { color: #94a3b8; }
+.code-block .code-backtick { color: #10b981; }
+.code-block .code-template { color: #10b981; }
+.code-block .code-regexp { color: #f59e0b; }
+        
+/* Code block structure styling */
+.code-block .code-line { display: block; }
+.code-block .code-indent { margin-left: 1rem; }
+.code-block .code-brace { color: #94a3b8; }
+.code-block .code-paren { color: #94a3b8; }
+.code-block .code-bracket { color: #94a3b8; }
+.code-block .code-curly { color: #94a3b8; }
+        
+/* Code highlighting utilities */
+.code-block .code-highlight { background-color: #334155; border-radius: 4px; padding: 2px 4px; }
+.code-block .code-error { color: #ef4444; text-decoration: underline; }
+.code-block .code-warning { color: #f59e0b; }
+.code-block .code-info { color: #3b82f6; }
+.code-block .code-success { color: #10b981; }
+        
+/* Section Separators */
+.section-separator {
+    margin: 3rem 0;
+    padding: 2rem 0;
+}
+
+.section-divider {
+    border: none;
+    border-top: 2px solid #e2e8f0;
+    margin: 1rem 0;
+    opacity: 0.6;
+}
+
+.section-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    padding: 1rem;
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    border-radius: 12px;
+    border: 1px solid #cbd5e1;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+}
+
+.section-icon {
+    font-size: 1.5rem;
+    opacity: 0.8;
+}
+
+.section-text {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #475569;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+        
+/* Enhanced table styling */
+.comparison-table {
+    background: #ffffff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+        
+.comparison-table th {
+    background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+    color: white;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+        
+.comparison-table td {
+    border-bottom: 1px solid #e2e8f0;
+    vertical-align: top;
+}
+        
+/* Print-specific styles */
+@media print {
+    .concept-box {
+        background: #e0f2fe !important;
+        border: 2px solid #3b82f6 !important;
+        page-break-inside: avoid;
+    }
+        
+    .code-explanation {
+        background: #fef3c7 !important;
+        border: 2px solid #f59e0b !important;
+        page-break-inside: avoid;
+    }
+        
+    .code-block {
+        background: #1e293b !important;
+        border: 2px solid #475569 !important;
+        page-break-inside: avoid;
+    }
+        
+    body {
+        color: #000000 !important;
+        background: #ffffff !important;
+    }
+        
+    .task-status {
+        background: #dcfce7 !important;
+        border: 2px solid #10b981 !important;
+        color: #065f46 !important;
+    }
+}
