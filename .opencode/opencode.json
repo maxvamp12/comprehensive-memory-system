@@ -26,7 +26,7 @@
           },
           "limit": {
             "context": 131072,
-            "output": 131072
+            "output": 16384
           },
           "modalities": {
             "input": ["text"],

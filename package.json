@@ -31,7 +31,9 @@
     "express": "^5.2.1",
     "natural": "^6.5.0",
     "node-cache": "^5.1.2",
-    "winston": "^3.10.0"
+    "puppeteer": "^24.33.0",
+    "winston": "^3.10.0",
+    "wkhtmltopdf": "^0.4.0"
   },
   "devDependencies": {
     "eslint": "^8.45.0",
