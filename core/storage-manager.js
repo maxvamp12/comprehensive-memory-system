@@ -17,7 +17,7 @@ class StorageManager {
             ]
         });
 
-        this.dataDir = config.dataDir || path.join(__dirname, '../../data');
+        this.dataDir = config.dataDir || './data';
         this.memoriesDir = path.join(this.dataDir, 'memories');
         this.indexesDir = path.join(this.dataDir, 'indexes');
         this.embeddingsDir = path.join(this.dataDir, 'embeddings');

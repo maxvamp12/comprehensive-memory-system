@@ -7,13 +7,13 @@
     "version": "1.0.0",
     "description": "AI-powered memory system with semantic search and OpenAI compatibility",
     
-    "api_base_url": "http://192.168.68.71:3000",
+    "api_base_url": "http://192.168.100.11:3000",
     
     "api_endpoints": {
-      "health": "http://192.168.68.71:3000/health",
-      "memories": "http://192.168.68.71:3000/api/memories",
+      "health": "http://192.168.100.11:3000/health",
+      "memories": "http://192.168.100.11:3000/api/memories",
       "search": "http://192.168.68.71:3000/api/search",
-      "openai": "http://192.168.68.71:3000/api/v1/chat/completions",
+      "openai": "http://192.168.100.11:3000/api/v1/chat/completions",
       "info": "http://192.168.68.71:3000/api/info"
     },
     
@@ -35,7 +35,7 @@
     "models": {
       "memory-search": {
         "provider": "memory",
-        "endpoint": "http://192.168.68.71:3000/api/v1/chat/completions",
+        "endpoint": "http://192.168.100.11:3000/api/v1/chat/completions",
         "model": "memory-search",
         "max_tokens": 1000,
         "temperature": 0.1
