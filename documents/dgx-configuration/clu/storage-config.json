@@ -1,0 +1,96 @@
+=== DISK USAGE ===
+Filesystem      Size  Used Avail Use% Mounted on
+tmpfs            12G  2.7M   12G   1% /run
+efivarfs        256K   21K  236K   8% /sys/firmware/efi/efivars
+/dev/nvme0n1p2  3.7T  1.3T  2.2T  37% /
+tmpfs            60G     0   60G   0% /dev/shm
+tmpfs           5.0M  8.0K  5.0M   1% /run/lock
+/dev/nvme0n1p1  298M  6.4M  292M   3% /boot/efi
+tmpfs            12G  100K   12G   1% /run/user/126
+tmpfs            12G   96K   12G   1% /run/user/1000
+
+=== BLOCK DEVICES ===
+NAME        MAJ:MIN RM   SIZE RO TYPE MOUNTPOINTS
+loop1         7:1    0     4K  1 loop /snap/bare/5
+loop2         7:2    0 235.1M  1 loop /snap/firefox/7474
+loop3         7:3    0  68.9M  1 loop /snap/core22/2164
+loop4         7:4    0  10.2M  1 loop /snap/firmware-updater/168
+loop5         7:5    0 234.7M  1 loop /snap/firefox/7563
+loop6         7:6    0  17.8M  1 loop /snap/firmware-updater/211
+loop7         7:7    0 493.6M  1 loop /snap/gnome-42-2204/228
+loop8         7:8    0  12.2M  1 loop /snap/snap-store/1217
+loop9         7:9    0  91.7M  1 loop /snap/gtk-common-themes/1535
+loop10        7:10   0    10M  1 loop /snap/snap-store/1271
+loop11        7:11   0  44.3M  1 loop /snap/snapd/25585
+loop12        7:12   0   552K  1 loop /snap/snapd-desktop-integration/316
+loop13        7:13   0 218.5M  1 loop /snap/thunderbird/876
+loop14        7:14   0 219.4M  1 loop /snap/thunderbird/916
+loop15        7:15   0  68.9M  1 loop /snap/core22/2194
+nvme0n1     259:0    0   3.7T  0 disk 
+├─nvme0n1p1 259:1    0   298M  0 part /boot/efi
+└─nvme0n1p2 259:2    0   3.7T  0 part /
+
+=== MOUNTS ===
+sysfs on /sys type sysfs (rw,nosuid,nodev,noexec,relatime)
+proc on /proc type proc (rw,nosuid,nodev,noexec,relatime)
+udev on /dev type devtmpfs (rw,nosuid,relatime,size=62643640k,nr_inodes=15660910,mode=755,inode64)
+devpts on /dev/pts type devpts (rw,nosuid,noexec,relatime,gid=5,mode=620,ptmxmode=000)
+tmpfs on /run type tmpfs (rw,nosuid,nodev,noexec,relatime,size=12551200k,mode=755,inode64)
+efivarfs on /sys/firmware/efi/efivars type efivarfs (rw,nosuid,nodev,noexec,relatime)
+/dev/nvme0n1p2 on / type ext4 (rw,relatime,errors=remount-ro)
+securityfs on /sys/kernel/security type securityfs (rw,nosuid,nodev,noexec,relatime)
+tmpfs on /dev/shm type tmpfs (rw,nosuid,nodev,inode64)
+tmpfs on /run/lock type tmpfs (rw,nosuid,nodev,noexec,relatime,size=5120k,inode64)
+cgroup2 on /sys/fs/cgroup type cgroup2 (rw,nosuid,nodev,noexec,relatime,nsdelegate,memory_recursiveprot)
+pstore on /sys/fs/pstore type pstore (rw,nosuid,nodev,noexec,relatime)
+bpf on /sys/fs/bpf type bpf (rw,nosuid,nodev,noexec,relatime,mode=700)
+systemd-1 on /proc/sys/fs/binfmt_misc type autofs (rw,relatime,fd=32,pgrp=1,timeout=0,minproto=5,maxproto=5,direct,pipe_ino=14113)
+hugetlbfs on /dev/hugepages type hugetlbfs (rw,nosuid,nodev,relatime,pagesize=2M)
+mqueue on /dev/mqueue type mqueue (rw,nosuid,nodev,noexec,relatime)
+tracefs on /sys/kernel/tracing type tracefs (rw,nosuid,nodev,noexec,relatime)
+debugfs on /sys/kernel/debug type debugfs (rw,nosuid,nodev,noexec,relatime)
+configfs on /sys/kernel/config type configfs (rw,nosuid,nodev,noexec,relatime)
+fusectl on /sys/fs/fuse/connections type fusectl (rw,nosuid,nodev,noexec,relatime)
+/var/lib/snapd/snaps/bare_5.snap on /snap/bare/5 type squashfs (ro,nodev,relatime,errors=continue,threads=single,x-gdu.hide,x-gvfs-hide)
+/var/lib/snapd/snaps/firefox_7474.snap on /snap/firefox/7474 type squashfs (ro,nodev,relatime,errors=continue,threads=single,x-gdu.hide,x-gvfs-hide)
+/var/lib/snapd/snaps/firmware-updater_168.snap on /snap/firmware-updater/168 type squashfs (ro,nodev,relatime,errors=continue,threads=single,x-gdu.hide,x-gvfs-hide)
+/var/lib/snapd/snaps/core22_2164.snap on /snap/core22/2164 type squashfs (ro,nodev,relatime,errors=continue,threads=single,x-gdu.hide,x-gvfs-hide)
+/var/lib/snapd/snaps/firefox_7563.snap on /snap/firefox/7563 type squashfs (ro,nodev,relatime,errors=continue,threads=single,x-gdu.hide,x-gvfs-hide)
+/var/lib/snapd/snaps/firmware-updater_211.snap on /snap/firmware-updater/211 type squashfs (ro,nodev,relatime,errors=continue,threads=single,x-gdu.hide,x-gvfs-hide)
+/var/lib/snapd/snaps/gnome-42-2204_228.snap on /snap/gnome-42-2204/228 type squashfs (ro,nodev,relatime,errors=continue,threads=single,x-gdu.hide,x-gvfs-hide)
+/var/lib/snapd/snaps/snap-store_1217.snap on /snap/snap-store/1217 type squashfs (ro,nodev,relatime,errors=continue,threads=single,x-gdu.hide,x-gvfs-hide)
+/var/lib/snapd/snaps/gtk-common-themes_1535.snap on /snap/gtk-common-themes/1535 type squashfs (ro,nodev,relatime,errors=continue,threads=single,x-gdu.hide,x-gvfs-hide)
+/var/lib/snapd/snaps/snap-store_1271.snap on /snap/snap-store/1271 type squashfs (ro,nodev,relatime,errors=continue,threads=single,x-gdu.hide,x-gvfs-hide)
+/var/lib/snapd/snaps/snapd_25585.snap on /snap/snapd/25585 type squashfs (ro,nodev,relatime,errors=continue,threads=single,x-gdu.hide,x-gvfs-hide)
+/var/lib/snapd/snaps/snapd-desktop-integration_316.snap on /snap/snapd-desktop-integration/316 type squashfs (ro,nodev,relatime,errors=continue,threads=single,x-gdu.hide,x-gvfs-hide)
+/var/lib/snapd/snaps/thunderbird_876.snap on /snap/thunderbird/876 type squashfs (ro,nodev,relatime,errors=continue,threads=single,x-gdu.hide,x-gvfs-hide)
+/var/lib/snapd/snaps/thunderbird_916.snap on /snap/thunderbird/916 type squashfs (ro,nodev,relatime,errors=continue,threads=single,x-gdu.hide,x-gvfs-hide)
+/dev/nvme0n1p1 on /boot/efi type vfat (rw,relatime,fmask=0022,dmask=0022,codepage=437,iocharset=iso8859-1,shortname=mixed,errors=remount-ro)
+binfmt_misc on /proc/sys/fs/binfmt_misc type binfmt_misc (rw,nosuid,nodev,noexec,relatime)
+sunrpc on /run/rpc_pipefs type rpc_pipefs (rw,relatime)
+tracefs on /sys/kernel/debug/tracing type tracefs (rw,nosuid,nodev,noexec,relatime)
+nsfs on /run/docker/netns/ingress_sbox type nsfs (rw)
+nsfs on /run/docker/netns/1-1y4klij5qm type nsfs (rw)
+tmpfs on /run/user/126 type tmpfs (rw,nosuid,nodev,relatime,size=12551196k,nr_inodes=3137799,mode=700,uid=126,gid=125,inode64)
+portal on /run/user/126/doc type fuse.portal (rw,nosuid,nodev,relatime,user_id=126,group_id=125)
+tmpfs on /run/snapd/ns type tmpfs (rw,nosuid,nodev,noexec,relatime,size=12551200k,mode=755,inode64)
+nsfs on /run/snapd/ns/snapd-desktop-integration.mnt type nsfs (rw)
+overlay on /var/lib/docker/overlay2/4590b0d07d49d017b261ee7f40feace81b4c435babe9095cb6b87f270ac85723/merged type overlay (rw,relatime,lowerdir=/var/lib/docker/overlay2/l/JP7O7NOCZY6JBR4TF6ORRDTIHG:/var/lib/docker/overlay2/l/RLLOSDIPNWYRFELRRMWF37O3JN:/var/lib/docker/overlay2/l/WZOHAHSHYI7A6KOALBADYRT7WE:/var/lib/docker/overlay2/l/2G3EC5DNTBK67E4WK4HMVR5NV3:/var/lib/docker/overlay2/l/PEN5CPQCL6DXL3XD3PIBGHKM63,upperdir=/var/lib/docker/overlay2/4590b0d07d49d017b261ee7f40feace81b4c435babe9095cb6b87f270ac85723/diff,workdir=/var/lib/docker/overlay2/4590b0d07d49d017b261ee7f40feace81b4c435babe9095cb6b87f270ac85723/work,nouserxattr)
+nsfs on /run/docker/netns/379d4e6b5c69 type nsfs (rw)
+overlay on /var/lib/docker/overlay2/8976b706e17296d058821094f068f1e9e5f7dc97bd793f8b08d4a97c3e81e1e3/merged type overlay (rw,relatime,lowerdir=/var/lib/docker/overlay2/l/M2CX2SBVMOZ6QTDFSEAE7IJ74W:/var/lib/docker/overlay2/l/Q4GEGEM4AEKGQHIKMCJ22PEROQ:/var/lib/docker/overlay2/l/EWA3D7YUXGE7FMAABEIFCJAFXO:/var/lib/docker/overlay2/l/IJJBHZIEK5BGB6CX3IDCLLRFL2:/var/lib/docker/overlay2/l/LKVV3Y3KHYWD6J72MI6JX7BNUG:/var/lib/docker/overlay2/l/DJKTH4CBWAQ7Q6MRHZK4OQ5JIO:/var/lib/docker/overlay2/l/AOIKZ62QNMBLN6AW5NIO6SIA4R:/var/lib/docker/overlay2/l/CKH35TA6VI6ASH7NDRBWT7LFKS:/var/lib/docker/overlay2/l/BCYDB6W3OKA3HH5XTFCMD77V2K:/var/lib/docker/overlay2/l/SXP74SFSEEIV5KOMEK2MUO6ENI:/var/lib/docker/overlay2/l/MMXKW65KQ252AX5YSXPAYTAOPC:/var/lib/docker/overlay2/l/RG2YK6ELGFHBQAUYMXPPUKXQMU:/var/lib/docker/overlay2/l/KC7O46PQMYUBYBBWMPQWQJV3U4:/var/lib/docker/overlay2/l/MMUIREHCRQRRAT2C7NER2XYJUY:/var/lib/docker/overlay2/l/HIKZRG2OKB3BQ7SPYXEEQPXY2Z:/var/lib/docker/overlay2/l/DWY2GAUGNPL6POTV34FLAKOZZ2:/var/lib/docker/overlay2/l/DXLHCWEVW7RRMYWBARHDYPH5ZK:/var/lib/docker/overlay2/l/3Q7T6FY6UB2UR4JXYSCDN4D7IN:/var/lib/docker/overlay2/l/43SQ3HVBZOUBYM7EI4V7OA2CNY:/var/lib/docker/overlay2/l/TCRPGO2A7YYBGLSMXQOPLCS2HB:/var/lib/docker/overlay2/l/DSWUWEGNW2TQ3QWWHIWAZ2YPCG:/var/lib/docker/overlay2/l/5YDMICVY3KXO5G6JBCRIYI7N3Z:/var/lib/docker/overlay2/l/2NI77VCPI267RHJGFWXMMOOC43:/var/lib/docker/overlay2/l/JLENVIAICEL4SILZOHN7NT4UUE:/var/lib/docker/overlay2/l/VW7ZSHS64IVIYHLAMGHNUJYCYK:/var/lib/docker/overlay2/l/FIEYET57QW3QF6UW2E4VE22EUV:/var/lib/docker/overlay2/l/KWUPJHDO2NPWZDO7VJONNSE7WN:/var/lib/docker/overlay2/l/PE6D3Z6S3MRNYOKVEWLXZKGIAX:/var/lib/docker/overlay2/l/ZDEQZ65U4HOYX5RCXDKNFKNJL6:/var/lib/docker/overlay2/l/2G647R42OHC2VVHE6FISWLP7XR:/var/lib/docker/overlay2/l/FZJU2O5XX43QZOJV5DECAOFOB7:/var/lib/docker/overlay2/l/7ROYAEQHLMPIPNAB2AL4Z55OIQ:/var/lib/docker/overlay2/l/GAUQEQ5K5QDZYDWCJPAPG7WNCE:/var/lib/docker/overlay2/l/F5UVKTS2VQ5X6W3MTBIE3RQ6UX:/var/lib/docker/overlay2/l/JOOWJB5FXEU2U7IAMYADFKD7CK:/var/lib/docker/overlay2/l/JEMT4D3KAK7HKC4VK3QHX4MC5S:/var/lib/docker/overlay2/l/INHGOQTGVB2MBQSQRLJ4IAQ3GT,upperdir=/var/lib/docker/overlay2/8976b706e17296d058821094f068f1e9e5f7dc97bd793f8b08d4a97c3e81e1e3/diff,workdir=/var/lib/docker/overlay2/8976b706e17296d058821094f068f1e9e5f7dc97bd793f8b08d4a97c3e81e1e3/work,nouserxattr)
+nsfs on /run/docker/netns/default type nsfs (rw)
+nsfs on /run/snapd/ns/firmware-updater.mnt type nsfs (rw)
+tmpfs on /run/user/1000 type tmpfs (rw,nosuid,nodev,relatime,size=12551196k,nr_inodes=3137799,mode=700,uid=1000,gid=1000,inode64)
+portal on /run/user/1000/doc type fuse.portal (rw,nosuid,nodev,relatime,user_id=1000,group_id=1000)
+/var/lib/snapd/snaps/core22_2194.snap on /snap/core22/2194 type squashfs (ro,nodev,relatime,errors=continue,threads=single,x-gdu.hide,x-gvfs-hide)
+
+=== DOCKER SYSTEM DF ===
+TYPE            TOTAL     ACTIVE    SIZE      RECLAIMABLE
+Images          9         3         115.7GB   80.05GB (69%)
+Containers      4         2         1.552GB   368.8MB (23%)
+Local Volumes   0         0         0B        0B
+Build Cache     13        0         93.01MB   93.01MB
+
+=== DOCKER VOLUMES ===
+DRIVER    VOLUME NAME
+

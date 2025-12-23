@@ -1,0 +1,86 @@
+=== RUNNING SERVICES ===
+  UNIT                         LOAD   ACTIVE SUB     DESCRIPTION
+  accounts-daemon.service      loaded active running Accounts Service
+  atop.service                 loaded active running Atop advanced performance monitor
+  atopacct.service             loaded active running Atop process accounting daemon
+  avahi-daemon.service         loaded active running Avahi mDNS/DNS-SD Stack
+  bluetooth.service            loaded active running Bluetooth service
+  chrony.service               loaded active running chrony, an NTP client/server
+  colord.service               loaded active running Manage, Install and Generate Color Profiles
+  containerd.service           loaded active running containerd container runtime
+  cron.service                 loaded active running Regular background program processing daemon
+  cups-browsed.service         loaded active running Make remote CUPS printers available locally
+  cups.service                 loaded active running CUPS Scheduler
+  dbus.service                 loaded active running D-Bus System Message Bus
+  dgx-dashboard-admin.service  loaded active running NVIDIA DGX Dashboard Admin Service
+  dgx-dashboard.service        loaded active running NVIDIA DGX Dashboard Service
+  docker.service               loaded active running Docker Application Container Engine
+  fwupd.service                loaded active running Firmware update daemon
+  gdm.service                  loaded active running GNOME Display Manager
+  gnome-remote-desktop.service loaded active running GNOME Remote Desktop
+  ModemManager.service         loaded active running Modem Manager
+  multipathd.service           loaded active running Device-Mapper Multipath Device Controller
+  networkd-dispatcher.service  loaded active running Dispatcher daemon for systemd-networkd
+  NetworkManager.service       loaded active running Network Manager
+  nmbd.service                 loaded active running Samba NMB Daemon
+  nvidia-dgx-telemetry.service loaded active running NVIDIA DGX Telemetry Service
+  nvidia-persistenced.service  loaded active running NVIDIA Persistence Daemon
+  pmcd.service                 loaded active running Performance Metrics Collector Daemon
+  pmie.service                 loaded active running Performance Metrics Inference Engine
+  pmie_farm.service            loaded active running pmie farm service
+  pmlogger.service             loaded active running Performance Metrics Archive Logger
+  pmlogger_farm.service        loaded active running pmlogger farm service
+  pmproxy.service              loaded active running Proxy for Performance Metrics Collector Daemon
+  polkit.service               loaded active running Authorization Manager
+  qwen3-tunnel.service         loaded active running SSH Tunnel for Qwen3-235B API (SARK to CLU)
+  rasdaemon.service            loaded active running RAS daemon to log the RAS events
+  rdma-ndd.service             loaded active running RDMA Node Description Daemon
+  rsyslog.service              loaded active running System Logging Service
+  rtkit-daemon.service         loaded active running RealtimeKit Scheduling Policy Service
+  smartmontools.service        loaded active running Self Monitoring and Reporting Technology (SMART) Daemon
+  smbd.service                 loaded active running Samba SMB Daemon
+  snapd.service                loaded active running Snap Daemon
+  ssh.service                  loaded active running OpenBSD Secure Shell server
+  switcheroo-control.service   loaded active running Switcheroo Control Proxy service
+  systemd-journald.service     loaded active running Journal Service
+  systemd-logind.service       loaded active running User Login Management
+  systemd-networkd.service     loaded active running Network Configuration
+  systemd-resolved.service     loaded active running Network Name Resolution
+  systemd-udevd.service        loaded active running Rule-based Manager for Device Events and Files
+  trtllm-proxy.service         loaded active running TRT-LLM API Proxy (CLU:8366 to 0.0.0.0:9355)
+  twingate-connector.service   loaded active running Twingate Connector service
+  udisks2.service              loaded active running Disk Manager
+  upower.service               loaded active running Daemon for power management
+  user@1000.service            loaded active running User Manager for UID 1000
+  user@126.service             loaded active running User Manager for UID 126
+  wpa_supplicant.service       loaded active running WPA supplicant
+
+Legend: LOAD   → Reflects whether the unit definition was properly loaded.
+        ACTIVE → The high-level unit activation state, i.e. generalization of SUB.
+        SUB    → The low-level unit activation state, values depend on unit type.
+
+54 loaded units listed.
+
+=== DOCKER SERVICES ===
+ID        NAME      MODE      REPLICAS   IMAGE     PORTS
+
+=== DOCKER STATS ===
+CONTAINER ID   NAME                 CPU %     MEM USAGE / LIMIT     MEM %     NET I/O          BLOCK I/O         PIDS
+7b4212ad5217   vllm-head            220.29%   7.246GiB / 119.7GiB   6.05%     0B / 0B          60.4GB / 2.38GB   2053
+a5fd391e923a   chromadb             0.09%     23.19MiB / 119.7GiB   0.02%     250kB / 2.65kB   81.7MB / 68.6MB   25
+dab05a4e9ac9   open-webui           0.14%     359.1MiB / 119.7GiB   0.29%     980kB / 1.52MB   652MB / 286MB     68
+3cecd44d94e9   borg-backup-server   0.00%     3.848MiB / 119.7GiB   0.00%     247kB / 126B     9.05MB / 4.1kB    1
+
+=== DOCKER DAEMON CONFIG ===
+{
+    "default-runtime": "nvidia",
+    "node-generic-resources": [
+    "NVIDIA_GPU=GPU-f03bb302-2a81-1320-87d9-8ea4f83e1f04"
+    ],
+    "runtimes": {
+        "nvidia": {
+            "args": [],
+            "path": "nvidia-container-runtime"
+        }
+    }
+}

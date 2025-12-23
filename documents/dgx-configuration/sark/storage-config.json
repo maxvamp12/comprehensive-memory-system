@@ -1,0 +1,137 @@
+=== DISK USAGE ===
+Filesystem      Size  Used Avail Use% Mounted on
+tmpfs            12G  7.6M   12G   1% /run
+efivarfs        256K   21K  236K   8% /sys/firmware/efi/efivars
+/dev/nvme0n1p2  3.7T  1.9T  1.7T  54% /
+tmpfs            60G     0   60G   0% /dev/shm
+tmpfs           5.0M  8.0K  5.0M   1% /run/lock
+/dev/nvme0n1p1  298M  6.4M  292M   3% /boot/efi
+/dev/sda1       3.6T  1.0T  2.4T  30% /mnt/borg-backup
+tmpfs            12G  100K   12G   1% /run/user/126
+tmpfs            12G   88K   12G   1% /run/user/1000
+
+=== BLOCK DEVICES ===
+NAME        MAJ:MIN RM   SIZE RO TYPE MOUNTPOINTS
+loop0         7:0    0     4K  1 loop /snap/bare/5
+loop1         7:1    0  68.9M  1 loop /snap/core22/2140
+loop2         7:2    0  68.9M  1 loop /snap/core22/2164
+loop3         7:3    0  61.9M  1 loop /snap/core24/1226
+loop4         7:4    0 234.7M  1 loop /snap/firefox/7563
+loop5         7:5    0  61.9M  1 loop /snap/core24/1238
+loop6         7:6    0 235.1M  1 loop /snap/firefox/7474
+loop7         7:7    0  10.2M  1 loop /snap/firmware-updater/168
+loop8         7:8    0  17.8M  1 loop /snap/firmware-updater/211
+loop9         7:9    0  91.7M  1 loop /snap/gtk-common-themes/1535
+loop10        7:10   0 493.6M  1 loop /snap/gnome-42-2204/228
+loop11        7:11   0  12.2M  1 loop /snap/snap-store/1217
+loop12        7:12   0  44.2M  1 loop /snap/snapd/25205
+loop13        7:13   0  44.3M  1 loop /snap/snapd/25585
+loop14        7:14   0    10M  1 loop /snap/snap-store/1271
+loop16        7:16   0   552K  1 loop /snap/snapd-desktop-integration/316
+loop17        7:17   0 219.4M  1 loop /snap/thunderbird/916
+loop18        7:18   0 219.4M  1 loop /snap/thunderbird/918
+sda           8:0    0   3.6T  0 disk 
+└─sda1        8:1    0   3.6T  0 part /mnt/borg-backup
+nvme0n1     259:0    0   3.7T  0 disk 
+├─nvme0n1p1 259:1    0   298M  0 part /boot/efi
+└─nvme0n1p2 259:2    0   3.7T  0 part /
+
+=== MOUNTS ===
+sysfs on /sys type sysfs (rw,nosuid,nodev,noexec,relatime)
+proc on /proc type proc (rw,nosuid,nodev,noexec,relatime)
+udev on /dev type devtmpfs (rw,nosuid,relatime,size=62643640k,nr_inodes=15660910,mode=755,inode64)
+devpts on /dev/pts type devpts (rw,nosuid,noexec,relatime,gid=5,mode=620,ptmxmode=000)
+tmpfs on /run type tmpfs (rw,nosuid,nodev,noexec,relatime,size=12551200k,mode=755,inode64)
+efivarfs on /sys/firmware/efi/efivars type efivarfs (rw,nosuid,nodev,noexec,relatime)
+/dev/nvme0n1p2 on / type ext4 (rw,relatime,errors=remount-ro)
+securityfs on /sys/kernel/security type securityfs (rw,nosuid,nodev,noexec,relatime)
+tmpfs on /dev/shm type tmpfs (rw,nosuid,nodev,inode64)
+tmpfs on /run/lock type tmpfs (rw,nosuid,nodev,noexec,relatime,size=5120k,inode64)
+cgroup2 on /sys/fs/cgroup type cgroup2 (rw,nosuid,nodev,noexec,relatime,nsdelegate,memory_recursiveprot)
+pstore on /sys/fs/pstore type pstore (rw,nosuid,nodev,noexec,relatime)
+bpf on /sys/fs/bpf type bpf (rw,nosuid,nodev,noexec,relatime,mode=700)
+systemd-1 on /proc/sys/fs/binfmt_misc type autofs (rw,relatime,fd=32,pgrp=1,timeout=0,minproto=5,maxproto=5,direct,pipe_ino=1789)
+hugetlbfs on /dev/hugepages type hugetlbfs (rw,nosuid,nodev,relatime,pagesize=2M)
+mqueue on /dev/mqueue type mqueue (rw,nosuid,nodev,noexec,relatime)
+debugfs on /sys/kernel/debug type debugfs (rw,nosuid,nodev,noexec,relatime)
+tracefs on /sys/kernel/tracing type tracefs (rw,nosuid,nodev,noexec,relatime)
+configfs on /sys/kernel/config type configfs (rw,nosuid,nodev,noexec,relatime)
+fusectl on /sys/fs/fuse/connections type fusectl (rw,nosuid,nodev,noexec,relatime)
+/var/lib/snapd/snaps/bare_5.snap on /snap/bare/5 type squashfs (ro,nodev,relatime,errors=continue,threads=single,x-gdu.hide,x-gvfs-hide)
+/var/lib/snapd/snaps/core22_2140.snap on /snap/core22/2140 type squashfs (ro,nodev,relatime,errors=continue,threads=single,x-gdu.hide,x-gvfs-hide)
+/var/lib/snapd/snaps/core22_2164.snap on /snap/core22/2164 type squashfs (ro,nodev,relatime,errors=continue,threads=single,x-gdu.hide,x-gvfs-hide)
+/var/lib/snapd/snaps/core24_1226.snap on /snap/core24/1226 type squashfs (ro,nodev,relatime,errors=continue,threads=single,x-gdu.hide,x-gvfs-hide)
+/var/lib/snapd/snaps/firefox_7563.snap on /snap/firefox/7563 type squashfs (ro,nodev,relatime,errors=continue,threads=single,x-gdu.hide,x-gvfs-hide)
+/var/lib/snapd/snaps/core24_1238.snap on /snap/core24/1238 type squashfs (ro,nodev,relatime,errors=continue,threads=single,x-gdu.hide,x-gvfs-hide)
+/var/lib/snapd/snaps/firefox_7474.snap on /snap/firefox/7474 type squashfs (ro,nodev,relatime,errors=continue,threads=single,x-gdu.hide,x-gvfs-hide)
+/var/lib/snapd/snaps/firmware-updater_168.snap on /snap/firmware-updater/168 type squashfs (ro,nodev,relatime,errors=continue,threads=single,x-gdu.hide,x-gvfs-hide)
+/var/lib/snapd/snaps/firmware-updater_211.snap on /snap/firmware-updater/211 type squashfs (ro,nodev,relatime,errors=continue,threads=single,x-gdu.hide,x-gvfs-hide)
+/var/lib/snapd/snaps/gtk-common-themes_1535.snap on /snap/gtk-common-themes/1535 type squashfs (ro,nodev,relatime,errors=continue,threads=single,x-gdu.hide,x-gvfs-hide)
+/var/lib/snapd/snaps/gnome-42-2204_228.snap on /snap/gnome-42-2204/228 type squashfs (ro,nodev,relatime,errors=continue,threads=single,x-gdu.hide,x-gvfs-hide)
+/var/lib/snapd/snaps/snap-store_1217.snap on /snap/snap-store/1217 type squashfs (ro,nodev,relatime,errors=continue,threads=single,x-gdu.hide,x-gvfs-hide)
+/var/lib/snapd/snaps/snapd_25205.snap on /snap/snapd/25205 type squashfs (ro,nodev,relatime,errors=continue,threads=single,x-gdu.hide,x-gvfs-hide)
+/var/lib/snapd/snaps/snapd_25585.snap on /snap/snapd/25585 type squashfs (ro,nodev,relatime,errors=continue,threads=single,x-gdu.hide,x-gvfs-hide)
+/var/lib/snapd/snaps/snap-store_1271.snap on /snap/snap-store/1271 type squashfs (ro,nodev,relatime,errors=continue,threads=single,x-gdu.hide,x-gvfs-hide)
+/var/lib/snapd/snaps/snapd-desktop-integration_316.snap on /snap/snapd-desktop-integration/316 type squashfs (ro,nodev,relatime,errors=continue,threads=single,x-gdu.hide,x-gvfs-hide)
+/var/lib/snapd/snaps/thunderbird_916.snap on /snap/thunderbird/916 type squashfs (ro,nodev,relatime,errors=continue,threads=single,x-gdu.hide,x-gvfs-hide)
+/dev/nvme0n1p1 on /boot/efi type vfat (rw,relatime,fmask=0022,dmask=0022,codepage=437,iocharset=iso8859-1,shortname=mixed,errors=remount-ro)
+binfmt_misc on /proc/sys/fs/binfmt_misc type binfmt_misc (rw,nosuid,nodev,noexec,relatime)
+/dev/sda1 on /mnt/borg-backup type ext4 (rw,relatime,stripe=512)
+sunrpc on /run/rpc_pipefs type rpc_pipefs (rw,relatime)
+tracefs on /sys/kernel/debug/tracing type tracefs (rw,nosuid,nodev,noexec,relatime)
+overlay on /var/lib/docker/overlay2/782b132fe0365165167d9c86061b0b58b4375a7973fd349cf96c7d79546f5c43/merged type overlay (rw,relatime,lowerdir=/var/lib/docker/overlay2/l/KW5FN6QTZFXB3Z54WABBGNO2CT:/var/lib/docker/overlay2/l/4LGKKB4DQH6VRUDWOPW6UCQ2YH:/var/lib/docker/overlay2/l/5VXFRHLCRIOJVKV6XJW3O77A4Q:/var/lib/docker/overlay2/l/4XNQC3WPIROVT2ROK4LQPELFWK:/var/lib/docker/overlay2/l/WHARKMU7E3XIA6N6OX2TQX2TKZ:/var/lib/docker/overlay2/l/3YE6ZJLKLKLZFOQIDGLQA2PTFH,upperdir=/var/lib/docker/overlay2/782b132fe0365165167d9c86061b0b58b4375a7973fd349cf96c7d79546f5c43/diff,workdir=/var/lib/docker/overlay2/782b132fe0365165167d9c86061b0b58b4375a7973fd349cf96c7d79546f5c43/work,nouserxattr)
+overlay on /var/lib/docker/overlay2/f6a71ca37a8020383819eb081b85ee6fe63e620dadc85efac49579720c573158/merged type overlay (rw,relatime,lowerdir=/var/lib/docker/overlay2/l/KKJ7ANTDWKCHNJCD5PHB6LXJZU:/var/lib/docker/overlay2/l/NFF5XFTM5HD2IQEC7H2OPOWBSK:/var/lib/docker/overlay2/l/L4SFNIVWRBHYPTYOBMWW4URYND:/var/lib/docker/overlay2/l/4SGLZHC27N7XY6NFPJMTOZM3HF:/var/lib/docker/overlay2/l/L4V5ZMJFHHGJXLY6VJF6IMBPD2:/var/lib/docker/overlay2/l/WXMF7BUV6PTYDXARKFBXAW4ETN:/var/lib/docker/overlay2/l/V2H2USJWQ3J3QNSQMVRTLCXMTW:/var/lib/docker/overlay2/l/2QRLEVOXD6JGVW4PYESENNMJB3:/var/lib/docker/overlay2/l/FAHMVPQKS7D2TM7VAABXECVMJ2:/var/lib/docker/overlay2/l/2D7QKPESMQYKT4QBVKEOD7P4KJ:/var/lib/docker/overlay2/l/ZUGVKHR5VTMVEWYVHYKPZV2ZN5:/var/lib/docker/overlay2/l/ONINHVAA4ROCYP5UM6N7ANASO3:/var/lib/docker/overlay2/l/3N2NZHVV6VBTSJ3SFLUSS7S524:/var/lib/docker/overlay2/l/THJEJU444AT4FQM232GKOZDJHH:/var/lib/docker/overlay2/l/ABU2F5UYXMNUXLHTU7KGGQGRLP:/var/lib/docker/overlay2/l/NMZ2IEJKCCFETSDX6S6TUD5Y2I:/var/lib/docker/overlay2/l/LXMME6GEJ35EFTTATP4Y45LY6A:/var/lib/docker/overlay2/l/WUYUEU56MOHONLNML2TS725NO7:/var/lib/docker/overlay2/l/MNMDJIOPU6O7XT4XB2EMLLHM3Z,upperdir=/var/lib/docker/overlay2/f6a71ca37a8020383819eb081b85ee6fe63e620dadc85efac49579720c573158/diff,workdir=/var/lib/docker/overlay2/f6a71ca37a8020383819eb081b85ee6fe63e620dadc85efac49579720c573158/work,nouserxattr)
+overlay on /var/lib/docker/overlay2/2471b5f8f33d6bb8e3d62b3f8b4c1a9260a952c7f430d6b53620dcf16266efde/merged type overlay (rw,relatime,lowerdir=/var/lib/docker/overlay2/l/PZ6HNBKGJFL2IHYSANCC4B2PSV:/var/lib/docker/overlay2/l/VKFUBU74RWFSBEUT5WASX6OLUJ:/var/lib/docker/overlay2/l/QFF7ROUL7ZGUYMAY54LH4NZVRP:/var/lib/docker/overlay2/l/ZDB6GXALD2J7RZELJIIALM7EXU:/var/lib/docker/overlay2/l/5FII6MATC3EFQAHXNI5PHQN5NG:/var/lib/docker/overlay2/l/NONL5UPFCTPD4A37XTZP3NHWD2:/var/lib/docker/overlay2/l/KRO7KQPXZACKFQFR32DD4PD334:/var/lib/docker/overlay2/l/NMCT2XZBBK2T5VDIBZGH37JSXH:/var/lib/docker/overlay2/l/IMEDOHR6PG4JAEOGY4KFFOI5AL:/var/lib/docker/overlay2/l/DXXML6YFD56FDRHELXJNDFCBMT:/var/lib/docker/overlay2/l/UWUVPYCZFJBPORZ4TWOP3C2WFM:/var/lib/docker/overlay2/l/CACTSTONG7X4EIYM2DZQADMCGT:/var/lib/docker/overlay2/l/BLWUZQGSQ2BQCYMV4AHCJNAZNT:/var/lib/docker/overlay2/l/UQGSR47XJWWZERMVQGEW4OPYET:/var/lib/docker/overlay2/l/7CBRUAQUYFWWNAU2BSVOTB7JHH:/var/lib/docker/overlay2/l/ODGWG5A4RYX7HGSEXOTKWNLRJ4:/var/lib/docker/overlay2/l/75E5WRJVBRF7ZVPA6CNDD3L45E:/var/lib/docker/overlay2/l/JJHNCA73B4LR5PGBKMHCNUIRRV:/var/lib/docker/overlay2/l/M3NS5MKDU6W6BTWVNBXC4LNRMI:/var/lib/docker/overlay2/l/DLSOEVQOLONJG6TDTROEFNQS7Y:/var/lib/docker/overlay2/l/JWSUCXOFDH7WYD2WPISL5WR6FC:/var/lib/docker/overlay2/l/Z5UT7A4L64MKSFYFVYY5V4LOE7:/var/lib/docker/overlay2/l/EZB7QKNL6Z45EHOFPTI3BDKKDC:/var/lib/docker/overlay2/l/3SMGGFBSTTH4SER447F3UMX2E2:/var/lib/docker/overlay2/l/K3KBCJNS3IIS3QBA6QNRPZVKDX:/var/lib/docker/overlay2/l/CSRQWEMKUBVGPXJTRKFHOMX4RI:/var/lib/docker/overlay2/l/WKBBNJZBN5DXKTST5OAANOUXHO:/var/lib/docker/overlay2/l/FHYDDDFJH262QY2W3Y5I7JH6UA:/var/lib/docker/overlay2/l/WFAR5R6KNDSRL3HGUTUNDKFMTZ:/var/lib/docker/overlay2/l/LOTYCIDRNFUTBJ7XYZFYHJN6YM:/var/lib/docker/overlay2/l/F6HF7HE4WCB2WT2MSIE34AJWSS:/var/lib/docker/overlay2/l/DNIQQ5HKCUTQYU4R2DEA6E5LF6:/var/lib/docker/overlay2/l/35R4W5B2BJ4UCC2VSCTSMSSXJK:/var/lib/docker/overlay2/l/3K4JRKYOTIUMVXM5DKGOWOWUGM:/var/lib/docker/overlay2/l/HUS6RP4P3JRA647VOZSBLI5DGX:/var/lib/docker/overlay2/l/BOVPC32RFSUKV35HFYCRBC2RZV:/var/lib/docker/overlay2/l/3YE6ZJLKLKLZFOQIDGLQA2PTFH,upperdir=/var/lib/docker/overlay2/2471b5f8f33d6bb8e3d62b3f8b4c1a9260a952c7f430d6b53620dcf16266efde/diff,workdir=/var/lib/docker/overlay2/2471b5f8f33d6bb8e3d62b3f8b4c1a9260a952c7f430d6b53620dcf16266efde/work,nouserxattr)
+nsfs on /run/docker/netns/default type nsfs (rw)
+tmpfs on /run/user/126 type tmpfs (rw,nosuid,nodev,relatime,size=12551196k,nr_inodes=3137799,mode=700,uid=126,gid=125,inode64)
+nsfs on /run/docker/netns/bd38cab178e1 type nsfs (rw)
+nsfs on /run/docker/netns/944c13b10b84 type nsfs (rw)
+portal on /run/user/126/doc type fuse.portal (rw,nosuid,nodev,relatime,user_id=126,group_id=125)
+tmpfs on /run/snapd/ns type tmpfs (rw,nosuid,nodev,noexec,relatime,size=12551200k,mode=755,inode64)
+nsfs on /run/snapd/ns/snapd-desktop-integration.mnt type nsfs (rw)
+nsfs on /run/docker/netns/ingress_sbox type nsfs (rw)
+nsfs on /run/docker/netns/1-1y4klij5qm type nsfs (rw)
+overlay on /var/lib/docker/overlay2/2130d03e6d77fed24f54f3bcd6eb8d0bbd5b7e26e9c21e39a7fb521fed53db3d/merged type overlay (rw,relatime,lowerdir=/var/lib/docker/overlay2/l/M4BXUARJVXYV6P4NLC5MDUDXQE:/var/lib/docker/overlay2/l/7SUYWF422QRC36XHC7DRPRIN2G:/var/lib/docker/overlay2/l/6XDMX4GTJ7WHPZNTDUKPCS2474:/var/lib/docker/overlay2/l/PFZMJ6BZ5F6BJIJICZZQPKDCGJ:/var/lib/docker/overlay2/l/RZXNABQBFRYFNOB4RMYKTNFJGE:/var/lib/docker/overlay2/l/D4UJPDC277OPVP73SCXNXZ3XHE:/var/lib/docker/overlay2/l/HJCTLFXHDKNZNQSHWFZOTWABOU:/var/lib/docker/overlay2/l/VI2UHWZHZE4HRVQ4N3CCI4XYIV:/var/lib/docker/overlay2/l/DUA5RZTCXHKG2QXB5IDIMI7C3D:/var/lib/docker/overlay2/l/ZZZVD3VUIDEQMTIAMDMXJ75IE4:/var/lib/docker/overlay2/l/SETBNVS4R3B73Z64OQUMIV2UIX,upperdir=/var/lib/docker/overlay2/2130d03e6d77fed24f54f3bcd6eb8d0bbd5b7e26e9c21e39a7fb521fed53db3d/diff,workdir=/var/lib/docker/overlay2/2130d03e6d77fed24f54f3bcd6eb8d0bbd5b7e26e9c21e39a7fb521fed53db3d/work,nouserxattr)
+nsfs on /run/docker/netns/70429b192e4e type nsfs (rw)
+nsfs on /run/snapd/ns/firmware-updater.mnt type nsfs (rw)
+/var/lib/snapd/snaps/thunderbird_918.snap on /snap/thunderbird/918 type squashfs (ro,nodev,relatime,errors=continue,threads=single,x-gdu.hide,x-gvfs-hide)
+nsfs on /run/snapd/ns/thunderbird.mnt type nsfs (rw)
+tmpfs on /run/user/1000 type tmpfs (rw,nosuid,nodev,relatime,size=12551196k,nr_inodes=3137799,mode=700,uid=1000,gid=1000,inode64)
+portal on /run/user/1000/doc type fuse.portal (rw,nosuid,nodev,relatime,user_id=1000,group_id=1000)
+
+=== DOCKER SYSTEM DF ===
+TYPE            TOTAL     ACTIVE    SIZE      RECLAIMABLE
+Images          20        7         160.7GB   129.2GB (80%)
+Containers      7         4         5.838GB   433MB (7%)
+Local Volumes   2         2         87.49GB   0B (0%)
+Build Cache     143       0         2.974GB   2.974GB
+
+=== DOCKER VOLUMES ===
+DRIVER    VOLUME NAME
+local     ollama-models
+local     open-webui
+
+=== Volume: ollama-models ===
+[
+    {
+        "CreatedAt": "2025-11-07T23:02:58-07:00",
+        "Driver": "local",
+        "Labels": null,
+        "Mountpoint": "/var/lib/docker/volumes/ollama-models/_data",
+        "Name": "ollama-models",
+        "Options": null,
+        "Scope": "local"
+    }
+]
+=== Volume: open-webui ===
+[
+    {
+        "CreatedAt": "2025-10-21T21:31:52-06:00",
+        "Driver": "local",
+        "Labels": null,
+        "Mountpoint": "/var/lib/docker/volumes/open-webui/_data",
+        "Name": "open-webui",
+        "Options": null,
+        "Scope": "local"
+    }
+]

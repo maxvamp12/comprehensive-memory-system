@@ -1,0 +1,115 @@
+=== DOCKER INFO ===
+Client: Docker Engine - Community
+ Version:    28.5.1
+ Context:    default
+ Debug Mode: false
+ Plugins:
+  buildx: Docker Buildx (Docker Inc.)
+    Version:  v0.29.1
+    Path:     /usr/libexec/docker/cli-plugins/docker-buildx
+  compose: Docker Compose (Docker Inc.)
+    Version:  v2.40.0
+    Path:     /usr/libexec/docker/cli-plugins/docker-compose
+
+Server:
+ Containers: 7
+  Running: 4
+  Paused: 0
+  Stopped: 3
+ Images: 20
+ Server Version: 28.5.1
+ Storage Driver: overlay2
+  Backing Filesystem: extfs
+  Supports d_type: true
+  Using metacopy: false
+  Native Overlay Diff: true
+  userxattr: false
+ Logging Driver: json-file
+ Cgroup Driver: systemd
+ Cgroup Version: 2
+ Plugins:
+  Volume: local
+  Network: bridge host ipvlan macvlan null overlay
+  Log: awslogs fluentd gcplogs gelf journald json-file local splunk syslog
+ CDI spec directories:
+  /etc/cdi
+  /var/run/cdi
+ Discovered Devices:
+  cdi: nvidia.com/gpu=0
+  cdi: nvidia.com/gpu=GPU-f03bb302-2a81-1320-87d9-8ea4f83e1f04
+  cdi: nvidia.com/gpu=all
+ Swarm: active
+  NodeID: n0i4vt5ubuog5a1iihr9g6kyj
+  Is Manager: true
+  ClusterID: tk3vml34565l77b7gzhd91wal
+  Managers: 1
+  Nodes: 2
+  Default Address Pool: 10.0.0.0/8  
+  SubnetSize: 24
+  Data Path Port: 4789
+  Orchestration:
+   Task History Retention Limit: 5
+  Raft:
+   Snapshot Interval: 10000
+   Number of Old Snapshots to Retain: 0
+   Heartbeat Tick: 1
+   Election Tick: 10
+  Dispatcher:
+   Heartbeat Period: 5 seconds
+  CA Configuration:
+   Expiry Duration: 3 months
+   Force Rotate: 0
+  Autolock Managers: false
+  Root Rotation In Progress: false
+  Node Address: 192.168.100.10
+  Manager Addresses:
+   192.168.100.10:2377
+ Runtimes: runc io.containerd.runc.v2 nvidia
+ Default Runtime: nvidia
+ Init Binary: docker-init
+ containerd version: b98a3aace656320842a23f4a392a33f46af97866
+ runc version: v1.3.0-0-g4ca628d1
+ init version: de40ad0
+ Security Options:
+  apparmor
+  seccomp
+   Profile: builtin
+  cgroupns
+ Kernel Version: 6.14.0-1015-nvidia
+ Operating System: Ubuntu 24.04.3 LTS
+ OSType: linux
+ Architecture: aarch64
+ CPUs: 20
+ Total Memory: 119.7GiB
+ Name: spark-8b86
+ ID: 50c48279-4ef7-4b90-b33f-4b96c6ecd68d
+ Docker Root Dir: /var/lib/docker
+ Debug Mode: false
+ Experimental: false
+ Insecure Registries:
+  ::1/128
+  127.0.0.0/8
+ Live Restore Enabled: false
+
+
+=== DOCKER NODE LS ===
+ID                            HOSTNAME     STATUS    AVAILABILITY   MANAGER STATUS   ENGINE VERSION
+n0i4vt5ubuog5a1iihr9g6kyj *   spark-8b86   Ready     Active         Leader           28.5.1
+k9m428b43covekk9i36au2uer     spark-f4cd   Ready     Active                          28.5.1
+
+=== DOCKER SERVICE LS ===
+ID        NAME      MODE      REPLICAS   IMAGE     PORTS
+
+=== DOCKER NETWORK LS ===
+NETWORK ID     NAME                       DRIVER    SCOPE
+4093523e69a7   borg-docker_borg-network   bridge    local
+bda59a21b022   bridge                     bridge    local
+0614f18cdab6   docker_gwbridge            bridge    local
+24ecdb474f97   host                       host      local
+1y4klij5qm5o   ingress                    overlay   swarm
+7489c8290634   none                       null      local
+
+=== DOCKER VOLUME LS ===
+DRIVER    VOLUME NAME
+local     ollama-models
+local     open-webui

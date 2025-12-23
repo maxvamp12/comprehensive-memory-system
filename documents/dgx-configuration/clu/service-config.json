@@ -1,0 +1,51 @@
+=== RUNNING SERVICES ===
+  UNIT                         LOAD   ACTIVE SUB     DESCRIPTION
+  accounts-daemon.service      loaded active running Accounts Service
+  avahi-daemon.service         loaded active running Avahi mDNS/DNS-SD Stack
+  bluetooth.service            loaded active running Bluetooth service
+  chrony.service               loaded active running chrony, an NTP client/server
+  colord.service               loaded active running Manage, Install and Generate Color Profiles
+  containerd.service           loaded active running containerd container runtime
+  cron.service                 loaded active running Regular background program processing daemon
+  cups-browsed.service         loaded active running Make remote CUPS printers available locally
+  cups.service                 loaded active running CUPS Scheduler
+  dbus.service                 loaded active running D-Bus System Message Bus
+  dgx-dashboard-admin.service  loaded active running NVIDIA DGX Dashboard Admin Service
+  dgx-dashboard.service        loaded active running NVIDIA DGX Dashboard Service
+  docker.service               loaded active running Docker Application Container Engine
+  fwupd.service                loaded active running Firmware update daemon
+  gdm.service                  loaded active running GNOME Display Manager
+  gnome-remote-desktop.service loaded active running GNOME Remote Desktop
+  ModemManager.service         loaded active running Modem Manager
+  multipathd.service           loaded active running Device-Mapper Multipath Device Controller
+  networkd-dispatcher.service  loaded active running Dispatcher daemon for systemd-networkd
+  NetworkManager.service       loaded active running Network Manager
+  nvidia-dgx-telemetry.service loaded active running NVIDIA DGX Telemetry Service
+  nvidia-persistenced.service  loaded active running NVIDIA Persistence Daemon
+  polkit.service               loaded active running Authorization Manager
+  rasdaemon.service            loaded active running RAS daemon to log the RAS events
+  rdma-ndd.service             loaded active running RDMA Node Description Daemon
+  rsyslog.service              loaded active running System Logging Service
+  rtkit-daemon.service         loaded active running RealtimeKit Scheduling Policy Service
+  smartmontools.service        loaded active running Self Monitoring and Reporting Technology (SMART) Daemon
+  snapd.service                loaded active running Snap Daemon
+  ssh.service                  loaded active running OpenBSD Secure Shell server
+  switcheroo-control.service   loaded active running Switcheroo Control Proxy service
+  systemd-journald.service     loaded active running Journal Service
+  systemd-logind.service       loaded active running User Login Management
+  systemd-networkd.service     loaded active running Network Configuration
+  systemd-resolved.service     loaded active running Network Name Resolution
+  systemd-udevd.service        loaded active running Rule-based Manager for Device Events and Files
+  udisks2.service              loaded active running Disk Manager
+  upower.service               loaded active running Daemon for power management
+  user@1000.service            loaded active running User Manager for UID 1000
+  user@126.service             loaded active running User Manager for UID 126
+  wpa_supplicant.service       loaded active running WPA supplicant
+
+Legend: LOAD   → Reflects whether the unit definition was properly loaded.
+        ACTIVE → The high-level unit activation state, i.e. generalization of SUB.
+        SUB    → The low-level unit activation state, values depend on unit type.
+
+41 loaded units listed.
+
+=== DOCKER SERVICES ===

@@ -1,0 +1,477 @@
+=== IP ADDRESSES ===
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host noprefixroute 
+       valid_lft forever preferred_lft forever
+2: enP7s7: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc mq state DOWN group default qlen 1000
+    link/ether 4c:bb:47:2c:8b:86 brd ff:ff:ff:ff:ff:ff
+    altname enP7p1s0
+3: enp1s0f0np0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP group default qlen 1000
+    link/ether 4c:bb:47:2c:8b:87 brd ff:ff:ff:ff:ff:ff
+    inet 192.168.101.10/24 brd 192.168.101.255 scope global enp1s0f0np0
+       valid_lft forever preferred_lft forever
+    inet6 fe80::4ebb:47ff:fe2c:8b87/64 scope link 
+       valid_lft forever preferred_lft forever
+4: enp1s0f1np1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP group default qlen 1000
+    link/ether 4c:bb:47:2c:8b:88 brd ff:ff:ff:ff:ff:ff
+    inet 192.168.100.10/24 brd 192.168.100.255 scope global enp1s0f1np1
+       valid_lft forever preferred_lft forever
+    inet6 fe80::4ebb:47ff:fe2c:8b88/64 scope link 
+       valid_lft forever preferred_lft forever
+5: enP2p1s0f0np0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP group default qlen 1000
+    link/ether 4c:bb:47:2c:8b:8b brd ff:ff:ff:ff:ff:ff
+    inet 192.168.102.10/24 brd 192.168.102.255 scope global enP2p1s0f0np0
+       valid_lft forever preferred_lft forever
+    inet6 fe80::4ebb:47ff:fe2c:8b8b/64 scope link 
+       valid_lft forever preferred_lft forever
+6: enP2p1s0f1np1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP group default qlen 1000
+    link/ether 4c:bb:47:2c:8b:8c brd ff:ff:ff:ff:ff:ff
+    inet 192.168.103.10/24 brd 192.168.103.255 scope global enP2p1s0f1np1
+       valid_lft forever preferred_lft forever
+    inet6 fe80::4ebb:47ff:fe2c:8b8c/64 scope link 
+       valid_lft forever preferred_lft forever
+7: wlP9s9: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+    link/ether f8:3d:c6:af:ef:dc brd ff:ff:ff:ff:ff:ff
+    altname wlP9p1s0
+    inet 192.168.68.69/22 brd 192.168.71.255 scope global dynamic noprefixroute wlP9s9
+       valid_lft 5349sec preferred_lft 5349sec
+    inet6 fe80::7899:2327:978e:c0d9/64 scope link noprefixroute 
+       valid_lft forever preferred_lft forever
+8: docker_gwbridge: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default 
+    link/ether ce:8b:a5:34:00:66 brd ff:ff:ff:ff:ff:ff
+    inet 172.19.0.1/16 brd 172.19.255.255 scope global docker_gwbridge
+       valid_lft forever preferred_lft forever
+    inet6 fe80::cc8b:a5ff:fe34:66/64 scope link 
+       valid_lft forever preferred_lft forever
+9: br-4093523e69a7: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default 
+    link/ether 2e:dd:6c:95:57:ed brd ff:ff:ff:ff:ff:ff
+    inet 172.18.0.1/16 brd 172.18.255.255 scope global br-4093523e69a7
+       valid_lft forever preferred_lft forever
+    inet6 fe80::2cdd:6cff:fe95:57ed/64 scope link 
+       valid_lft forever preferred_lft forever
+10: docker0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default 
+    link/ether be:a5:2e:9b:c7:57 brd ff:ff:ff:ff:ff:ff
+    inet 172.17.0.1/16 brd 172.17.255.255 scope global docker0
+       valid_lft forever preferred_lft forever
+    inet6 fe80::bca5:2eff:fe9b:c757/64 scope link 
+       valid_lft forever preferred_lft forever
+11: veth8a32cc6@if2: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue master docker0 state UP group default 
+    link/ether 26:84:15:41:d4:3b brd ff:ff:ff:ff:ff:ff link-netnsid 0
+    inet6 fe80::2484:15ff:fe41:d43b/64 scope link 
+       valid_lft forever preferred_lft forever
+12: vetha313413@if2: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue master br-4093523e69a7 state UP group default 
+    link/ether ca:1c:43:d7:6b:fc brd ff:ff:ff:ff:ff:ff link-netnsid 1
+    inet6 fe80::c81c:43ff:fed7:6bfc/64 scope link 
+       valid_lft forever preferred_lft forever
+17: vetha9d5293@if16: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue master docker_gwbridge state UP group default 
+    link/ether f6:11:b5:95:e5:c2 brd ff:ff:ff:ff:ff:ff link-netnsid 3
+    inet6 fe80::f411:b5ff:fe95:e5c2/64 scope link 
+       valid_lft forever preferred_lft forever
+18: veth30a3b35@if2: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue master docker0 state UP group default 
+    link/ether 5a:ae:c9:b4:b5:c2 brd ff:ff:ff:ff:ff:ff link-netnsid 4
+    inet6 fe80::58ae:c9ff:feb4:b5c2/64 scope link 
+       valid_lft forever preferred_lft forever
+
+=== LISTENING PORTS ===
+Active Internet connections (only servers)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State      
+tcp        0      0 0.0.0.0:19355           0.0.0.0:*               LISTEN     
+tcp        0      0 192.168.100.10:7946     0.0.0.0:*               LISTEN     
+tcp        0      0 127.0.0.53:53           0.0.0.0:*               LISTEN     
+tcp        0      0 192.168.100.10:2377     0.0.0.0:*               LISTEN     
+tcp        0      0 127.0.0.1:52365         0.0.0.0:*               LISTEN     
+tcp        0      0 0.0.0.0:4330            0.0.0.0:*               LISTEN     
+tcp        0      0 0.0.0.0:8001            0.0.0.0:*               LISTEN     
+tcp        0      0 0.0.0.0:8080            0.0.0.0:*               LISTEN     
+tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN     
+tcp        0      0 0.0.0.0:139             0.0.0.0:*               LISTEN     
+tcp        0      0 0.0.0.0:445             0.0.0.0:*               LISTEN     
+tcp        0      0 0.0.0.0:3000            0.0.0.0:*               LISTEN     
+tcp        0      0 0.0.0.0:2222            0.0.0.0:*               LISTEN     
+tcp        0      0 0.0.0.0:9355            0.0.0.0:*               LISTEN     
+tcp        0      0 0.0.0.0:53474           0.0.0.0:*               LISTEN     
+tcp        0      0 192.168.101.10:63946    0.0.0.0:*               LISTEN     
+tcp        0      0 192.168.101.10:59145    0.0.0.0:*               LISTEN     
+tcp        0      0 192.168.101.10:60967    0.0.0.0:*               LISTEN     
+tcp        0      0 192.168.101.10:60287    0.0.0.0:*               LISTEN     
+tcp        0      0 127.0.0.1:28028         0.0.0.0:*               LISTEN     
+tcp        0      0 192.168.101.10:54693    0.0.0.0:*               LISTEN     
+tcp        0      0 192.168.101.10:50627    0.0.0.0:*               LISTEN     
+tcp        0      0 192.168.101.10:52365    0.0.0.0:*               LISTEN     
+tcp        0      0 127.0.0.54:53           0.0.0.0:*               LISTEN     
+tcp        0      0 192.168.101.10:45335    0.0.0.0:*               LISTEN     
+tcp        0      0 192.168.101.10:45175    0.0.0.0:*               LISTEN     
+tcp        0      0 127.0.0.1:8265          0.0.0.0:*               LISTEN     
+tcp        0      0 192.168.101.10:41989    0.0.0.0:*               LISTEN     
+tcp        0      0 192.168.101.10:41479    0.0.0.0:*               LISTEN     
+tcp        0      0 127.0.0.1:11000         0.0.0.0:*               LISTEN     
+tcp        0      0 192.168.101.10:39231    0.0.0.0:*               LISTEN     
+tcp        0      0 192.168.101.10:34361    0.0.0.0:*               LISTEN     
+tcp        0      0 192.168.101.10:34129    0.0.0.0:*               LISTEN     
+tcp        0      0 127.0.0.1:631           0.0.0.0:*               LISTEN     
+tcp        0      0 192.168.101.10:34011    0.0.0.0:*               LISTEN     
+tcp        0      0 192.168.101.10:34039    0.0.0.0:*               LISTEN     
+tcp        0      0 192.168.101.10:33123    0.0.0.0:*               LISTEN     
+tcp        0      0 192.168.101.10:36715    0.0.0.0:*               LISTEN     
+tcp        0      0 192.168.101.10:35645    0.0.0.0:*               LISTEN     
+tcp        0      0 0.0.0.0:44227           0.0.0.0:*               LISTEN     
+tcp        0      0 0.0.0.0:44217           0.0.0.0:*               LISTEN     
+tcp        0      0 0.0.0.0:44321           0.0.0.0:*               LISTEN     
+tcp        0      0 0.0.0.0:44322           0.0.0.0:*               LISTEN     
+tcp        0      0 0.0.0.0:44323           0.0.0.0:*               LISTEN     
+tcp6       0      0 :::4330                 :::*                    LISTEN     
+tcp6       0      0 :::6379                 :::*                    LISTEN     
+tcp6       0      0 :::8001                 :::*                    LISTEN     
+tcp6       0      0 192.168.101.10:10001    :::*                    LISTEN     
+tcp6       0      0 :::22                   :::*                    LISTEN     
+tcp6       0      0 :::139                  :::*                    LISTEN     
+tcp6       0      0 :::445                  :::*                    LISTEN     
+tcp6       0      0 :::3000                 :::*                    LISTEN     
+tcp6       0      0 :::2222                 :::*                    LISTEN     
+tcp6       0      0 :::3389                 :::*                    LISTEN     
+tcp6       0      0 127.0.0.1:38646         :::*                    LISTEN     
+tcp6       0      0 :::10020                :::*                    LISTEN     
+tcp6       0      0 :::10021                :::*                    LISTEN     
+tcp6       0      0 :::10022                :::*                    LISTEN     
+tcp6       0      0 :::10016                :::*                    LISTEN     
+tcp6       0      0 :::10017                :::*                    LISTEN     
+tcp6       0      0 :::10018                :::*                    LISTEN     
+tcp6       0      0 :::10019                :::*                    LISTEN     
+tcp6       0      0 :::10012                :::*                    LISTEN     
+tcp6       0      0 :::10013                :::*                    LISTEN     
+tcp6       0      0 :::10014                :::*                    LISTEN     
+tcp6       0      0 :::10015                :::*                    LISTEN     
+tcp6       0      0 :::10008                :::*                    LISTEN     
+tcp6       0      0 :::10009                :::*                    LISTEN     
+tcp6       0      0 :::10010                :::*                    LISTEN     
+tcp6       0      0 :::10011                :::*                    LISTEN     
+tcp6       0      0 :::10004                :::*                    LISTEN     
+tcp6       0      0 :::10005                :::*                    LISTEN     
+tcp6       0      0 :::10006                :::*                    LISTEN     
+tcp6       0      0 :::10007                :::*                    LISTEN     
+tcp6       0      0 :::10002                :::*                    LISTEN     
+tcp6       0      0 :::10003                :::*                    LISTEN     
+tcp6       0      0 ::1:631                 :::*                    LISTEN     
+tcp6       0      0 :::33193                :::*                    LISTEN     
+tcp6       0      0 127.0.0.1:10001         :::*                    LISTEN     
+tcp6       0      0 192.168.101.10:38646    :::*                    LISTEN     
+tcp6       0      0 :::45065                :::*                    LISTEN     
+tcp6       0      0 :::45375                :::*                    LISTEN     
+tcp6       0      0 :::44321                :::*                    LISTEN     
+tcp6       0      0 :::44322                :::*                    LISTEN     
+tcp6       0      0 :::44323                :::*                    LISTEN     
+udp        0      0 0.0.0.0:43300           0.0.0.0:*                          
+udp        0      0 0.0.0.0:44663           0.0.0.0:*                          
+udp        0      0 0.0.0.0:59080           0.0.0.0:*                          
+udp        0      0 127.0.0.54:53           0.0.0.0:*                          
+udp        0      0 127.0.0.53:53           0.0.0.0:*                          
+udp        0      0 192.168.71.255:137      0.0.0.0:*                          
+udp        0      0 192.168.68.69:137       0.0.0.0:*                          
+udp        0      0 172.19.255.255:137      0.0.0.0:*                          
+udp        0      0 172.19.0.1:137          0.0.0.0:*                          
+udp        0      0 172.18.255.255:137      0.0.0.0:*                          
+udp        0      0 172.18.0.1:137          0.0.0.0:*                          
+udp        0      0 172.17.255.255:137      0.0.0.0:*                          
+udp        0      0 172.17.0.1:137          0.0.0.0:*                          
+udp        0      0 192.168.100.255:137     0.0.0.0:*                          
+udp        0      0 192.168.100.10:137      0.0.0.0:*                          
+udp        0      0 192.168.101.255:137     0.0.0.0:*                          
+udp        0      0 192.168.101.10:137      0.0.0.0:*                          
+udp        0      0 192.168.102.255:137     0.0.0.0:*                          
+udp        0      0 192.168.102.10:137      0.0.0.0:*                          
+udp        0      0 192.168.103.255:137     0.0.0.0:*                          
+udp        0      0 192.168.103.10:137      0.0.0.0:*                          
+udp        0      0 0.0.0.0:137             0.0.0.0:*                          
+udp        0      0 192.168.71.255:138      0.0.0.0:*                          
+udp        0      0 192.168.68.69:138       0.0.0.0:*                          
+udp        0      0 172.19.255.255:138      0.0.0.0:*                          
+udp        0      0 172.19.0.1:138          0.0.0.0:*                          
+udp        0      0 172.18.255.255:138      0.0.0.0:*                          
+udp        0      0 172.18.0.1:138          0.0.0.0:*                          
+udp        0      0 172.17.255.255:138      0.0.0.0:*                          
+udp        0      0 172.17.0.1:138          0.0.0.0:*                          
+udp        0      0 192.168.100.255:138     0.0.0.0:*                          
+udp        0      0 192.168.100.10:138      0.0.0.0:*                          
+udp        0      0 192.168.101.255:138     0.0.0.0:*                          
+udp        0      0 192.168.101.10:138      0.0.0.0:*                          
+udp        0      0 192.168.102.255:138     0.0.0.0:*                          
+udp        0      0 192.168.102.10:138      0.0.0.0:*                          
+udp        0      0 192.168.103.255:138     0.0.0.0:*                          
+udp        0      0 192.168.103.10:138      0.0.0.0:*                          
+udp        0      0 0.0.0.0:138             0.0.0.0:*                          
+udp        0      0 127.0.0.1:323           0.0.0.0:*                          
+udp        0      0 0.0.0.0:4789            0.0.0.0:*                          
+udp        0      0 0.0.0.0:5353            0.0.0.0:*                          
+udp        0      0 192.168.100.10:7946     0.0.0.0:*                          
+udp6       0      0 :::51075                :::*                               
+udp6       0      0 ::1:323                 :::*                               
+udp6       0      0 :::5353                 :::*                               
+
+=== DOCKER NETWORKS ===
+NETWORK ID     NAME                       DRIVER    SCOPE
+4093523e69a7   borg-docker_borg-network   bridge    local
+bda59a21b022   bridge                     bridge    local
+0614f18cdab6   docker_gwbridge            bridge    local
+24ecdb474f97   host                       host      local
+1y4klij5qm5o   ingress                    overlay   swarm
+7489c8290634   none                       null      local
+
+=== Network: 4093523e69a7 ===
+[
+    {
+        "Name": "borg-docker_borg-network",
+        "Id": "4093523e69a7d2cfb91e3052107f48029e38a20414762a4fe42bcd23013f12de",
+        "Created": "2025-11-08T10:39:52.245228844-07:00",
+        "Scope": "local",
+        "Driver": "bridge",
+        "EnableIPv4": true,
+        "EnableIPv6": false,
+        "IPAM": {
+            "Driver": "default",
+            "Options": null,
+            "Config": [
+                {
+                    "Subnet": "172.18.0.0/16",
+                    "Gateway": "172.18.0.1"
+                }
+            ]
+        },
+        "Internal": false,
+        "Attachable": false,
+        "Ingress": false,
+        "ConfigFrom": {
+            "Network": ""
+        },
+        "ConfigOnly": false,
+        "Containers": {
+            "3cecd44d94e93db957e28cd9827b9a935de63fa7d6cd5fac2ee2cb356e6a2247": {
+                "Name": "borg-backup-server",
+                "EndpointID": "a679bb01c6c728c967dced0757115f15e302d23c512eb157ac1787f14622879a",
+                "MacAddress": "9e:9e:fa:3c:54:a1",
+                "IPv4Address": "172.18.0.2/16",
+                "IPv6Address": ""
+            }
+        },
+        "Options": {},
+        "Labels": {
+            "com.docker.compose.config-hash": "ff1e3afa96b5615b4f4b26f175efa340741ff42014cb92e490ae4c4810bd5be6",
+            "com.docker.compose.network": "borg-network",
+            "com.docker.compose.project": "borg-docker",
+            "com.docker.compose.version": "2.39.1"
+        }
+    }
+]
+=== Network: bda59a21b022 ===
+[
+    {
+        "Name": "bridge",
+        "Id": "bda59a21b02229e6cdb1eba3860aeb725396413020e21613ecf8f76cfae357a9",
+        "Created": "2025-12-19T20:02:42.17766873-07:00",
+        "Scope": "local",
+        "Driver": "bridge",
+        "EnableIPv4": true,
+        "EnableIPv6": false,
+        "IPAM": {
+            "Driver": "default",
+            "Options": null,
+            "Config": [
+                {
+                    "Subnet": "172.17.0.0/16",
+                    "Gateway": "172.17.0.1"
+                }
+            ]
+        },
+        "Internal": false,
+        "Attachable": false,
+        "Ingress": false,
+        "ConfigFrom": {
+            "Network": ""
+        },
+        "ConfigOnly": false,
+        "Containers": {
+            "a5fd391e923a278d68e48affbce2de227e662a0599335d4193c8c4da8baca59b": {
+                "Name": "chromadb",
+                "EndpointID": "5bac8ae95f35c5e3713c4ed8bb172d2e6213e41f3e4c0732f4c136f95b038204",
+                "MacAddress": "ee:84:e6:c8:5e:74",
+                "IPv4Address": "172.17.0.3/16",
+                "IPv6Address": ""
+            },
+            "dab05a4e9ac9504db9da5ffe9e851e8baf9a748dd00c8e14e51d6d042a07bd5d": {
+                "Name": "open-webui",
+                "EndpointID": "5cfcabb84a1aa7f319fefa169231b2dca0efb345a391d71871e51455ef1bb539",
+                "MacAddress": "16:e1:8e:42:0e:2b",
+                "IPv4Address": "172.17.0.2/16",
+                "IPv6Address": ""
+            }
+        },
+        "Options": {
+            "com.docker.network.bridge.default_bridge": "true",
+            "com.docker.network.bridge.enable_icc": "true",
+            "com.docker.network.bridge.enable_ip_masquerade": "true",
+            "com.docker.network.bridge.host_binding_ipv4": "0.0.0.0",
+            "com.docker.network.bridge.name": "docker0",
+            "com.docker.network.driver.mtu": "1500"
+        },
+        "Labels": {}
+    }
+]
+=== Network: 0614f18cdab6 ===
+[
+    {
+        "Name": "docker_gwbridge",
+        "Id": "0614f18cdab69f5906690f95848d6887abbf69ae0fc499a8f369c8048b5238c6",
+        "Created": "2025-11-05T21:32:50.75759356-07:00",
+        "Scope": "local",
+        "Driver": "bridge",
+        "EnableIPv4": true,
+        "EnableIPv6": false,
+        "IPAM": {
+            "Driver": "default",
+            "Options": null,
+            "Config": [
+                {
+                    "Subnet": "172.19.0.0/16",
+                    "Gateway": "172.19.0.1"
+                }
+            ]
+        },
+        "Internal": false,
+        "Attachable": false,
+        "Ingress": false,
+        "ConfigFrom": {
+            "Network": ""
+        },
+        "ConfigOnly": false,
+        "Containers": {
+            "ingress-sbox": {
+                "Name": "gateway_ingress-sbox",
+                "EndpointID": "03c595ff155fb68d099c9804a53b8ef64df745f77c991f4149bbb4c095fd0343",
+                "MacAddress": "da:4f:d2:9a:ee:f4",
+                "IPv4Address": "172.19.0.2/16",
+                "IPv6Address": ""
+            }
+        },
+        "Options": {
+            "com.docker.network.bridge.enable_icc": "false",
+            "com.docker.network.bridge.enable_ip_masquerade": "true",
+            "com.docker.network.bridge.name": "docker_gwbridge"
+        },
+        "Labels": {}
+    }
+]
+=== Network: 24ecdb474f97 ===
+[
+    {
+        "Name": "host",
+        "Id": "24ecdb474f975cae5baea4147259ad8a647a0ab69c025d00ea75b6a176949c3d",
+        "Created": "2025-09-30T18:53:57.439307184Z",
+        "Scope": "local",
+        "Driver": "host",
+        "EnableIPv4": true,
+        "EnableIPv6": false,
+        "IPAM": {
+            "Driver": "default",
+            "Options": null,
+            "Config": null
+        },
+        "Internal": false,
+        "Attachable": false,
+        "Ingress": false,
+        "ConfigFrom": {
+            "Network": ""
+        },
+        "ConfigOnly": false,
+        "Containers": {
+            "7b4212ad5217d9d6b0b407d65713f7abb42202acc3c38d06e3b77873a171b7e5": {
+                "Name": "vllm-head",
+                "EndpointID": "01b8622c0b4116cfbf39c007f763f2b041f64852e118f9ab2df777c4772d360d",
+                "MacAddress": "",
+                "IPv4Address": "",
+                "IPv6Address": ""
+            }
+        },
+        "Options": {},
+        "Labels": {}
+    }
+]
+=== Network: 1y4klij5qm5o ===
+[
+    {
+        "Name": "ingress",
+        "Id": "1y4klij5qm5ob9p1c6kcrdjxa",
+        "Created": "2025-12-19T20:02:44.447964983-07:00",
+        "Scope": "swarm",
+        "Driver": "overlay",
+        "EnableIPv4": true,
+        "EnableIPv6": false,
+        "IPAM": {
+            "Driver": "default",
+            "Options": null,
+            "Config": [
+                {
+                    "Subnet": "10.0.0.0/24",
+                    "Gateway": "10.0.0.1"
+                }
+            ]
+        },
+        "Internal": false,
+        "Attachable": false,
+        "Ingress": true,
+        "ConfigFrom": {
+            "Network": ""
+        },
+        "ConfigOnly": false,
+        "Containers": {
+            "ingress-sbox": {
+                "Name": "ingress-endpoint",
+                "EndpointID": "59425bfb1a18bcdf42af4c747a03a632cf493fd3cd0f98aff44e1595a2cbe016",
+                "MacAddress": "02:42:0a:00:00:02",
+                "IPv4Address": "10.0.0.2/24",
+                "IPv6Address": ""
+            }
+        },
+        "Options": {
+            "com.docker.network.driver.overlay.vxlanid_list": "4096"
+        },
+        "Labels": {},
+        "Peers": [
+            {
+                "Name": "430746895e46",
+                "IP": "192.168.100.10"
+            },
+            {
+                "Name": "7fdc21ae7605",
+                "IP": "192.168.100.11"
+            }
+        ]
+    }
+]
+=== Network: 7489c8290634 ===
+[
+    {
+        "Name": "none",
+        "Id": "7489c8290634bbd55931296171640e058d0808e741e9335875c2b34f9eaad5b8",
+        "Created": "2025-09-30T18:53:57.419831504Z",
+        "Scope": "local",
+        "Driver": "null",
+        "EnableIPv4": true,
+        "EnableIPv6": false,
+        "IPAM": {
+            "Driver": "default",
+            "Options": null,
+            "Config": null
+        },
+        "Internal": false,
+        "Attachable": false,
+        "Ingress": false,
+        "ConfigFrom": {
+            "Network": ""
+        },
+        "ConfigOnly": false,
+        "Containers": {},
+        "Options": {},
+        "Labels": {}
+    }
+]

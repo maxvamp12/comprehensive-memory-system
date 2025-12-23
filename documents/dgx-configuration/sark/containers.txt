@@ -1,0 +1,8 @@
+NAMES                IMAGE                                STATUS                     PORTS
+vllm-head            nvcr.io/nvidia/vllm:25.11-py3        Up 3 days                  
+chromadb             chromadb/chroma:0.5.23               Up 3 days                  0.0.0.0:8001->8000/tcp, [::]:8001->8000/tcp
+open-webui           ghcr.io/open-webui/open-webui:main   Up 3 days (healthy)        0.0.0.0:3000->8080/tcp, [::]:3000->8080/tcp
+anythingllm          mintplexlabs/anythingllm             Exited (137) 12 days ago   
+borg-backup-server   borg-docker-borg-server              Up 3 days                  0.0.0.0:2222->22/tcp, [::]:2222->22/tcp
+ollama               ollama/ollama                        Exited (0) 12 days ago     
+unsloth-gpt-oss      unsloth-dgx-spark                    Exited (137) 6 weeks ago   
