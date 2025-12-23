@@ -1,23 +1,23 @@
 # AGENTS.md - Comprehensive Memory System
 
 ## Build/Dev Commands
-- No traditional build system found - this is a BMAD (Business Method Agent Development) framework
-- Development focuses on agent workflows and configurations
-- Use `@bmad/{module}/{type}/{name}` syntax to reference specific agents/tasks/workflows
+- BMAD framework only - no traditional build system
+- Use `@bmad/{module}/{type}/{name}` syntax for agent/workflow references
+- Testing via BMAD workflows: `@bmm/testarch/*` (framework, design, review, CI)
 
 ## Code Style Guidelines
-- **Naming**: kebab-case for workflows, snake_case for agents, PascalCase for core agents
+- **Naming**: kebab-case workflows, snake_case agents, PascalCase core agents
 - **Imports**: Follow BMAD module structure (core/bmb/bmgd/bmm/cis)
-- **Formatting**: Use consistent YAML configuration format
-- **Types**: No explicit typing - rely on YAML configuration and markdown documentation
-- **Error Handling**: Use BMAD workflow compliance checks and agent-specific error handling
+- **Formatting**: Consistent YAML configuration format
+- **Types**: No explicit typing - YAML configuration and markdown docs only
+- **Error Handling**: BMAD workflow compliance checks + agent-specific handling
 
 ## BMAD Framework Rules
 - Reference agents: `@bmad/{module}/agents/{agent-name}`
 - Reference workflows: `@bmad/{module}/workflows/{workflow-name}`  
 - Reference tools: `@bmad/{module}/tools/{tool-name}`
-- Manual rules only - alwaysApply: false for all BMAD rules
-- Follow module hierarchy: core → bmb → bmgd → bmm → cis
+- Manual rules only - alwaysApply: false for all rules
+- Module hierarchy: core → bmb → bmgd → bmm → cis
 
 ## Cursor Rules
 - Located in `.cursor/rules/bmad/` directory
@@ -26,7 +26,7 @@
 - Reference specific rules using BMAD syntax
 
 ## Important Notes
-- No package.json or traditional build tools found
-- Focus is on agent-based development and workflow orchestration
+- No package.json or traditional build tools
+- Focus on agent-based development and workflow orchestration
 - Use existing agent configurations in `_bmad/_config/` as templates
 - Follow BMAD workflow patterns for consistency
