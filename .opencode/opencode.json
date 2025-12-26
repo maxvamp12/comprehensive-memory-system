@@ -72,5 +72,12 @@
     "glm"
   ],
   "autoupdate": false,
-  "share": "manual"
+  "share": "manual",
+  "mcp": {
+    "mcp-ssh": {
+      "type": "local",
+      "command": ["npx", "-y", "@aiondadotcom/mcp-ssh"],
+      "enabled": true
+    }
+  }
 }

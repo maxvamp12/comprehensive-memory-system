@@ -7,6 +7,28 @@
         "--package=agentvibes",
         "agentvibes-mcp-server"
       ]
+    },
+    "github": {
+      "command": "docker",
+      "args": [
+        "run",
+        "-i",
+        "--rm",
+        "-e",
+        "GITHUB_PERSONAL_ACCESS_TOKEN=${input:github_token}",
+        "ghcr.io/github/github-mcp-server"
+      ],
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "${input:github_token}"
+      },
+      "inputs": [
+        {
+          "type": "promptString",
+          "name": "github_token",
+          "description": "GitHub Personal Access Token",
+          "required": true
+        }
+      ]
     }
   }
 }

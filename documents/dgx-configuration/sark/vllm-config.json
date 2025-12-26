@@ -51,7 +51,7 @@ vllm-head   nvcr.io/nvidia/vllm:25.11-py3   Up 3 days
                 "Type": "json-file",
                 "Config": {}
             },
-            "NetworkMode": "host",
+            "NetworkMode": "bridge",
             "PortBindings": {},
             "RestartPolicy": {
                 "Name": "unless-stopped",
