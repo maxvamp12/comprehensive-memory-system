@@ -1,0 +1,41 @@
+# Load Balancer Configuration
+# This file contains all configurable settings for the load balancer
+
+# Service endpoints configuration
+services:
+  chromadb:
+    host: "192.168.68.69"          # Replace with your ChromaDB host
+    port: 8001                      # Replace with your ChromaDB port
+    weight: 1                       # Load balancing weight (higher = more traffic)
+    path: "/api/v2/tenants/default_tenant/databases/default_database"
+    health_check_path: "/api/v2/heartbeat"
+    health_check_interval: 30       # seconds
+    health_check_timeout: 10        # seconds
+    
+  memory_service:
+    host: "192.168.68.71"          # Replace with your Memory Service host
+    port: 3000                      # Replace with your Memory Service port
+    weight: 1                       # Load balancing weight
+    path: "/health"
+    health_check_path: "/health"
+    health_check_interval: 30       # seconds
+    health_check_timeout: 10        # seconds
+
+# Load balancer settings
+load_balancer:
+  host: "0.0.0.0"                 # Bind to all interfaces
+  port: 8082                      # Load balancer port
+  max_connections: 1000            # Maximum concurrent connections
+  request_timeout: 30             # Request timeout in seconds
+  
+# Logging configuration
+logging:
+  level: "INFO"                   # DEBUG, INFO, WARNING, ERROR
+  format: "%(asctime)s,%(msecs)03d - %(levelname)s - %(message)s"
+  
+# Health check settings
+health_checks:
+  enabled: true
+  interval: 30                    # seconds
+  timeout: 10                     # seconds
+  retries: 3                      # Number of retries before marking as unhealthy

@@ -80,13 +80,13 @@ class LoadBalancer:
                 "host": "192.168.68.69",
                 "port": 8001,
                 "weight": 1,
-                "path": "/api/v1",
+                "path": "/api/v2",
             },
             "memory_service": {
                 "host": "192.168.68.71",
                 "port": 3000,
                 "weight": 1,
-                "path": "/api/v1",
+                "path": "/health",
             },
         }
 
@@ -137,6 +137,9 @@ class LoadBalancer:
             # Health check URL - some services have health at root, others under path
             if service.name == "memory_service":
                 url = f"http://{service.host}:{service.port}/health"
+            elif "heartbeat" in service.path:
+                # For services with heartbeat in path, use it directly
+                url = f"http://{service.host}:{service.port}{service.path}"
             else:
                 # For other services, use the path + health
                 if service.path.endswith("/"):
@@ -144,6 +147,9 @@ class LoadBalancer:
                 else:
                     health_path = service.path + "/" + "health"
                 url = f"http://{service.host}:{service.port}{health_path}"
+
+            # Log the URL being checked
+            self.logger.info(f"Checking health URL: {url}")
 
             # Create request with timeout
             req = urllib.request.Request(url, method="GET")

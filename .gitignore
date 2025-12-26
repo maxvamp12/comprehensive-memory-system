@@ -91,3 +91,19 @@ jspm_modules/
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+# BMAD activation and session files
+activate-*.sh
+party-mode-*.yaml
+*.md
+!CONSTITUTION.md
+
+# BMAD-generated files
+_bmad-output/
+!_bmad/_config/
+!_bmad/_memory/
+!_bmad/bmb/
+!_bmad/bmgd/
+!_bmad/bmm/
+!_bmad/cis/
+!_bmad/core/

@@ -1,0 +1,75 @@
+# Production Docker Compose Configuration
+# Use this for production deployments with external services
+
+version: '3.8'
+
+services:
+  # Load Balancer - This is the main service we deploy
+  load-balancer:
+    build:
+      context: src/load-balancer
+      dockerfile: Dockerfile
+    ports:
+      - "${LOAD_BALANCER_PORT:-8082}:8082"
+    environment:
+      - LOAD_BALANCER_HOST=0.0.0.0
+      - LOAD_BALANCER_PORT=8082
+      - CHROMADB_HOST=${CHROMADB_HOST:-localhost}
+      - CHROMADB_PORT=${CHROMADB_PORT:-8001}
+      - CHROMADB_PATH=${CHROMADB_PATH:-/api/v2/tenants/default_tenant/databases/default_database}
+      - CHROMADB_HEALTH_PATH=${CHROMADB_HEALTH_PATH:-/api/v2/heartbeat}
+      - MEMORY_SERVICE_HOST=${MEMORY_SERVICE_HOST:-localhost}
+      - MEMORY_SERVICE_PORT=${MEMORY_SERVICE_PORT:-3000}
+      - MEMORY_SERVICE_PATH=${MEMORY_SERVICE_PATH:-/health}
+      - MEMORY_SERVICE_HEALTH_PATH=${MEMORY_SERVICE_HEALTH_PATH:-/health}
+      - LOG_LEVEL=${LOG_LEVEL:-INFO}
+    volumes:
+      - load-balancer-data:/app/data
+      - load-balancer-logs:/app/logs
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8082/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    depends_on:
+      - chromadb-healthcheck
+      - memory-service-healthcheck
+
+  # Health check services for external dependencies
+  chromadb-healthcheck:
+    image: curlimages/curl:latest
+    environment:
+      - CHROMADB_HOST=${CHROMADB_HOST:-localhost}
+      - CHROMADB_PORT=${CHROMADB_PORT:-8001}
+      - CHROMADB_HEALTH_PATH=${CHROMADB_HEALTH_PATH:-/api/v2/heartbeat}
+    command: >
+      sh -c "while true; do curl -f http://${CHROMADB_HOST}:${CHROMADB_PORT}${CHROMADB_HEALTH_PATH} || exit 1; sleep 30; done"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8082/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  memory-service-healthcheck:
+    image: curlimages/curl:latest
+    environment:
+      - MEMORY_SERVICE_HOST=${MEMORY_SERVICE_HOST:-localhost}
+      - MEMORY_SERVICE_PORT=${MEMORY_SERVICE_PORT:-3000}
+      - MEMORY_SERVICE_HEALTH_PATH=${MEMORY_SERVICE_HEALTH_PATH:-/health}
+    command: >
+      sh -c "while true; do curl -f http://${MEMORY_SERVICE_HOST}:${MEMORY_SERVICE_PORT}${MEMORY_SERVICE_HEALTH_PATH} || exit 1; sleep 30; done"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8082/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+volumes:
+  load-balancer-data:
+    driver: local
+  load-balancer-logs:
+    driver: local

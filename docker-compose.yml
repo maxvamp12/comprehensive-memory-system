@@ -1,0 +1,91 @@
+version: '3.8'
+
+services:
+  # Load Balancer
+  load-balancer:
+    build:
+      context: src/load-balancer
+      dockerfile: Dockerfile
+    ports:
+      - "8082:8082"
+    environment:
+      - LOAD_BALANCER_HOST=0.0.0.0
+      - LOAD_BALANCER_PORT=8082
+      - CHROMADB_HOST=192.168.68.69
+      - CHROMADB_PORT=8001
+      - CHROMADB_PATH=/api/v2/tenants/default_tenant/databases/default_database
+      - CHROMADB_HEALTH_PATH=/api/v2/heartbeat
+      - MEMORY_SERVICE_HOST=192.168.68.71
+      - MEMORY_SERVICE_PORT=3000
+      - MEMORY_SERVICE_PATH=/health
+      - MEMORY_SERVICE_HEALTH_PATH=/health
+    volumes:
+      - load-balancer-data:/app/data
+      - load-balancer-logs:/app/logs
+    depends_on:
+      - chromadb
+      - memory-service
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8082/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # ChromaDB (placeholder - replace with actual ChromaDB service)
+  chromadb:
+    image: chromadb/chroma:0.5.23
+    ports:
+      - "8001:8000"
+    volumes:
+      - chroma-data:/app/chroma
+    environment:
+      - ALLOW_RESET=TRUE
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/v2/heartbeat"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # Memory Service (placeholder - replace with actual Memory Service)
+  memory-service:
+    image: node:18-alpine
+    ports:
+      - "3000:3000"
+    volumes:
+      - memory-service-data:/app/data
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # Caching Service (placeholder - replace with actual Caching Service)
+  caching-service:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - caching-data:/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+volumes:
+  load-balancer-data:
+  load-balancer-logs:
+  chroma-data:
+  memory-service-data:
+  caching-data:

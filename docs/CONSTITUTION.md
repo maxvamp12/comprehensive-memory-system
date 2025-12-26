@@ -76,6 +76,13 @@ The AI system is responsible for organizing files based on document type and pur
 - Changes should be documented with revision history
 - Maintainers should strive to uphold these organizational principles
 
+### AI Commit Restrictions
+- **ABSOLUTE PROHIBITION** against any git commits without explicit user review and authorization
+- All changes must be presented to the user for approval before committing to version control
+- AI system must maintain a staging area for all changes and seek explicit permission for each commit
+- Commit messages must be reviewed and approved by the user before execution
+- No automated commits, batch commits, or commit-all operations without user consent
+
 ### Purpose
 This constitution ensures:
 - Consistent file organization across the project lifecycle
@@ -214,3 +221,4 @@ After each compaction of the context window, **this constitution must be reread*
 *Amendment Process: Requires explicit consensus for changes*
 *Last Amendment: December 25, 2025 - Added Memory Service Replacement Policy and Source Code Classification*
 *Vital Amendment: December 25, 2025 - Added System Operational Protocols (vLLM Cluster Restrictions, Startup Protocol, Context Management)*
+*Critical Amendment: December 25, 2025 - Added AI Commit Restrictions (No commits without explicit user review)*
