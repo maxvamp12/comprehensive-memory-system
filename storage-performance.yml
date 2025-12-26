@@ -1,0 +1,253 @@
+# Storage Service Performance Configuration
+# Configuration for storage service mesh performance optimization
+
+# Load Balancer Configuration
+load_balancer:
+  port: 8082
+  algorithm: "weighted_round_robin"
+  health_check_interval: 30
+  health_check_timeout: 10
+  health_check_threshold: 3
+  services:
+    chromadb:
+      host: "192.168.68.69"
+      port: 8001
+      weight: 1
+      path: "/api/v1"
+    memory_service:
+      host: "192.168.68.71"
+      port: 3000
+      weight: 1
+      path: "/api/v1"
+
+# Caching System Configuration
+caching:
+  max_size: 10000
+  default_ttl: 300
+  cleanup_interval: 60
+  compression_enabled: true
+  memory_limit_mb: 512
+  
+  service_configs:
+    chromadb:
+      ttl: 120
+      cache_keys: ["query", "collection", "limit"]
+    memory_service:
+      ttl: 60
+      cache_keys: ["query", "domain", "limit"]
+
+# Performance Optimization Settings
+performance:
+  # Connection Pool Settings
+  connection_pool:
+    max_connections: 100
+    max_retries: 3
+    timeout_seconds: 30
+    
+  # Request Optimization
+  request_optimization:
+    enable_compression: true
+    enable_chunking: false
+    chunk_size_mb: 10
+    max_concurrent_requests: 50
+    
+  # Response Optimization  
+  response_optimization:
+    enable_gzip: true
+    max_response_size_mb: 100
+    cache_control_max_age: 3600
+    
+  # Monitoring and Metrics
+  monitoring:
+    enable_metrics: true
+    metrics_port: 9091
+    metrics_path: "/metrics"
+    health_check_path: "/health"
+
+# Security Configuration
+security:
+  # Authentication
+  authentication:
+    enabled: true
+    jwt_secret: "storage-service-mesh-jwt-secret-2025"
+    token_expiry_hours: 24
+    algorithm: "HS256"
+    
+  # Authorization
+  authorization:
+    enabled: true
+    roles:
+      - "admin"
+      - "user" 
+      - "readonly"
+    
+  # Encryption
+  encryption:
+    tls_enabled: true
+    tls_port: 8443
+    cert_file: "/etc/ssl/certs/storage-service.crt"
+    key_file: "/etc/ssl/private/storage-service.key"
+    
+  # Rate Limiting
+  rate_limiting:
+    enabled: true
+    requests_per_minute: 1000
+    burst_limit: 200
+
+# Storage Configuration
+storage:
+  # Volume Settings
+  volumes:
+    data:
+      path: "/var/lib/storage-service/data"
+      size_gb: 100
+      type: "ssd"
+      
+    cache:
+      path: "/var/lib/storage-service/cache"
+      size_gb: 20
+      type: "ssd"
+      
+    logs:
+      path: "/var/log/storage-service"
+      size_gb: 10
+      type: "hdd"
+      
+  # Backup Settings
+  backup:
+    enabled: true
+    interval_hours: 24
+    retention_days: 7
+    compression: true
+    
+  # Performance Settings
+  performance:
+    io_threads: 4
+    read_ahead_mb: 16
+    write_buffer_mb: 64
+    cache_pressure: 80
+
+# Network Configuration
+network:
+  # TCP Settings
+  tcp:
+    keepalive_enabled: true
+    keepalive_interval: 300
+    keepalive_probes: 3
+    
+  # UDP Settings (if needed)
+  udp:
+    enable_multicast: false
+    buffer_size_mb: 1
+    
+  # DNS Settings
+  dns:
+    enabled: false
+    servers: []
+    
+  # Load Balancer Network
+  load_balancer:
+    bind_address: "0.0.0.0"
+    port: 8082
+    max_connections: 1000
+    backlog: 100
+
+# Logging Configuration
+logging:
+  level: "INFO"
+  format: "json"
+  file_path: "/var/log/storage-service.log"
+  max_size_mb: 100
+  max_backup_files: 5
+  enable_console: true
+  
+  # Structured Logging
+  structured:
+    enable: true
+    fields:
+      - "timestamp"
+      - "level"
+      - "service"
+      - "request_id"
+      - "duration_ms"
+      - "status_code"
+
+# Monitoring and Health Checks
+monitoring:
+  # Health Check Endpoints
+  health:
+    path: "/health"
+    interval: 30
+    timeout: 10
+    threshold: 3
+    
+  # Metrics Endpoint
+  metrics:
+    path: "/metrics"
+    port: 9091
+    format: "prometheus"
+    
+  # Tracing
+  tracing:
+    enabled: true
+    jaeger_endpoint: "http://192.168.68.69:14268/api/traces"
+    sample_rate: 0.1
+    
+  # Alerting
+  alerting:
+    enabled: true
+    channels:
+      - "prometheus"
+      - "logging"
+
+# Service Discovery Configuration
+service_discovery:
+  enabled: true
+  refresh_interval: 60
+  health_check_interval: 30
+  service_timeout: 300
+  
+  # Service Registry
+  registry:
+    chromadb:
+      host: "192.168.68.69"
+      port: 8001
+      health_path: "/health"
+      weight: 1
+      
+    memory_service:
+      host: "192.168.68.71"
+      port: 3000
+      health_path: "/health"
+      weight: 1
+
+# Database Configuration (for internal state)
+database:
+  type: "sqlite"
+  path: "/var/lib/storage-service/state.db"
+  connection_pool_size: 10
+  timeout_seconds: 30
+  
+  # Migration Settings
+  migration:
+    auto_migrate: true
+    check_on_startup: true
+
+# Performance Tuning
+tuning:
+  # Thread Pool Settings
+  thread_pool:
+    core_threads: 4
+    max_threads: 20
+    queue_capacity: 100
+    
+  # Memory Settings
+  memory:
+    max_heap_size_mb: 1024
+    gc_policy: "G1GC"
+    
+  # Cache Settings
+  cache:
+    eviction_policy: "LRU"
+    preloading_enabled: true
+    compression_level: 6
