@@ -39,5 +39,189 @@
         "GITHUB_PERSONAL_ACCESS_TOKEN": "${GITHUB_TOKEN}"
       }
     }
+  },
+  "lsp": {
+    "java": {
+      "enabled": true,
+      "command": ["jdtls"],
+      "extensions": [".java", ".jav", ".class"],
+      "initialization": {
+        "java": {
+          "format": {
+            "enabled": true,
+            "url": "https://github.com/google/google-java-format",
+            "version": "1.18.1"
+          }
+        }
+      }
+    },
+    "c": {
+      "enabled": true,
+      "command": ["clangd"],
+      "extensions": [".c", ".h"],
+      "environment": {
+        "CLANGD_FLAGS": "--log=verbose"
+      }
+    },
+    "cpp": {
+      "enabled": true,
+      "command": ["clangd"],
+      "extensions": [".cpp", ".cxx", ".cc", ".hpp", ".hxx", ".hh"],
+      "environment": {
+        "CLANGD_FLAGS": "--log=verbose"
+      }
+    },
+    "csharp": {
+      "enabled": true,
+      "command": ["csharp-ls"],
+      "extensions": [".cs", ".csx"],
+      "environment": {}
+    },
+    "rust": {
+      "enabled": true,
+      "command": ["rust-analyzer"],
+      "extensions": [".rs"],
+      "initialization": {
+        "rust-analyzer": {
+          "cargo": {
+            "loadOutDirsFromCheck": true
+          },
+          "checkOnSave": {
+            "command": "clippy"
+          }
+        }
+      }
+    },
+    "swift": {
+      "enabled": true,
+      "command": ["sourcekit-lsp"],
+      "extensions": [".swift", ".swiftinterface"],
+      "environment": {
+        "SOURCEKIT_LSP_LOG_LEVEL": "info"
+      }
+    },
+    "sql": {
+      "enabled": true,
+      "command": ["sqls"],
+      "extensions": [".sql", ".ddl", ".dml"],
+      "environment": {
+        "SQLS_CONNECTIONS": "mysql://user:pass@localhost:3306/db,postgresql://user:pass@localhost:5432/db"
+      }
+    },
+    "typescript": {
+      "enabled": true,
+      "command": ["typescript-language-server", "--stdio"],
+      "extensions": [".ts", ".tsx", ".js", ".jsx", ".mjs", ".cjs"],
+      "environment": {
+        "TSSERVER_LOG_LEVEL": "verbose"
+      }
+    },
+    "javascript": {
+      "enabled": true,
+      "command": ["typescript-language-server", "--stdio"],
+      "extensions": [".js", ".jsx", ".mjs", ".cjs"],
+      "environment": {
+        "TSSERVER_LOG_LEVEL": "verbose"
+      }
+    },
+    "python": {
+      "enabled": true,
+      "command": ["pylsp"],
+      "extensions": [".py", ".pyi", ".pyw"],
+      "initialization": {
+        "pylsp": {
+          "plugins": {
+            "pyflakes": {
+              "enabled": true
+            },
+            "pycodestyle": {
+              "enabled": false
+            },
+            "flake8": {
+              "enabled": true,
+              "maxLineLength": 88
+            }
+          }
+        }
+      }
+    },
+    "go": {
+      "enabled": true,
+      "command": ["gopls"],
+      "extensions": [".go"],
+      "environment": {
+        "GOPATH": "${GOPATH:-/tmp/gopath}"
+      }
+    },
+    "rexx": {
+      "enabled": true,
+      "command": ["java", "-jar", "/Users/maxvamp/tools/lsp/ls4rexx/target/ls4rexx-0.0.1-SNAPSHOT-jar-with-dependencies.jar"],
+      "extensions": [".rex", ".rexx", ".zrx", ".rxj"],
+      "environment": {}
+    },
+    "bash": {
+      "enabled": true,
+      "command": ["bash-language-server", "start"],
+      "extensions": [".sh", ".bash", ".ksh", ".zsh"],
+      "environment": {
+        "BASH_LANGUAGE_SERVER_LOG_LEVEL": "info"
+      }
+    },
+    "yaml": {
+      "enabled": true,
+      "command": ["yaml-language-server", "--stdio"],
+      "extensions": [".yaml", ".yml"],
+      "environment": {
+        "YAML_LANGUAGE_SERVER_LOG_LEVEL": "info"
+      }
+    },
+    "json": {
+      "enabled": true,
+      "command": ["vscode-json-language-server", "--stdio"],
+      "extensions": [".json", ".jsonc"],
+      "environment": {
+        "JSON_LS_LOG_LEVEL": "info"
+      }
+    },
+    "html": {
+      "enabled": true,
+      "command": ["vscode-html-language-server", "--stdio"],
+      "extensions": [".html", ".htm", ".xhtml"],
+      "environment": {
+        "HTML_LS_LOG_LEVEL": "info"
+      }
+    },
+    "css": {
+      "enabled": true,
+      "command": ["vscode-css-language-server", "--stdio"],
+      "extensions": [".css", ".scss", ".sass", ".less"],
+      "environment": {
+        "CSS_LS_LOG_LEVEL": "info"
+      }
+    },
+    "dockerfile": {
+      "enabled": true,
+      "command": ["docker-langserver", "--stdio"],
+      "extensions": [".dockerfile", "Dockerfile", "docker-compose.yml"],
+      "environment": {
+        "DOCKER_LS_LOG_LEVEL": "info"
+      }
+    },
+    "toml": {
+      "enabled": true,
+      "command": ["taplo", "lsp", "stdio"],
+      "extensions": [".toml"],
+      "environment": {
+        "TAPLO_LOG_LEVEL": "info"
+      }
+    },
+    "xml": {
+      "enabled": true,
+      "command": ["node", "/opt/homebrew/lib/node_modules/@xml-tools/language-server/lib/server.js", "--stdio"],
+      "extensions": [".xml", ".xsd", ".xsl", ".dtd"],
+      "environment": {
+        "XML_LS_LOG_LEVEL": "info"
+      }
+    }
   }
 }

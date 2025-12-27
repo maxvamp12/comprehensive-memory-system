@@ -1,0 +1,25 @@
+# Redis Integration Configuration for Memory Service
+# Configuration for Redis caching integration with Memory Service
+# Server: CLU (192.168.68.71)
+# Port: 6379
+
+# Redis connection configuration
+redis_host: "127.0.0.1"
+redis_port: 6379
+redis_db: 0
+redis_password: ""
+
+# Cache configuration
+cache_ttl: 3600  # 1 hour
+cache_max_size: 10000
+cache_cleanup_ratio: 0.1
+
+# Memory service caching
+memory_cache_enabled: true
+memory_cache_ttl: 1800  # 30 minutes
+memory_cache_max_size: 5000
+
+# Performance optimization
+redis_pool_size: 10
+redis_timeout: 5000
+redis_retry_count: 3

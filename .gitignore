@@ -107,3 +107,17 @@ _bmad-output/
 !_bmad/bmm/
 !_bmad/cis/
 !_bmad/core/
+
+# Environment files - contain sensitive configuration data
+config/environments/.env.*
+config/environments/*.env*
+
+# Docker compose files with production configs
+docker-compose.prod.yml
+docker-compose.prod.yml.*
+
+# Configuration files with production settings
+config/**/*.yml
+config/**/*.yaml
+!config/templates/
+!config/templates/**

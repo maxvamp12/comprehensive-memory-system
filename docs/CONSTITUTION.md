@@ -83,6 +83,16 @@ The AI system is responsible for organizing files based on document type and pur
 - Commit messages must be reviewed and approved by the user before execution
 - No automated commits, batch commits, or commit-all operations without user consent
 
+### Implementation and Documentation Standards
+- **Evidence-Based Documentation**: All documents must provide a realistic roadmap for recovery and proper implementation, with strict verification protocols to prevent future documentation mismatches
+- **Verification-Driven Development**: All work must be evidence-based and verification-driven, requiring physical proof of completion before any status claims are made
+- **Documentation Accuracy**: All documentation must maintain 100% accuracy between documented status and actual implementation state
+- **Verification Protocols**: Mandatory verification procedures for all task completions, including service health checks, data integrity validation, and configuration verification
+- **Evidence Collection**: All implementations must include evidence collection procedures (screenshots, logs, test results) before documentation of completion
+- **Quality Assurance Gates**: Multiple verification checkpoints must be established throughout the implementation lifecycle to ensure documentation accuracy
+- **Incremental Verification**: Small, verifiable steps must be taken with evidence collected at each step before proceeding to next steps
+- **Test-Driven Implementation**: All features must include verification tests that validate functionality before completion is claimed
+
 ### Purpose
 This constitution ensures:
 - Consistent file organization across the project lifecycle
@@ -92,6 +102,11 @@ This constitution ensures:
 - Clear separation between BMAD project documentation and general documentation
 - Clear separation between documentation (documents/) and source code (project directory)
 - Proper organization of both documentation and implementation artifacts
+- Evidence-based documentation with realistic implementation roadmaps
+- Verification-driven development with strict documentation accuracy protocols
+- Quality assurance through mandatory verification procedures and checkpoints
+- Prevention of documentation mismatches through evidence-based progress tracking
+- Test-driven implementation with comprehensive validation procedures
 
 ## SYSTEM ARCHITECTURE
 
@@ -217,8 +232,259 @@ After each compaction of the context window, **this constitution must be reread*
 - **Future Tasks**: Verify upcoming tasks are accurately documented and aligned with implementation plan
 
 ---
+
+## VERIFICATION PROTOCOLS AND DOCUMENTATION
+
+### Implementation Audit Documentation Framework
+
+#### 10.1 Audit Documentation Requirements
+
+##### 10.1.1 Purpose and Scope
+- **Purpose**: Ensure evidence-based implementation with comprehensive audit trails
+- **Scope**: All system implementations, deployments, and modifications
+- **Goal**: Eliminate documentation drift and provide verifiable progress tracking
+
+##### 10.1.2 Audit Document Location
+- **Primary Location**: `documents/implementation-audit/`
+- **Document Naming**: `phase-[phase-number]-[section-name]-audit.md`
+- **Version Control**: Each audit document is unique and saved upon completion
+- **Retention**: All audit documents must be retained for project lifetime
+
+##### 10.1.3 Audit Trigger Requirements
+- **Phase Completion**: Audit required after all sub-items of a phase are completed
+- **Section Completion**: Audit required after all sub-items of a section are completed
+- **Before Progress**: Must be completed before moving to next phase/section
+- **Evidence Verification**: All audit claims must have physical evidence
+
+#### 10.2 Comprehensive Audit Report Template
+
+##### 10.2.1 Required Report Sections (ALL 9 ITEMS MUST BE INCLUDED)
+
+**Section 1: Executive Summary**
+- Audit overview and key findings
+- Phase/section identification
+- Overall status assessment
+- Time elapsed metrics
+
+**Section 2: Key Findings**
+- Critical issues identified
+- Success metrics achieved
+- Risk assessment results
+- Compliance verification status
+
+**Section 3: Implementation Audit Details**
+- Detailed task-by-task execution records
+- Evidence for each completed task
+- Verification results for each task
+- Implementation methodology used
+
+**Section 4: Performance Metrics**
+- Time efficiency measurements
+- Resource utilization metrics
+- Quality assurance indicators
+- System performance baselines
+
+**Section 5: Compliance Verification**
+- Constitution compliance results
+- System architecture compliance
+- Operational protocol compliance
+- Governance requirements verification
+
+**Section 6: Files and Configurations**
+- Created files and locations
+- Modified files and changes
+- Directories created
+- Containers deployed
+
+**Section 7: Audit Verification**
+- Evidence collection quality assessment
+- Risk evaluation results
+- Success criteria verification
+- System impact analysis
+
+**Section 8: Next Steps**
+- Recommended immediate actions
+- Phase progression readiness
+- Outstanding issues to address
+- Integration requirements
+
+**Section 9: Conclusion**
+- Phase/section certification
+- Overall impact assessment
+- Audit completion certification
+- Readiness for next phase
+
+#### 10.3 Evidence Collection Standards
+
+##### 10.3.1 Evidence Requirements
+- **Physical Evidence**: 100% of audit claims must have verifiable proof
+- **Documentation Trail**: All changes must be documented with timestamps
+- **Configuration Accuracy**: All modifications must be verified against requirements
+- **System Impact**: No unintended side effects documented
+
+##### 10.3.2 Evidence Types
+- **Command Outputs**: SSH command results and responses
+- **File Contents**: Actual file contents and modifications
+- **Container Status**: Docker container states and logs
+- **Network Connectivity**: Ping tests, HTTP responses, port checks
+- **System Metrics**: Resource utilization, performance measurements
+- **Configuration Files**: Actual deployed configurations
+- **Service Health**: Health check results and status codes
+
+##### 10.3.3 Evidence Storage
+- **Location**: Evidence embedded within audit documents
+- **Format**: JSON-formatted evidence with timestamps
+- **Retention**: Permanent retention for audit trail
+- **Accessibility**: Evidence must be easily verifiable
+
+#### 10.4 Context Drift Prevention Methods
+
+##### 10.4.1 Context Preservation
+- **Audit Trail**: Complete documentation of all changes
+- **Evidence Collection**: Physical proof for all claims
+- **Status Verification**: Verification of actual vs. documented state
+- **Progress Tracking**: Incremental verification at each step
+
+##### 10.4.2 Drift Detection
+- **Comparison Protocol**: Regular comparison of actual vs. documented state
+- **Verification Points**: Mandatory verification at major milestones
+- **Alert System**: Automatic alerts for documentation mismatches
+- **Correction Protocol**: Defined process for addressing drift
+
+##### 10.4.3 Context Window Preservation
+- **Audit Reading**: Constitution must be read after each audit completion
+- **Context Updates**: SESSION_RESUME_CONTEXT.md must be updated after each audit
+- **Documentation Synchronization**: Task lists must match actual implementation
+- **Progress Tracking**: All progress must be evidence-based
+
+#### 10.5 Evidence Retention Policies
+
+##### 10.5.1 Retention Requirements
+- **Permanent Retention**: All audit documents must be retained permanently
+- **Evidence Preservation**: All evidence must be preserved with audit documents
+- **Backup Integration**: Audit documents must be backed up with Borg system
+- **Version Control**: No deletion or modification of completed audit documents
+
+##### 10.5.2 Audit Document Structure
+```
+documents/
+├── implementation-audit/
+│   ├── phase-1-integration-foundation-audit.md
+│   ├── phase-2-service-mesh-audit.md
+│   ├── phase-3-optimization-audit.md
+│   └── [future phase audits...]
+└── [other documentation...]
+```
+
+#### 10.6 Verification Checkpoint Requirements
+
+##### 10.6.1 Checkpoint Triggers
+- **After Phase Completion**: Mandatory checkpoint after each phase completion
+- **Before Phase Progress**: Cannot progress to next phase without checkpoint
+- **Evidence Collection**: All evidence must be collected before checkpoint
+- **Documentation Update**: SESSION_RESUME_CONTEXT.md must be updated at checkpoint
+
+##### 10.6.2 Checkpoint Verification Process
+1. **Evidence Collection**: Gather all physical evidence for completed tasks
+2. **Documentation Verification**: Compare actual vs. documented state
+3. **Compliance Check**: Verify constitution and protocol compliance
+4. **Risk Assessment**: Evaluate current state risks and issues
+5. **Certification**: Issue phase completion certification
+6. **Context Update**: Update SESSION_RESUME_CONTEXT.md with findings
+
+##### 10.6.3 Checkpoint Success Criteria
+- **Evidence Coverage**: 100% of audit claims have physical evidence
+- **Documentation Accuracy**: 100% match between documentation and reality
+- **Compliance Verification**: 100% compliance with all protocols
+- **Risk Mitigation**: All critical risks addressed or documented
+- **System Stability**: System remains stable and operational
+- **Readiness Certification**: Phase ready for progression
+
+#### 10.7 Audit Display Requirements
+
+##### 10.7.1 User Display Requirements
+- **Summary Display**: After each audit completion, display summary to user
+- **File Location**: Display comprehensive document location to user
+- **Phase Status**: Display current phase status and readiness
+- **Next Steps**: Display recommended next actions
+
+##### 10.7.2 Display Content
+- **Audit Summary**: Brief overview of audit results
+- **Key Findings**: Critical issues and success metrics
+- **Document Location**: Full path to comprehensive audit document
+- **Phase Status**: Current phase completion status
+- **Next Steps**: Immediate action recommendations
+- **Evidence Summary**: Summary of collected evidence
+
+##### 10.7.3 Display Format
+```
+=== PHASE [X] COMPLETION AUDIT ===
+
+Status: ✅ COMPLETED
+Time Elapsed: [X] minutes
+Key Findings: [Summary]
+Issues Identified: [List]
+
+Comprehensive Document: documents/implementation-audit/phase-X-section-name-audit.md
+
+Next Steps: [Action items]
+Evidence Collected: [Count] items
+
+Ready for Phase [X+1]: ✅ YES/NO
+```
+
+#### 10.8 Audit Workflow Integration
+
+##### 10.8.1 Workflow Steps
+1. **Phase Completion**: All sub-items of phase completed
+2. **Evidence Collection**: Gather all physical evidence
+3. **Audit Report Generation**: Create comprehensive audit document
+4. **Summary Display**: Show summary to user with document location
+5. **Context Update**: Update SESSION_RESUME_CONTEXT.md
+6. **Constitution Reading**: Read constitution to preserve context
+7. **Phase Certification**: Certify phase completion
+8. **Progression**: Allow progression to next phase
+
+##### 10.8.2 Mandatory Audits
+- **Phase 1 Audit**: Integration Foundation audit
+- **Phase 2 Audit**: Service Mesh Implementation audit
+- **Phase 3 Audit**: Optimization and Enhancement audit
+- **Milestone Audits**: Any major system milestone completion
+
+##### 10.8.3 Audit Quality Assurance
+- **Template Compliance**: All 9 sections must be included
+- **Evidence Verification**: All claims must have verifiable proof
+- **Documentation Accuracy**: No documentation drift allowed
+- **Compliance Verification**: Full compliance with all protocols
+
+#### 10.9 Special Audit Requirements
+
+##### 10.9.1 Emergency Audits
+- **Trigger**: System changes, failures, or critical incidents
+- **Scope**: Immediate assessment of system state
+- **Purpose**: Rapid context preservation and issue resolution
+- **Format**: Simplified emergency audit template
+
+##### 10.9.2 Pre-Deployment Audits
+- **Trigger**: Before any production deployment
+- **Scope**: System readiness and stability verification
+- **Purpose**: Ensure deployment safety and success
+- **Format**: Deployment-specific audit template
+
+##### 10.9.3 Post-Implementation Audits
+- **Trigger**: After major system implementation
+- **Scope**: Implementation success and impact assessment
+- **Purpose**: Verify implementation meets requirements
+- **Format**: Implementation-specific audit template
+
+---
+
+*Established: December 26, 2025*
+*Section: Verification Protocols and Documentation*
+*Integration: Complete system audit framework*
 *Established: December 22, 2025*
 *Amendment Process: Requires explicit consensus for changes*
-*Last Amendment: December 25, 2025 - Added Memory Service Replacement Policy and Source Code Classification*
+*Last Amendment: December 26, 2025 - Added Implementation and Documentation Standards (Evidence-based and verification-driven principles)*
+*Previous Amendment: December 25, 2025 - Added Memory Service Replacement Policy and Source Code Classification*
 *Vital Amendment: December 25, 2025 - Added System Operational Protocols (vLLM Cluster Restrictions, Startup Protocol, Context Management)*
 *Critical Amendment: December 25, 2025 - Added AI Commit Restrictions (No commits without explicit user review)*

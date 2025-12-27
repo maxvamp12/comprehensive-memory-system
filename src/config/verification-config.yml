@@ -1,0 +1,90 @@
+verification_timeout: 30
+health_check_interval: 5
+max_retries: 3
+required_evidence:
+  - service_status
+  - config_validation
+  - data_integrity
+  - connectivity_verification
+
+services:
+  chromadb:
+    host: "192.168.68.69"
+    port: 8001
+    endpoint: "/api/v1/heartbeat"
+    expected_status: 200
+    timeout: 10
+    required_headers: []
+  
+  memory_service:
+    host: "192.168.68.71"
+    port: 3000
+    endpoint: "/health"
+    expected_status: 200
+    timeout: 10
+    required_headers: []
+  
+  vllm_head:
+    host: "192.168.68.69"
+    port: 8000
+    endpoint: "/health"
+    expected_status: 200
+    timeout: 10
+    required_headers: []
+  
+  load_balancer:
+    host: "192.168.68.69"
+    port: 8080
+    endpoint: "/health"
+    expected_status: 200
+    timeout: 10
+    required_headers: []
+
+verification_rules:
+  service_health:
+    required_status_codes: [200]
+    max_response_time: 5.0
+    min_uptime_percentage: 95.0
+  
+  configuration_validation:
+    required_files:
+      - "docker-compose.yml"
+      - "src/config/storage-performance.yml"
+      - "src/config/verification-config.yml"
+    required_directories:
+      - "~/chroma-enhanced-data/"
+      - "~/memory-service-data/"
+      - "~/logs/"
+  
+  data_integrity:
+    min_file_size: 0
+    max_file_size: 104857600  # 100MB
+    required_permissions: ["read", "write"]
+  
+  connectivity_tests:
+    required_ports: [22, 80, 443, 8000, 8001, 3000]
+    timeout_seconds: 5
+    retry_attempts: 3
+
+evidence_storage:
+  directory: "documents/verification-evidence"
+  retention_days: 30
+  compression: true
+  format: "json"
+
+logging:
+  level: "INFO"
+  file: "logs/verification.log"
+  max_size_mb: 10
+  backup_count: 5
+
+notifications:
+  on_failure: true
+  on_success: false
+  notification_channels: []
+  
+compliance:
+  constitutional_requirements: true
+  evidence_collection: true
+  verification_documentation: true
+  audit_trail: true

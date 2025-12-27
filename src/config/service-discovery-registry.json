@@ -1,0 +1,70 @@
+{
+  "services": {
+    "chromadb": {
+      "name": "chromadb",
+      "host": "192.168.68.69",
+      "port": 8001,
+      "endpoint": "/api/v1/heartbeat",
+      "health_check": "/api/v1/heartbeat",
+      "status": "healthy",
+      "tags": ["database", "vector", "persistent"]
+    },
+    "memory_service": {
+      "name": "memory_service",
+      "host": "192.168.68.71",
+      "port": 3000,
+      "endpoint": "/health",
+      "health_check": "/health",
+      "status": "healthy",
+      "tags": ["memory", "api", "persistent"]
+    },
+    "redis_caching": {
+      "name": "redis_caching",
+      "host": "192.168.68.71",
+      "port": 6379,
+      "endpoint": "/ping",
+      "health_check": "/ping",
+      "status": "healthy",
+      "tags": ["cache", "redis", "performance"]
+    },
+    "vllm_head": {
+      "name": "vllm_head",
+      "host": "192.168.68.69",
+      "port": 8000,
+      "endpoint": "/health",
+      "health_check": "/health",
+      "status": "healthy",
+      "tags": ["llm", "gpu", "inference"]
+    },
+    "prometheus": {
+      "name": "prometheus",
+      "host": "192.168.68.69",
+      "port": 9090,
+      "endpoint": "/api/v1/targets",
+      "health_check": "/-/healthy",
+      "status": "healthy",
+      "tags": ["monitoring", "metrics", "prometheus"]
+    },
+    "grafana": {
+      "name": "grafana",
+      "host": "192.168.68.69",
+      "port": 3001,
+      "endpoint": "/api/health",
+      "health_check": "/api/health",
+      "status": "healthy",
+      "tags": ["monitoring", "dashboard", "grafana"]
+    }
+  },
+  "discovery": {
+    "method": "static",
+    "refresh_interval": 30,
+    "health_check_interval": 10,
+    "service_registry": "/etc/service-registry.json"
+  },
+  "load_balancer": {
+    "algorithm": "weighted_round_robin",
+    "health_check_interval": 30,
+    "unhealthy_threshold": 3,
+    "healthy_threshold": 2
+  }
+}

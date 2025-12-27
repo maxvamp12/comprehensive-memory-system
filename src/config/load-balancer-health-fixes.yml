@@ -1,0 +1,38 @@
+# Load Balancer Health Endpoint Configuration
+# Fixed health check endpoints based on actual service endpoints
+# Server: SARK (192.168.68.69)
+
+# Service health endpoints
+health_endpoints:
+  chromadb:
+    host: "192.168.68.69"
+    port: 8001
+    endpoint: "/api/v1/heartbeat"  # FIXED: was /api/v1/health
+    expected_status: 200
+    timeout: 10
+    interval: 30
+  
+  memory_service:
+    host: "192.168.68.71"
+    port: 3000
+    endpoint: "/health"
+    expected_status: 200
+    timeout: 10
+    interval: 30
+  
+  redis_caching:
+    host: "192.168.68.71"
+    port: 6379
+    endpoint: "/ping"
+    expected_status: 200  # Redis PONG response
+    timeout: 5
+    interval: 60
+
+# Load balancer configuration
+load_balancer:
+  algorithm: "weighted_round_robin"
+  health_check_interval: 30
+  health_check_timeout: 10
+  unhealthy_threshold: 3
+  healthy_threshold: 2
+  backend_check_interval: 10
