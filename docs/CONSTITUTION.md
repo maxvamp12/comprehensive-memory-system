@@ -108,6 +108,79 @@ This constitution ensures:
 - Prevention of documentation mismatches through evidence-based progress tracking
 - Test-driven implementation with comprehensive validation procedures
 
+## BACKUP SYSTEM PROTOCOL
+
+### Backup System Structure and Requirements
+
+#### 11.1 Backup System Folder Structure
+- **MANDATORY LOCATION**: All backup-related files and documentation **MUST** be stored in `Backup-system/` folder at the project root directory
+- **Folder Naming**: `Backup-system/` (exact name as specified)
+- **Purpose**: Centralized location for all backup-related files, scripts, and documentation
+- **Accessibility**: Must be easily accessible for backup operations and disaster recovery
+
+#### 11.2 Master Backup Script Requirements
+- **MASTER SCRIPT LOCATION**: The master `backup-clu.sh` script **MUST** be preserved in `/home/maxvamp/borg-docker/` on SARK (192.168.68.69)
+- **SCRIPT INTEGRITY**: The master script must **NEVER** be renamed, deleted, or modified directly
+- **COPY PROTOCOL**: All modifications must be made to a local copy in the `Backup-system/` folder first
+- **VALIDATION**: Before deployment, local copies must be tested and validated
+
+#### 11.3 Local Backup System Folder Structure
+```
+Backup-system/
+├── scripts/
+│   ├── backup-clu.sh           # Master copy for local testing and validation
+│   ├── backup-config.conf      # Backup configuration files
+│   └── backup-restore.sh       # Restore operations
+├── documentation/
+│   ├── BACKUP_NOTES.md        # Backup operation notes
+│   ├── DISASTER_RECOVERY.md   # Disaster recovery procedures
+│   ├── VORTA_CONFIGURATION.md # Vorta backup interface config
+│   └── BACKUP_USAGE.md       # Usage instructions and examples
+├── configurations/
+│   ├── backup-config.conf     # Main backup configuration
+│   ├── vorta-config.json      # Vorta GUI configuration
+│   └── backup-cron.conf       # Cron job configurations
+├── logs/
+│   ├── backup.log            # Backup operation logs
+│   └── backup-clu.log       # CLU backup extension logs
+└───── archives/
+     └───── historical/       # Historical backup scripts and configs
+```
+
+#### 11.4 Backup Script Modifications Protocol
+- **Step 1**: Create/modify local copy in `Backup-system/scripts/`
+- **Step 2**: Test local copy for syntax and logic validation
+- **Step 3**: Validate against existing backup infrastructure
+- **Step 4**: User authorization required for deployment to SARK
+- **Step 5**: Deploy only after successful local testing and user approval
+- **Step 6**: Update documentation in `Backup-system/documentation/`
+
+#### 11.5 Documentation Requirements
+- **MANDATORY**: All backup operations must have corresponding documentation
+- **LOCATION**: All backup documentation **MUST** be in `Backup-system/documentation/`
+- **CONTENT**: Include setup instructions, usage examples, troubleshooting guides
+- **VERSIONING**: Maintain version history for all backup scripts and configurations
+
+#### 11.6 Emergency Backup Procedures
+- **CRITICAL**: In case of master script corruption, restore from local copy
+- **PROCEDURE**: Use the local copy in `Backup-system/scripts/` as recovery source
+- **VALIDATION**: Validate restored script functionality before deployment
+- **DOCUMENTATION**: Document restoration process for future reference
+
+#### 11.7 Backup System Integration
+- **BORG INTEGRATION**: All backup scripts must integrate with existing Borg backup system
+- **BACKUP SERVER**: Must work with borg-backup-server on SARK (port 2222)
+- **DATA PERSISTENCE**: Ensure all backed up data follows constitution container data persistence policy
+- **COMPLIANCE**: Must comply with all constitution requirements for data storage
+
+#### 11.8 Backup System Governance
+- **AMENDMENT PROCESS**: Changes to backup system require explicit consensus
+- **AUDIT TRAIL**: All modifications must be documented with timestamps
+- **VALIDATION**: Regular testing of backup and restore procedures required
+- **RECOVERY**: Documented recovery procedures for all backup scenarios
+
+---
+
 ## SYSTEM ARCHITECTURE
 
 ### Client-Server Architecture
@@ -117,6 +190,7 @@ This constitution ensures:
 - **LLM Instance**: This GLM-4.5 Air model operates on the backend server infrastructure
 - **Development Workflow**: Code development occurs on FLYNN client
 - **Server Management**: All improvements to AI server backend must be performed exclusively on SARK and CLU systems
+- **User**: Max (primary user and system administrator)
 
 ### System Design Principles
 - **Decoupled Architecture**: Client (FLYNN) and backend (SARK/CLU) operate independently
@@ -165,6 +239,7 @@ After each compaction of the context window, **this constitution must be reread*
 **CRITICAL OPERATIONAL CONSTRAINTS**:
 1. **vLLM Cluster Operations**: **ABSOLUTE PROHIBITION** against stopping, restarting, or modifying the vLLM cluster or any running vLLM processes/services without explicit written authorization from the user. The vLLM cluster is a critical production system and any disruption will impact the entire RAG functionality.
 2. **Service State Protection**: All vLLM-related containers, processes, and services must be maintained in their current operational state. Any changes require explicit user permission and proper backup procedures.
+3. **MANDATORY PROTECTION**: **NEVER SHUT DOWN vLLM or its containers under any circumstances** - This is a non-negotiable mandate. vLLM cluster protection takes precedence over all other operational procedures.
 
 ### vLLM Cluster Architecture Specification
 **ARCHITECTURAL DEFINITION - MUST BE UNDERSTOOD BY ALL AGENTS**:
@@ -259,6 +334,11 @@ After each compaction of the context window, **this constitution must be reread*
 #### 10.2 Comprehensive Audit Report Template
 
 ##### 10.2.1 Required Report Sections (ALL 9 ITEMS MUST BE INCLUDED)
+**CRITICAL: DOCUMENTATION CREATION MANDATORY**
+- **MANDATORY ACTION**: Each audit document MUST BE PHYSICALLY CREATED and saved to disk
+- **ZERO TOLERANCE**: No audit reporting is complete without the actual file being created
+- **DATA PROTECTION**: Failure to create audit documents constitutes data loss and system integrity violation
+- **ENFORCEMENT**: Audit reports are NOT COMPLETE until the file exists on the filesystem
 
 **Section 1: Executive Summary**
 - Audit overview and key findings
@@ -318,6 +398,9 @@ After each compaction of the context window, **this constitution must be reread*
 
 ##### 10.3.1 Evidence Requirements
 - **Physical Evidence**: 100% of audit claims must have verifiable proof
+- **DOCUMENTATION CREATION EVIDENCE**: Physical file creation is mandatory audit evidence
+- **FILE VERIFICATION**: Audit completion requires file system verification of created documents
+- **DATA INTEGRITY**: All audit documents must be immediately verifiable on filesystem
 - **Documentation Trail**: All changes must be documented with timestamps
 - **Configuration Accuracy**: All modifications must be verified against requirements
 - **System Impact**: No unintended side effects documented
@@ -336,6 +419,17 @@ After each compaction of the context window, **this constitution must be reread*
 - **Format**: JSON-formatted evidence with timestamps
 - **Retention**: Permanent retention for audit trail
 - **Accessibility**: Evidence must be easily verifiable
+
+#### 10.3.4 DOCUMENTATION CREATION PROTOCOLS
+- **ZERO TOLERANCE POLICY**: No audit is complete without physical file creation
+- **MANDATORY VERIFICATION**: File existence must be verified before audit completion
+- **DATA LOSS PREVENTION**: All audit documents must be immediately created and saved
+- **SYSTEM INTEGRITY**: Audit documentation failure constitutes system integrity violation
+- **ENFORCEMENT MECHANISMS**: 
+  - File system verification required for all audit completions
+  - Physical file creation is mandatory evidence
+  - No audit reporting is complete without file verification
+  - Data loss prevention protocols enforced at all times
 
 #### 10.4 Context Drift Prevention Methods
 
@@ -387,18 +481,44 @@ documents/
 ##### 10.6.2 Checkpoint Verification Process
 1. **Evidence Collection**: Gather all physical evidence for completed tasks
 2. **Documentation Verification**: Compare actual vs. documented state
-3. **Compliance Check**: Verify constitution and protocol compliance
-4. **Risk Assessment**: Evaluate current state risks and issues
-5. **Certification**: Issue phase completion certification
-6. **Context Update**: Update SESSION_RESUME_CONTEXT.md with findings
+3. **DOCUMENTATION CREATION VERIFICATION**: PHYSICALLY CREATE all required audit documents
+4. **File System Verification**: Verify ALL audit documents exist on filesystem
+5. **Compliance Check**: Verify constitution and protocol compliance
+6. **Risk Assessment**: Evaluate current state risks and issues
+7. **Certification**: Issue phase completion certification
+8. **Context Update**: Update SESSION_RESUME_CONTEXT.md with findings
+
+#### 10.6.3 DOCUMENTATION CREATION PROTOCOLS
+- **PHYSICAL CREATION MANDATORY**: All audit documents MUST BE PHYSICALLY CREATED and saved
+- **ZERO TOLERANCE**: No checkpoint passes without physical file creation
+- **DATA LOSS PREVENTION**: File creation is mandatory checkpoint requirement
+- **SYSTEM INTEGRITY**: Documentation creation failure = system integrity violation
+- **VERIFICATION PROTOCOL**:
+  - File existence verification required for all audit completions
+  - Physical file path verification mandatory
+  - Document accessibility confirmation required
+  - No checkpoint completion without file verification
 
 ##### 10.6.3 Checkpoint Success Criteria
 - **Evidence Coverage**: 100% of audit claims have physical evidence
 - **Documentation Accuracy**: 100% match between documentation and reality
+- **DOCUMENTATION CREATION**: 100% of required audit documents PHYSICALLY CREATED and verified
+- **File System Verification**: 100% of audit documents exist and are accessible
 - **Compliance Verification**: 100% compliance with all protocols
 - **Risk Mitigation**: All critical risks addressed or documented
 - **System Stability**: System remains stable and operational
 - **Readiness Certification**: Phase ready for progression
+
+#### 10.6.4 DOCUMENTATION CREATION ENFORCEMENT
+- **PHYSICAL CREATION MANDATORY**: All audit documents MUST BE PHYSICALLY CREATED
+- **ZERO TOLERANCE**: No checkpoint completion without physical file creation
+- **DATA LOSS PROTECTION**: File creation is non-negotiable audit requirement
+- **SYSTEM INTEGRITY**: Documentation creation failure = system failure
+- **ENFORCEMENT MEASURES**:
+  - File system verification required for all checkpoint completions
+  - Physical document creation is mandatory evidence
+  - No phase progression without documentation creation verification
+  - Data loss prevention enforced at all checkpoints
 
 #### 10.7 Audit Display Requirements
 
@@ -438,18 +558,42 @@ Ready for Phase [X+1]: ✅ YES/NO
 ##### 10.8.1 Workflow Steps
 1. **Phase Completion**: All sub-items of phase completed
 2. **Evidence Collection**: Gather all physical evidence
-3. **Audit Report Generation**: Create comprehensive audit document
-4. **Summary Display**: Show summary to user with document location
-5. **Context Update**: Update SESSION_RESUME_CONTEXT.md
-6. **Constitution Reading**: Read constitution to preserve context
-7. **Phase Certification**: Certify phase completion
-8. **Progression**: Allow progression to next phase
+3. **DOCUMENTATION CREATION**: PHYSICALLY CREATE all required audit documents
+4. **File System Verification**: VERIFY all audit documents exist on filesystem
+5. **Audit Report Generation**: Create comprehensive audit document
+6. **Summary Display**: Show summary to user with document location
+7. **Context Update**: Update SESSION_RESUME_CONTEXT.md
+8. **Constitution Reading**: Read constitution to preserve context
+9. **Phase Certification**: Certify phase completion
+10. **Progression**: Allow progression to next phase
+
+#### 10.8.2 DOCUMENTATION CREATION PROTOCOLS
+- **PHYSICAL CREATION MANDATORY**: All audit documents MUST BE PHYSICALLY CREATED
+- **VERIFY BEFORE PROCEED**: File verification required before any progression
+- **ZERO TOLERANCE**: No workflow step advancement without physical file creation
+- **DATA LOSS PREVENTION**: Documentation creation is mandatory workflow step
+- **ENFORCEMENT MECHANISMS**:
+  - File system verification required before progression
+  - Physical document creation is mandatory workflow step
+  - No phase advancement without documentation verification
+  - Data loss prevention enforced in all workflow steps
 
 ##### 10.8.2 Mandatory Audits
 - **Phase 1 Audit**: Integration Foundation audit
 - **Phase 2 Audit**: Service Mesh Implementation audit
 - **Phase 3 Audit**: Optimization and Enhancement audit
 - **Milestone Audits**: Any major system milestone completion
+
+#### 10.8.3 DOCUMENTATION CREATION ENFORCEMENT
+- **PHYSICAL CREATION MANDATORY**: All audit documents MUST BE PHYSICALLY CREATED
+- **VERIFY BEFORE PROCEED**: File verification required before proceeding
+- **ZERO TOLERANCE**: No audit completion without physical file creation
+- **DATA LOSS PREVENTION**: Documentation creation is mandatory audit requirement
+- **ENFORCEMENT PROTOCOLS**:
+  - File system verification required for all audit completions
+  - Physical document creation is mandatory evidence
+  - No phase advancement without documentation verification
+  - Data loss prevention enforced at all audit points
 
 ##### 10.8.3 Audit Quality Assurance
 - **Template Compliance**: All 9 sections must be included
@@ -479,12 +623,270 @@ Ready for Phase [X+1]: ✅ YES/NO
 
 ---
 
+#### 10.10 DOCUMENTATION CREATION CRITICAL REQUIREMENTS
+
+##### 10.10.1 Zero Tolerance Policy
+- **CRITICAL**: DOCUMENTATION CREATION FAILURE = SYSTEM INTEGRITY VIOLATION
+- **MANDATORY**: All audit documents MUST BE PHYSICALLY CREATED and saved to filesystem
+- **ENFORCED**: No audit completion without physical file verification
+- **PROTECTED**: Data loss prevention is non-negotiable requirement
+
+##### 10.10.2 File Creation Verification Protocol
+- **STEP 1**: Create all required audit documents
+- **STEP 2**: Verify file existence on filesystem
+- **STEP 3**: Confirm document accessibility and readability
+- **STEP 4**: Document file path and location for audit trail
+- **STEP 5**: Include file verification evidence in audit report
+- **STEP 6**: Only proceed to next phase after file verification
+
+##### 10.10.3 Data Loss Prevention Enforcement
+- **ENFORCEMENT MECHANISM**: File system verification required for all audit completions
+- **PROTOCOL**: Physical document creation is mandatory evidence
+- **ZERO TOLERANCE**: No phase advancement without documentation verification
+- **SYSTEM INTEGRITY**: Documentation creation failure = system failure
+
+##### 10.10.4 Critical Failure Protocol
+- **TRIGGER**: Any missing or inaccessible audit documents
+- **RESPONSE**: Immediate halt to all system progression
+- **CORRECTION**: Mandatory document recreation and verification
+- **RESOLUTION**: Only proceed after successful file verification
+
 *Established: December 26, 2025*
 *Section: Verification Protocols and Documentation*
 *Integration: Complete system audit framework*
+*CRITICAL UPDATE: Documentation Creation Zero Tolerance Policy - December 26, 2025*
 *Established: December 22, 2025*
 *Amendment Process: Requires explicit consensus for changes*
 *Last Amendment: December 26, 2025 - Added Implementation and Documentation Standards (Evidence-based and verification-driven principles)*
 *Previous Amendment: December 25, 2025 - Added Memory Service Replacement Policy and Source Code Classification*
 *Vital Amendment: December 25, 2025 - Added System Operational Protocols (vLLM Cluster Restrictions, Startup Protocol, Context Management)*
 *Critical Amendment: December 25, 2025 - Added AI Commit Restrictions (No commits without explicit user review)*
+
+*Backup System Amendment: December 27, 2025 - Added Backup System Protocol (Backup-system folder structure, master backup-CLU.sh preservation, local copy requirements)*
+
+#### 10.11 Phase 3 Audit Format Requirements
+#### 10.8.3 Phase 3 Audit Document Structure Requirements
+- **SINGLE AUDIT DOCUMENT PER PHASE**: One comprehensive audit document per phase covering all work completed in that phase
+- **TASK-BASED UPDATES**: Document is updated as tasks are completed within the phase
+- **COMPREHENSIVE COVERAGE**: Document serves as the single authoritative audit record for the entire phase
+- **ACCURATE STATUS**: Document accurately reflects the status of the last completed task (whether phase is complete or ongoing)
+- **NO PER-TASK DOCUMENTS**: No separate audit documents per individual task within a phase
+- **PHASE COMPLETION AUDIT**: Final audit document created when phase is fully completed
+
+#### 10.8.4 Phase 3 Audit Format Requirements
+- **MANDATORY FORMAT COMPLIANCE**: Phase 3 audit documents MUST follow the EXACT same format and structure as Phase 1 and Phase 2 audit documents
+- **DOCUMENT TITLE**: "Implementation Audit Report - Phase 3: Enhancement and Optimization"
+- **SECTION STRUCTURE**: All 9 sections must be included and formatted identically to Phase 1/Phase 2 documents
+- **STATUS ACCURACY**: Status header must accurately reflect actual phase completion percentage
+- **TIMESTAMP AUDIT**: Document must be updated with timestamps as tasks are completed
+- **ZERO TOLERANCE**: NO deviations from the Phase 1/Phase 2 format will be permitted for Phase 3 documents
+- **AUDIT TEMPLATE**: Phase 3 audit documents MUST use the exact template structure from Phase 1 and Phase 2 with only content differences
+- **SECTION HEADERS**: ALL section headers MUST match Phase 1 and Phase 2 headers exactly, including emoji patterns and numbering
+- **DOCUMENTATION STRUCTURE**: The complete 9-section structure MUST be maintained exactly as established in Phase 1 and Phase 2
+
+---
+
+## FILE LOCATION AND REPOSITORY REQUIREMENTS
+
+### 12.1 Primary File Location Directive
+**MANDATORY REQUIREMENT**: ALL code, documentation, configuration files, and implementation artifacts MUST be stored in the project directory at `/Volumes/Dev/git/CLU_CODE/comprehensive-memory-system/` with the following exceptions:
+
+#### 12.1.1 Absolute Requirements
+- **Project Root Directory**: `/Volumes/Dev/git/CLU_CODE/comprehensive-memory-system/` is the ONLY authorized location for:
+  - All source code files
+  - All documentation files
+  - All configuration files
+  - All scripts and automation files
+  - All audit and compliance documentation
+  - All container and deployment artifacts
+  - All test files and testing frameworks
+  - All backup and recovery documentation
+
+#### 12.1.2 Server-Side File Management
+- **SARK/CLU Server Files**: Files on SARK (192.168.68.69) and CLU (192.168.68.71) must be backed up to the project directory
+- **Configuration Backups**: All server configurations must have corresponding files in the project directory
+- **Documentation Sync**: All server-side documentation must be replicated in the project directory
+- **Script Management**: All scripts must exist in the project directory first, then deployed to servers
+
+#### 12.1.3 No Exceptions Policy
+- **ZERO TOLERANCE**: No exceptions to the file location requirement
+- **MANDATORY DUPLICATION**: All server-side files must have project directory copies
+- **VERSION CONTROL COMPLIANCE**: All project files must be tracked in git
+- **BACKUP INTEGRATION**: Project directory files must integrate with existing backup systems
+
+### 12.2 Directory Structure Requirements
+
+#### 12.2.1 Required Directory Structure
+```
+/Volumes/Dev/git/CLU_CODE/comprehensive-memory-system/
+├── documents/                    # General documentation and session context
+├── docs/                         # BMAD project documentation
+├── src/                          # All source code
+├── config/                      # All configuration files
+├── scripts/                     # All automation scripts
+├── tests/                       # All test files
+├── Backup-system/              # Backup system files and documentation
+├── memory-service/             # Memory service implementation
+├── src/caching/                # Caching implementation
+├── src/load-balancer/          # Load balancer implementation
+├── src/memory/                 # Memory system implementation
+├── src/config/                # Configuration management
+└── docs/implementation-audit/  # Audit documentation
+```
+
+#### 12.2.2 File Organization Rules
+- **Documentation Separation**: 
+  - `documents/` for session context and general documentation
+  - `docs/` for BMAD project documentation
+  - `docs/implementation-audit/` for audit documentation
+- **Code Organization**: All source code in `src/` with logical subdirectories
+- **Configuration Management**: All configs in `config/` and `src/config/`
+- **Script Management**: All scripts in `scripts/` with logical subdirectories
+
+#### 12.2.3 AI Testing and Temporary Files Requirements
+- **AI_TMP Directory**: Create `AI_tmp/` folder at project root for files/scripts exclusively used by AI for testing and validation purposes
+- **Root Directory Purity**: Only essential files that absolutely must be in project root (e.g., SESSION_RESUME_CONTEXT.md, constitution files, gitignore) may remain in root directory
+- **Source Code Enforcement**: Explicit prohibition of .js, .py, .go, and other source code files in project root directory - all must be in appropriate subdirectories
+- **Testing Files**: All AI testing scripts, temporary validation files, and development artifacts must be stored in `AI_tmp/` with appropriate subfolder organization
+- **Cleanup Protocol**: AI_tmp files should be automatically cleaned up after successful testing/validation to prevent root directory accumulation
+
+#### 12.2.4 Enhanced File Organization Rules
+- **Root Directory Allowlist**: Only files explicitly required for project operation (SESSION_RESUME_CONTEXT.md, CONSTITUTION.md, README.md, .gitignore, .mcp.json) may exist in project root
+- **Source Code Enforcement**: Zero tolerance for source code files (.js, .py, .go, .java, etc.) in project root directory
+- **Script Migration**: All existing root-level scripts must be moved to appropriate subdirectories (scripts/, AI_tmp/)
+- **Documentation Migration**: All root-level documentation must be moved to appropriate subdirectories (documents/, docs/)
+
+### 12.3 Server File Management Protocol
+
+#### 12.3.1 Server File Requirements
+- **MANDATORY BACKUP**: All server files must have corresponding project directory files
+- **SCRIPT DEPLOYMENT**: Scripts must be developed in project directory, then deployed
+- **CONFIGURATION SYNC**: Server configs must be backed up to project directory
+- **DOCUMENTATION REPLICATION**: All server documentation must be replicated in project directory
+
+#### 12.3.2 Server File Locations
+- **SARK Files**: `/home/maxvamp/` directories on SARK must have project directory backups
+- **CLU Files**: `/home/maxvamp/` directories on CLU must have project directory backups
+- **Backup System**: `Backup-system/` folder in project directory for all backup-related files
+
+### 12.4 Conflict Identification and Resolution
+
+#### 12.4.1 Identified Conflicts
+1. **Backup Script Location Conflict**:
+   - **Current**: Section 11.2 requires master backup script at `/home/maxvamp/borg-docker/` on SARK
+   - **Required**: All scripts must be in project directory `scripts/` folder
+   - **Resolution**: Master backup script must be copied to project directory first, then deployed to SARK
+
+2. **Configuration File Location Conflict**:
+   - **Current**: Various sections reference files in `/home/maxvamp/` directories on servers
+   - **Required**: All configurations must have project directory copies
+   - **Resolution**: Create project directory copies of all server configurations
+
+3. **Documentation Location Conflict**:
+   - **Current**: Session context mentions files in various server locations
+   - **Required**: All documentation must be in project directory
+   - **Resolution**: Move all documentation to project directory structure
+
+#### 12.4.2 Conflict Resolution Protocol
+- **PRIORITY**: File location requirements (Section 12) override all other sections
+- **BACKUP REQUIREMENT**: All server-side files must have project directory copies
+- **DUPLICATION PROTOCOL**: Create project directory copies before modifying server files
+- **VERSION CONTROL**: Project directory files must be tracked in git
+- **BACKUP INTEGRATION**: Project directory files must work with existing backup systems
+
+### 12.5 Enforcement and Compliance
+
+#### 12.5.1 Zero Tolerance Policy
+- **MANDATORY COMPLIANCE**: All files must be in project directory
+- **NO EXCEPTIONS**: No server-only files allowed
+- **DUPLICATION REQUIRED**: All server files must have project directory copies
+- **VERSION CONTROL**: All project files must be git-tracked
+
+#### 12.5.2 vLLM Protection Mandate
+- **ABSOLUTE PROTECTION**: vLLM cluster protection takes precedence over ALL other operations
+- **NEVER SHUTDOWN**: Absolute prohibition against stopping, restarting, or modifying vLLM containers
+- **OPERATIONAL CONSTRAINT**: vLLM containers are critical production systems - any disruption impacts entire RAG functionality
+- **PERMISSION REQUIRED**: Any vLLM-related changes require explicit user authorization
+
+#### 12.5.2 Compliance Verification
+- **File Verification**: Regular checks that all server files have project directory copies
+- **Backup Integration**: Verification that project directory files work with backup systems
+- **Version Control**: Ensure all project files are tracked in git
+- **Documentation Sync**: Ensure all server documentation is replicated in project directory
+
+### 12.6 Migration Protocol
+
+#### 12.6.1 File Migration Requirements
+- **PRIORITY**: Project directory files take precedence
+- **SERVER DEPLOYMENT**: Files deployed to servers only after project directory verification
+- **BACKUP BEFORE MODIFY**: Always backup project directory files before server deployment
+- **TESTING PROTOCOL**: Test all project directory files before server deployment
+
+#### 12.6.2 Migration Process
+1. **Create Project Directory Files**: All files must exist in project directory first
+2. **Test Project Files**: Verify all project directory files work correctly
+3. **Deploy to Servers**: Deploy to SARK/CLU only after project directory verification
+4. **Document Migration**: Record all file movements and changes
+5. **Verify Deployment**: Confirm server deployment matches project directory files
+
+### 12.7 Exception Handling
+
+#### 12.7.1 Zero Exceptions Policy
+- **NO EXCEPTIONS**: No exceptions to file location requirements
+- **MANDATORY DUPLICATION**: All server files must have project directory copies
+- **VERSION CONTROL COMPLIANCE**: All project files must be git-tracked
+- **BACKUP INTEGRATION**: All project files must work with backup systems
+
+#### 12.7.2 Emergency Procedures
+- **CRITICAL FAILURE**: Any deviation from file location requirements is critical
+- **IMMEDIATE CORRECTION**: Must be corrected immediately
+- **BACKUP RESTORATION**: Use project directory files to restore server files
+- **DOCUMENTATION UPDATE**: Record all deviations and corrections
+
+### 12.8 Integration with Existing Systems
+
+#### 12.8.1 Backup System Integration
+- **BACKUP SYSTEM PROTOCOL**: All project directory files must integrate with existing backup systems
+- **SERVER BACKUP REQUIREMENT**: Server files must be backed up using existing Borg backup system
+- **PROJECT DIRECTORY BACKUP**: Project directory files must be backed up with existing systems
+- **CONSISTENCY MAINTENANCE**: Ensure backup consistency across all systems
+
+#### 12.8.2 Version Control Integration
+- **GIT COMPLIANCE**: All project directory files must be tracked in git
+- **SERVER DEPLOYMENT**: Server files deployed only after git commit
+- **VERSION MAINTENANCE**: Maintain version consistency between project and server files
+- **ROLLBACK CAPABILITY**: Ensure ability to rollback to previous versions
+
+### 12.9 Quality Assurance and Verification
+
+#### 12.9.1 Regular Verification
+- **FILE VERIFICATION**: Regular checks that all server files have project directory copies
+- **BACKUP VERIFICATION**: Verification that backup systems include all project files
+- **VERSION CONTROL VERIFICATION**: Ensure all project files are git-tracked
+- **FUNCTIONALITY VERIFICATION**: Test that all project files work correctly
+
+#### 12.9.2 Audit Requirements
+- **DOCUMENTATION AUDIT**: Regular audits of file location compliance
+- **BACKUP AUDIT**: Verification that backup systems include all required files
+- **VERSION CONTROL AUDIT**: Ensure all files are properly tracked in git
+- **FUNCTIONALITY AUDIT**: Test that all deployed functionality works correctly
+
+### 12.10 Governance and Maintenance
+
+#### 12.10.1 Amendment Process
+- **EXPLICIT CONSENSUS**: Only through explicit consensus
+- **DOCUMENTATION UPDATE**: All amendments must be documented with revision history
+- **COMPLIANCE VERIFICATION**: Ensure all amendments comply with file location requirements
+- **BACKUP INTEGRATION**: Ensure amendments integrate with existing backup systems
+
+#### 12.10.2 Maintenance Requirements
+- **REGULAR AUDITS**: Regular verification of file location compliance
+- **BACKUP MAINTENANCE**: Regular maintenance of backup systems
+- **VERSION CONTROL MAINTENANCE**: Regular maintenance of version control systems
+- **DOCUMENTATION MAINTENANCE**: Regular updates to documentation and procedures
+
+---
+*Established: December 27, 2025*
+*Section: File Location and Repository Requirements*
+*Integration: Complete file management framework with zero tolerance for location deviations*
+*Conflict Resolution: Identified and resolved conflicts with existing backup system protocols*
