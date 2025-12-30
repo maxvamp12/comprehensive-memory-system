@@ -29,6 +29,12 @@
           "required": true
         }
       ]
+    },
+    "mcp-memory": {
+      "command": "node",
+      "args": [
+        "/Volumes/Dev/git/CLU_CODE/comprehensive-memory-system/.opencode/mcp/test-mcp-server.js"
+      ]
     }
   }
 }
