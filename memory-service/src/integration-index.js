@@ -4,7 +4,7 @@ const helmet = require('helmet');
 const winston = require('winston');
 
 const app = express();
-const PORT = 3000;
+const PORT = 8080;
 
 // Configure Winston logging
 const logger = winston.createLogger({
@@ -14,8 +14,7 @@ const logger = winston.createLogger({
     winston.format.json()
   ),
   transports: [
-    new winston.transports.Console(),
-    new winston.transports.File({ filename: 'logs/memory-service.log' })
+    new winston.transports.Console()
   ]
 });
 

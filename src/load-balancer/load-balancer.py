@@ -96,8 +96,8 @@ class LoadBalancer:
                 "path": "/api/v2/heartbeat",
             },
             "memory_service": {
-                "host": "192.168.68.71",
-                "port": 3000,
+                "host": "localhost",
+                "port": 8080,
                 "weight": 1,
                 "path": "/health",
             },
@@ -288,7 +288,7 @@ class LoadBalancer:
             if path == "/health":
                 target_url = f"http://{service.host}:{service.port}/health"
             else:
-                target_url = f"http://{service.host}:{service.port}{service.path}{path}"
+                target_url = f"http://{service.host}:{service.port}{path}"
         else:
             target_url = f"http://{service.host}:{service.port}{service.path}{path}"
 

@@ -1,20 +1,24 @@
 {
   "main": {
-    "id": "866cc3f766511433",
+    "id": "ee1e98af46bb2da0",
     "type": "split",
     "children": [
       {
-        "id": "d9031c79f3619850",
+        "id": "fb63f8ed7bbfbf3b",
         "type": "tabs",
         "children": [
           {
-            "id": "04e671832b8ac683",
+            "id": "c6aaddfdf106fd59",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "architecture/production-infrastructure.md",
+                "mode": "source",
+                "source": false
+              },
               "icon": "lucide-file",
-              "title": "New tab"
+              "title": "production-infrastructure"
             }
           }
         ]
@@ -23,15 +27,15 @@
     "direction": "vertical"
   },
   "left": {
-    "id": "ecc6b837597f908a",
+    "id": "3b7cc174d12b700d",
     "type": "split",
     "children": [
       {
-        "id": "9329a7e389e51819",
+        "id": "f21905ca9e09ede1",
         "type": "tabs",
         "children": [
           {
-            "id": "914254c1640ea39a",
+            "id": "b0c95144954866cd",
             "type": "leaf",
             "state": {
               "type": "file-explorer",
@@ -44,7 +48,7 @@
             }
           },
           {
-            "id": "ac0bfde0a85c3314",
+            "id": "81860304339dce28",
             "type": "leaf",
             "state": {
               "type": "search",
@@ -61,7 +65,7 @@
             }
           },
           {
-            "id": "40d217d0b5f7ae62",
+            "id": "155a025c63729761",
             "type": "leaf",
             "state": {
               "type": "bookmarks",
@@ -77,19 +81,20 @@
     "width": 300
   },
   "right": {
-    "id": "7eae11e1a55508fa",
+    "id": "1f91ac96dab81755",
     "type": "split",
     "children": [
       {
-        "id": "c4a2b022296de41c",
+        "id": "92ca603e1eaff89b",
         "type": "tabs",
         "children": [
           {
-            "id": "cc425e77b2aed00f",
+            "id": "e015f4848265e083",
             "type": "leaf",
             "state": {
               "type": "backlink",
               "state": {
+                "file": "architecture/production-infrastructure.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -99,24 +104,25 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Backlinks"
+              "title": "Backlinks for production-infrastructure"
             }
           },
           {
-            "id": "117f78d9eb1946a0",
+            "id": "0f529f77b37d8322",
             "type": "leaf",
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "architecture/production-infrastructure.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "Outgoing links"
+              "title": "Outgoing links from production-infrastructure"
             }
           },
           {
-            "id": "0583949fcee7ca9b",
+            "id": "34a792a904a0f0fa",
             "type": "leaf",
             "state": {
               "type": "tag",
@@ -131,7 +137,7 @@
             }
           },
           {
-            "id": "408aa4a2c1c94fdb",
+            "id": "dab0bf8c83835e60",
             "type": "leaf",
             "state": {
               "type": "all-properties",
@@ -145,17 +151,18 @@
             }
           },
           {
-            "id": "53364097267cbec6",
+            "id": "7d7523d77088a450",
             "type": "leaf",
             "state": {
               "type": "outline",
               "state": {
+                "file": "architecture/production-infrastructure.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Outline"
+              "title": "Outline of production-infrastructure"
             }
           }
         ]
@@ -176,49 +183,9 @@
       "bases:Create new base": false
     }
   },
-  "active": "04e671832b8ac683",
+  "active": "c6aaddfdf106fd59",
   "lastOpenFiles": [
-    "memory-service/test-memory-service.log",
-    "memory-service/src/test-memory.js",
-    "memory-service/memory-service.log",
-    "config/jwt-auth-config.js",
-    "memory-service/node_modules/chroma-js/vitest.config.mjs",
-    "memory-service/node_modules/chroma-js/eslint.config.mjs",
-    "memory-service/node_modules/chroma-js/readme.md",
-    "memory-service/node_modules/chroma-js/CHANGELOG.md",
-    "memory-service/node_modules/chroma-js/package.json",
-    "memory-service/node_modules/chroma-js/prettier.config.js",
-    "memory-service/node_modules/chroma-js/index.umd.light.js",
-    "memory-service/node_modules/chroma-js/index.umd.js",
-    "memory-service/node_modules/chroma-js/index.js",
-    "memory-service/node_modules/fsevents/README.md",
-    "documents/implementation-audit/phase-3-mcp-enhancement-audit.md",
-    "docs/implementation-guide-for-junior-engineers.md",
-    "docs/architecture/deployment-status.md",
-    "docs/architecture/system-architecture-diagram.md",
-    "docs/architecture/production-infrastructure.md",
-    "documents/opencode-agent-integration.md",
-    "documents/comprehensive-integration-guide.md",
-    "documents/implementation-audit/phase-4-production-deployment-audit.md",
-    "documents/memory-system-usage-guide.md",
-    "documents/production-deployment-documentation.md",
-    "documents/implementation-audit/project-completion-audit.md",
-    "documents/implementation-audit/phase-3-enhancement-and-optimization-audit.md",
-    "docs/prompt-engineering/vllm-configuration-guide.md",
-    "documents/implementation-audit/phase-3-security-reliability-testing-audit.md",
-    "documents/implementation-audit/phase-3-performance-testing-audit.md",
-    "docs/prompt-engineering/understanding-and-eliminating-ai-slop.md",
-    "docs/prompt-engineering/llm-directive-keywords-complete-guide.md",
-    "docs/prompt-engineering/personas-for-ai-quality-reducing-slop.md",
-    "documents/implementation-audit/phase-3-integration-testing-audit.md",
-    "docs/prompt-engineering/ai-slop-comprehensive-guide.md",
-    "docs/prompt-engineering/llm-directive-keywords-guide.md",
-    "documents/file-reorganization-summary.md",
-    "memory-service/node_modules/istanbul-reports/lib/html/assets/sort-arrow-sprite.png",
-    "memory-service/node_modules/istanbul-reports/lib/html-spa/assets/sort-arrow-sprite.png",
-    "memory-service/node_modules/istanbul-reports/lib/html/assets/favicon.png",
-    "memory-service/node_modules/@jest/reporters/assets/jest_logo.png",
-    "old/archive-old-code/_bmad/bmm/docs/images/workflow-method-greenfield.svg",
-    "archive-old-code/_bmad/bmm/docs/images/workflow-method-greenfield.svg"
+    "architecture/deployment-status.md",
+    "implementation-guide-for-junior-engineers.md"
   ]
 }
