@@ -928,6 +928,101 @@ The system only handles JSON text content. Users cannot:
 
 ---
 
+### 4.11 Reference: Zep Memory System
+
+**Review before implementing Phases 7-9** - Zep is the most mature open-source memory system and may provide implementation patterns we can learn from.
+
+#### Links
+- **Website**: https://www.getzep.com/
+- **GitHub**: https://github.com/getzep/zep
+- **Documentation**: https://docs.getzep.com/
+- **Python SDK**: https://github.com/getzep/zep-python
+- **TypeScript SDK**: https://github.com/getzep/zep-js
+- **Y Combinator**: https://www.ycombinator.com/launches/Kd4-zep-long-term-memory-for-ai-assistants
+
+#### Key Features to Study
+
+| Feature | Description | Relevance to Our System |
+|---------|-------------|------------------------|
+| **Graphiti** | Temporal knowledge graph framework | Could enhance our domain organization with time-aware facts |
+| **Fact Extraction** | Auto-builds fact tables from conversations | Could automate memory categorization |
+| **Dialog Classification** | Intent/emotion detection | Could improve keyword expansion |
+| **Structured Data Extraction** | Schema-defined extraction | Could help with document ingestion (Phase 9) |
+| **Temporal Tracking** | Facts have valid_at/invalid_at dates | Useful for tracking preference changes over time |
+
+#### Architecture Comparison
+
+```
+Zep Architecture:
+┌─────────────────────────────────────────────────────────┐
+│ Application                                             │
+└─────────────────────────────────────────────────────────┘
+         │
+         ▼
+┌─────────────────────────────────────────────────────────┐
+│ Zep Server                                              │
+│ ├── Memory Store (conversations)                        │
+│ ├── Graphiti (temporal knowledge graph)                 │
+│ ├── Fact Extraction (LLM-powered)                       │
+│ └── Dialog Classification                               │
+└─────────────────────────────────────────────────────────┘
+         │
+         ▼
+┌─────────────────────────────────────────────────────────┐
+│ External LLM API (OpenAI, Anthropic, etc.)              │
+└─────────────────────────────────────────────────────────┘
+
+Our Architecture:
+┌─────────────────────────────────────────────────────────┐
+│ AI Coding Assistant (MCP Client)                        │
+└─────────────────────────────────────────────────────────┘
+         │
+         ▼
+┌─────────────────────────────────────────────────────────┐
+│ MCP Memory Server (FastMCP)                             │
+│ ├── Multi-Domain Organization                           │
+│ ├── Keyword Expansion                                   │
+│ └── Fail-Safe Design                                    │
+└─────────────────────────────────────────────────────────┘
+         │
+         ▼
+┌─────────────────────────────────────────────────────────┐
+│ ChromaDB (self-hosted, no external LLM required)        │
+└─────────────────────────────────────────────────────────┘
+```
+
+#### Key Differences
+
+| Aspect | Zep | Our System |
+|--------|-----|------------|
+| LLM Dependency | **Required** (OpenAI, Anthropic) | **Optional** (vLLM local) |
+| Protocol | REST API | **MCP Native** |
+| Knowledge Structure | Temporal graph | Multi-domain collections |
+| Deployment | Cloud or self-hosted | **Fully self-hosted** |
+| Cost | LLM API costs | Infrastructure only |
+
+#### Features to Consider Adopting
+
+1. **Temporal Fact Tracking** (from Graphiti)
+   - Add `valid_from` and `valid_until` timestamps to memories
+   - Track when facts/preferences change
+   - Query "what did user prefer in Q3 2025?"
+
+2. **Automatic Fact Extraction**
+   - Use local vLLM to extract facts from conversations
+   - Auto-generate tags and keywords
+   - Build fact tables without manual tagging
+
+3. **Dialog Classification**
+   - Classify conversations by intent (question, decision, problem, etc.)
+   - Improve search relevance based on classification
+
+#### Implementation Notes
+
+Zep requires an external LLM API, which adds cost and latency. Our system's advantage is using local vLLM infrastructure, eliminating per-request API costs. When adopting Zep's patterns, implement them using our local vLLM cluster rather than external APIs.
+
+---
+
 ## 5. Implementation Guides
 
 ### 5.1 Implementing User Isolation
