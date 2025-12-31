@@ -1,0 +1,53 @@
+version: '3.8'
+
+# MCP Memory System Deployment for CLU (192.168.68.71)
+# Deploy with: docker-compose up -d
+
+services:
+  mcp-memory-system:
+    container_name: mcp-memory-system
+    build:
+      context: ../..
+      dockerfile: deployment/clu/Dockerfile
+    restart: unless-stopped
+    ports:
+      - "8200:8200"
+    volumes:
+      # Persistent storage for SQLite database
+      - memory-data:/app/data
+      # Optional: Mount logs directory
+      - memory-logs:/app/logs
+    environment:
+      - PYTHONUNBUFFERED=1
+      - MCP_MEMORY_DB_PATH=/app/data/memory_system.db
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8200/sse"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    networks:
+      - memory-network
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+volumes:
+  memory-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /opt/mcp-memory-system/data
+  memory-logs:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /opt/mcp-memory-system/logs
+
+networks:
+  memory-network:
+    driver: bridge

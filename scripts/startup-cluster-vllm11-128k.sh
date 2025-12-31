@@ -1,8 +1,8 @@
 #!/bin/bash
 # =============================================================================
 # GLM-4.5-Air vLLM 0.11 Cluster Startup - 128k Context with fp8 KV Cache
-# SARK (spark-8b86) - 192.168.101.10 - Head node
-# CLU  (spark-f4cd) - 192.168.101.11 - Worker node
+# SARK (spark-8b86) - 192.168.68.69 - Head node
+# CLU  (spark-f4cd) - 192.168.68.71 - Worker node
 # =============================================================================
 # STABLE CONFIGURATION - Model max_position_embeddings = 131072 (128k)
 # DO NOT EXCEED 128k - architectural limit, will cause NaN or CUDA errors
@@ -26,8 +26,8 @@ for arg in "$@"; do
     esac
 done
 
-SARK_IP="192.168.101.10"
-CLU_IP="192.168.101.11"
+SARK_IP="192.168.68.69"
+CLU_IP="192.168.68.71"
 
 echo "=============================================="
 echo "  GLM-4.5-Air vLLM 0.11 - 128k Context"
@@ -83,8 +83,11 @@ echo ""
 echo "Starting Redis Caching Service on CLU..."
 ssh $CLU_IP "docker start redis-caching 2>/dev/null" && echo "  Redis Caching Service started" || echo "  Redis Caching Service already running or not found"
 
-echo "Starting Memory System on CLU..."
-ssh $CLU_IP "docker start memory-system 2>/dev/null" && echo "  Memory System started" || echo "  Memory System already running or not found"
+echo "Starting MCP Memory System on CLU..."
+ssh $CLU_IP "docker start mcp-memory-system 2>/dev/null" && echo "  MCP Memory System started" || echo "  MCP Memory System not deployed yet"
+
+echo "Starting Legacy Memory System on CLU..."
+ssh $CLU_IP "docker start memory-system 2>/dev/null" && echo "  Legacy Memory System started" || echo "  Legacy Memory System not found (OK)"
 
 echo ""
 echo "=== Step 2: Start vLLM head on SARK ==="
@@ -231,15 +234,16 @@ echo "  STARTUP COMPLETE"
 echo "=============================================="
 echo ""
 echo "Access points:"
-echo "  GLM-4.5-Air API:  http://192.168.101.10:8080/v1  (external)"
-echo "  ChromaDB:         http://192.168.101.10:8001     (SARK)"
-echo "  Memory System:    http://192.168.101.11:3000    (CLU)"
+echo "  GLM-4.5-Air API:  http://192.168.68.69:8080/v1   (SARK)"
+echo "  ChromaDB:         http://192.168.68.69:8001      (SARK)"
+echo "  MCP Memory:       http://192.168.68.71:8200/sse  (CLU - for opencode)"
+echo "  Legacy Memory:    http://192.168.68.71:3000      (CLU)"
 echo "  Server logs:      /home/maxvamp/vllm-logs/server.log"
 echo ""
 echo "Configuration:"
 echo "  - Max context: 128k tokens (131072)"
 
-echo "  - Backup monitoring: http://192.168.101.10:2223/metrics"
+echo "  - Backup monitoring: http://192.168.68.69:2223/metrics"
 echo "  - KV cache: fp8 (memory optimized)"
 echo "  - GPU memory: 0.80 utilization"
 echo "  - Restart policy: unless-stopped"

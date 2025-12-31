@@ -14,7 +14,7 @@ BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
 # Configuration
-CLU_IP="192.168.100.11"  # CLU cluster IP on high-speed private network (spark-f4cd)
+CLU_IP="192.168.68.71"  # Correct CLU cluster IP address
 BACKUP_SCRIPT="/home/maxvamp/borg-docker/backup.sh"
 LOG_FILE="/home/maxvamp/borg-docker/backup-clu.log"
 
@@ -53,113 +53,184 @@ check_clu_connectivity() {
         return 1
     fi
     
-    print_status "Memory system data directory verified on CLU"
+    # Check if Redis data directory exists
+    if ! ssh maxvamp@$CLU_IP "docker exec redis-caching test -d /data"; then
+        print_warning "Redis data directory not accessible on CLU"
+        return 1
+    fi
+    
+    print_status "Memory system and Redis data directories verified on CLU"
     return 0
 }
 
-# Check memory system container status
-check_memory_container() {
-    print_info "Checking memory system container status..."
+# Check container status
+check_container_status() {
+    local container_name=$1
+    print_info "Checking $container_name container status..."
     
-    local status=$(ssh maxvamp@$CLU_IP "docker ps -q --filter name=memory-system")
+    local status=$(ssh maxvamp@$CLU_IP "docker ps -q --filter name=$container_name")
     if [ -n "$status" ]; then
-        print_status "Memory system container is running"
+        print_status "$container_name container is running"
         return 0
     else
-        print_warning "Memory system container is not running"
+        print_warning "$container_name container is not running"
         return 1
     fi
 }
 
-# Stop memory system container for consistent backup
-stop_memory_container() {
-    print_info "Stopping memory system container on CLU..."
+# Backup Redis data
+backup_redis_data() {
+    print_info "Backing up Redis data..."
     
-    if ssh maxvamp@$CLU_IP "docker stop memory-system"; then
-        print_status "Memory system container stopped successfully"
-        sleep 3  # Give time for processes to clean up
-        return 0
+    # Trigger Redis BGSAVE
+    if ssh maxvamp@$CLU_IP "docker exec redis-caching redis-cli BGSAVE"; then
+        print_status "Redis BGSAVE triggered successfully"
+        sleep 2  # Give time for save to complete
     else
-        print_warning "Could not stop memory system container (may already be stopped)"
-        return 0
+        print_warning "Redis BGSAVE failed, continuing with sync"
     fi
+    
+    return 0
 }
 
-# Start memory system container after backup
-start_memory_container() {
-    print_info "Starting memory system container on CLU..."
-    
-    if ssh maxvamp@$CLU_IP "docker start memory-system"; then
-        print_status "Memory system container started successfully"
-        return 0
+# Stop containers for consistent backup
+stop_containers() {
+    print_info "Stopping containers for consistent backup..."
+
+    # Stop MCP Memory System (new Python-based)
+    if ssh maxvamp@$CLU_IP "docker stop mcp-memory-system 2>/dev/null"; then
+        print_status "MCP Memory System stopped"
     else
-        print_error "Failed to start memory system container"
-        return 1
+        print_warning "MCP Memory System not running or not deployed"
     fi
+
+    # Stop Memory Service (legacy)
+    if ssh maxvamp@$CLU_IP "docker stop enhanced-memory-service 2>/dev/null"; then
+        print_status "Enhanced Memory Service stopped"
+    else
+        print_warning "Enhanced Memory Service already stopped or failed to stop"
+    fi
+
+    # Stop Redis
+    if ssh maxvamp@$CLU_IP "docker stop redis-caching 2>/dev/null"; then
+        print_status "Redis caching service stopped"
+    else
+        print_warning "Redis caching service already stopped or failed to stop"
+    fi
+
+    sleep 3  # Give time for processes to clean up
 }
 
-# Cleanup CLU data mount
-cleanup_clu_mount() {
-    print_info "Cleaning up CLU data mount..."
-    
-    MOUNT_POINT="/tmp/clu-memory-system"
-    
-    if mountpoint -q "$MOUNT_POINT" 2>/dev/null; then
-        umount "$MOUNT_POINT"
-        print_status "Unmounted CLU data"
+# Start containers after backup
+start_containers() {
+    print_info "Starting containers after backup..."
+
+    # Start Redis first (dependency for Memory Service)
+    if ssh maxvamp@$CLU_IP "docker start redis-caching 2>/dev/null"; then
+        print_status "Redis caching service started"
+        sleep 2  # Give Redis time to initialize
+    else
+        print_error "Failed to start Redis caching service"
     fi
-    
-    if [ -d "$MOUNT_POINT" ]; then
-        rmdir "$MOUNT_POINT"
-        print_status "Removed mount point"
+
+    # Start MCP Memory System (new Python-based)
+    if ssh maxvamp@$CLU_IP "docker start mcp-memory-system 2>/dev/null"; then
+        print_status "MCP Memory System started"
+    else
+        print_warning "MCP Memory System not deployed or failed to start"
     fi
+
+    # Start Memory Service (legacy)
+    if ssh maxvamp@$CLU_IP "docker start enhanced-memory-service 2>/dev/null"; then
+        print_status "Enhanced Memory Service started"
+    else
+        print_error "Failed to start Enhanced Memory Service"
+    fi
+
+    # Verify containers are running
+    sleep 5
+    check_container_status "redis-caching"
+    check_container_status "mcp-memory-system" || true
+    check_container_status "enhanced-memory-service"
 }
 
 # Sync CLU data to SARK for backup
 sync_clu_data() {
-    print_info "Syncing CLU memory system data to SARK..."
+    print_info "Syncing CLU data to SARK..."
 
     # Create local directory for CLU data
     CLU_BACKUP_DIR="/home/maxvamp/clu-backup"
     mkdir -p "$CLU_BACKUP_DIR"
 
-    # Sync memory system data from CLU (force use of private 192.168.100.x network)
-    print_info "Syncing /opt/memory-system/data from CLU via private network..."
-    rsync -avz --delete \
-        -e "ssh -o BindAddress=192.168.100.10" \
-        maxvamp@192.168.100.11:/opt/memory-system/data/ \
-        "$CLU_BACKUP_DIR/memory-system-data/" 2>&1 || {
-        print_warning "Failed to sync memory-system data"
-    }
+    # Sync MCP memory system data (new Python-based)
+    print_info "Syncing /opt/mcp-memory-system/data from CLU..."
+    if rsync -avz --delete \
+        -e "ssh -o BindAddress=192.168.68.69" \
+        maxvamp@$CLU_IP:/opt/mcp-memory-system/data/ \
+        "$CLU_BACKUP_DIR/mcp-memory-system-data/" 2>&1; then
+        print_status "MCP memory system data synced successfully"
+    else
+        print_warning "MCP memory system data sync failed (may not be deployed yet)"
+    fi
 
-    print_status "CLU data synced to $CLU_BACKUP_DIR"
+    # Sync legacy memory system data from CLU
+    print_info "Syncing /opt/memory-system/data from CLU..."
+    if rsync -avz --delete \
+        -e "ssh -o BindAddress=192.168.68.69" \
+        maxvamp@$CLU_IP:/opt/memory-system/data/ \
+        "$CLU_BACKUP_DIR/memory-system-data/" 2>&1; then
+        print_status "Memory system data synced successfully"
+    else
+        print_error "Failed to sync memory system data"
+        return 1
+    fi
+
+    # Sync Redis data from CLU
+    print_info "Syncing Redis data from CLU..."
+    if rsync -avz --delete \
+        -e "ssh -o BindAddress=192.168.68.69" \
+        maxvamp@$CLU_IP:/data/ \
+        "$CLU_BACKUP_DIR/redis-data/" 2>&1; then
+        print_status "Redis data synced successfully"
+    else
+        print_error "Failed to sync Redis data"
+        return 1
+    fi
+
+    return 0
 }
 
 # Backup CLU memory system data
 backup_clu_data() {
     print_info "Starting CLU memory system backup..."
-
+    
     # Check CLU connectivity
     if ! check_clu_connectivity; then
         print_warning "CLU connectivity check failed, skipping CLU backup"
         return 0
     fi
-
-    # Check current container status
-    print_info "Checking current memory system container status..."
-    local was_running=0
-    if check_memory_container; then
-        was_running=1
-    fi
-
-    # Stop memory container for consistent backup
-    print_info "Stopping memory system container for consistent backup..."
-    stop_memory_container
-
+    
+    # Backup Redis data first
+    backup_redis_data
+    
+    # Stop containers for consistent backup
+    print_info "Stopping containers for consistent backup..."
+    stop_containers
+    
     # Sync CLU data to SARK
-    sync_clu_data
-
-    print_status "CLU memory system backup setup completed successfully"
+    if sync_clu_data; then
+        print_status "CLU data synced successfully"
+    else
+        print_error "CLU data sync failed"
+        return 1
+    fi
+    
+    # Start containers after backup
+    print_info "Starting containers after backup..."
+    start_containers
+    
+    print_status "CLU memory system backup completed successfully"
+    return 0
 }
 
 # Main function
@@ -180,23 +251,24 @@ main() {
     fi
     
     # Run CLU backup
-    backup_clu_data
+    if backup_clu_data; then
+        print_status "CLU backup completed successfully"
+    else
+        print_error "CLU backup failed"
+        exit 1
+    fi
     
     # Run main backup
     print_info "Running main backup script..."
     "$BACKUP_SCRIPT"
-    
-    # Ensure memory container is restarted after backup
-    print_info "Ensuring memory system container is running..."
-    start_memory_container
-    check_memory_container
     
     print_status "CLU backup extension completed"
 }
 
 # Cleanup function
 cleanup() {
-    cleanup_clu_mount
+    print_info "Cleaning up temporary files..."
+    # Add any cleanup operations here
 }
 
 # Handle cleanup on exit

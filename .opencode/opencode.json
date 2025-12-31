@@ -94,12 +94,17 @@
       }
     },
     "memory-system": {
+      "type": "remote",
+      "url": "http://192.168.68.71:8200/sse",
+      "enabled": true
+    },
+    "memory-system-local": {
       "type": "local",
       "command": [
         "python3",
         "/Volumes/Dev/git/CLU_CODE/comprehensive-memory-system/.opencode/mcp/memory-system-mcp-server.py"
       ],
-      "enabled": true
+      "enabled": false
     }
     
   },

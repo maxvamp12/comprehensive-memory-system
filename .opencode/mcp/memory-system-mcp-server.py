@@ -36,9 +36,17 @@ logger = logging.getLogger(__name__)
 
 # Import the MCP SDK
 from mcp.server.fastmcp import FastMCP
+from mcp.server.transport_security import TransportSecuritySettings
 
 # Import memory system
 from src.memory.multi_domain_memory_system import MemoryManager, MCPMemoryInterface
+
+# Configure transport security to allow network access
+transport_security = TransportSecuritySettings(
+    enable_dns_rebinding_protection=False,  # Disable for network access
+    allowed_hosts=["*"],  # Allow all hosts
+    allowed_origins=["*"],  # Allow all origins for CORS
+)
 
 # Initialize the MCP server
 mcp = FastMCP(
@@ -55,6 +63,7 @@ Available tools:
 Domains: bmad_code, website_info, religious_discussions, electronics_maker
 
 WORKFLOW: Always call retrieve_memories first, only use external search if memory has no results.""",
+    transport_security=transport_security,
 )
 
 # Initialize memory system (lazy initialization for flexibility)
@@ -256,11 +265,16 @@ def run_http_server(host: str = "0.0.0.0", port: int = 8200):
     logger.info(f"Starting Memory System MCP Server on http://{host}:{port}")
     logger.info(f"MCP endpoint: http://{host}:{port}/sse")
 
-    # Get the ASGI app for SSE transport
+    # Get the ASGI app for SSE transport (transport_security already configured above)
     app = mcp.sse_app()
 
     # Run with uvicorn
-    uvicorn.run(app, host=host, port=port, log_level="info")
+    uvicorn.run(
+        app,
+        host=host,
+        port=port,
+        log_level="info",
+    )
 
 
 def run_stdio_server():

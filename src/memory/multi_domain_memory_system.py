@@ -428,7 +428,10 @@ class MemoryStorage:
 class MemoryManager:
     """High-level memory management system"""
 
-    def __init__(self, storage_path: str = "memory_system.db"):
+    def __init__(self, storage_path: str = None):
+        # Use environment variable if set, otherwise use default
+        if storage_path is None:
+            storage_path = os.environ.get("MCP_MEMORY_DB_PATH", "memory_system.db")
         self.storage = MemoryStorage(storage_path)
         self.domain_validators = {
             "bmad_code": self._validate_bmad_code,
