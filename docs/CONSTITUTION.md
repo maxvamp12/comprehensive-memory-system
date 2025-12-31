@@ -890,3 +890,100 @@ Ready for Phase [X+1]: ✅ YES/NO
 *Section: File Location and Repository Requirements*
 *Integration: Complete file management framework with zero tolerance for location deviations*
 *Conflict Resolution: Identified and resolved conflicts with existing backup system protocols*
+## OPCODE CONFIGURATION LOCATION REQUIREMENTS
+
+### 13.1 Opencode Configuration Directive
+**MANDATORY REQUIREMENT**: ALL Opencode configuration files and MCP server configurations MUST be stored in the local project folder root directory, NOT in the user's home directory.
+
+#### 13.1.1 Absolute Requirements
+- **Project Root Directory**: `/Volumes/Dev/git/CLU_CODE/comprehensive-memory-system/` is the ONLY authorized location for:
+  - `.opencode/` directory and all its contents
+  - `.mcp.json` configuration file
+  - All MCP server implementations and client files
+  - All Opencode-related configuration and metadata files
+
+#### 13.1.2 Home Directory Prohibition
+- **ZERO TOLERANCE**: `.opencode/` directories and configuration files are PROHIBITED from user's home directory (`~/.opencode/`)
+- **MANDATORY LOCAL STORAGE**: All Opencode configurations must exist exclusively in the project directory
+- **NO HOME DIRECTORY CONFIGURATION**: Opencode must be configured to use local project directory, not home directory
+
+#### 13.1.3 Configuration File Requirements
+- **.mcp.json Location**: MUST be at project root: `/Volumes/Dev/git/CLU_CODE/comprehensive-memory-system/.mcp.json`
+- **MCP Server Location**: MUST be in project directory: `/Volumes/Dev/git/CLU_CODE/comprehensive-memory-system/.opencode/mcp/`
+- **Opencode Configuration**: MUST be in project directory: `/Volumes/Dev/git/CLU_CODE/comprehensive-memory-system/.opencode/`
+
+#### 13.1.4 MCP Server Implementation Requirements
+- **Server Scripts**: All MCP server implementations MUST be stored in `.opencode/mcp/` directory
+- **Configuration**: MCP server configurations MUST reference absolute paths to project directory files
+- **Client Files**: MCP client implementations MUST be stored in `.opencode/mcp/clients/` directory
+- **Package Management**: MCP server dependencies MUST be managed within the `.opencode/mcp/` directory
+
+### 13.2 Configuration Management Protocol
+
+#### 13.2.1 Configuration File Creation
+- **PROJECT DIRECTORY FIRST**: All configuration files MUST be created in project directory first
+- **VALIDATION BEFORE USE**: Configuration MUST be validated before deployment or use
+- **BACKUP REQUIREMENT**: Configuration files MUST be backed up with existing backup systems
+- **VERSION CONTROL**: Configuration files MUST be tracked in git
+
+#### 13.2.2 Configuration Verification
+- **FILE EXISTENCE**: All configuration files MUST exist in project directory
+- **PATH VALIDATION**: All file paths in configurations MUST use absolute paths to project directory
+- **FUNCTIONALITY TESTING**: Configuration MUST be tested for functionality before deployment
+- **INTEGRATION VERIFICATION**: Configuration MUST be verified to work with existing systems
+
+#### 13.2.3 MCP Server Integration
+- **SERVER PATHS**: MCP server configurations MUST use absolute paths to project directory files
+- **RELATIVE PATHS PROHIBITED**: No relative paths allowed in MCP server configurations
+- **ABSOLUTE PATHS REQUIRED**: All file references MUST use absolute paths from project root
+- **TESTING PROTOCOL**: MCP servers MUST be tested for functionality before integration
+
+### 13.3 Enforcement and Compliance
+
+#### 13.3.1 Zero Tolerance Policy
+- **MANDATORY COMPLIANCE**: All Opencode configurations MUST be in project directory
+- **NO EXCEPTIONS**: No home directory configurations allowed
+- **DUPLICATION PROHIBITED**: No duplication between home and project directories
+- **VERSION CONTROL REQUIRED**: All configurations MUST be git-tracked
+
+#### 13.3.2 Verification Protocol
+- **REGULAR AUDITS**: Regular verification that all Opencode configurations are in project directory
+- **PATH VALIDATION**: Regular validation that all file paths are absolute and correct
+- **FUNCTIONALITY TESTING**: Regular testing that all configurations work correctly
+- **INTEGRATION VERIFICATION**: Regular verification that configurations integrate with existing systems
+
+#### 13.3.3 Emergency Procedures
+- **CRITICAL FAILURE**: Any home directory configuration is critical failure
+- **IMMEDIATE CORRECTION**: Must be corrected immediately by moving to project directory
+- **BACKUP RESTORATION**: Use project directory configurations to restore correct state
+- **DOCUMENTATION UPDATE**: Record all corrections and deviations
+
+### 13.4 Integration with Existing Systems
+
+#### 13.4.1 Backup System Integration
+- **BACKUP SYSTEM PROTOCOL**: All Opencode configurations MUST integrate with existing backup systems
+- **PROJECT DIRECTORY BACKUP**: Project directory configurations MUST be backed up with existing systems
+- **CONSISTENCY MAINTENANCE**: Ensure backup consistency across all configurations
+- **RECOVERY CAPABILITY**: Ensure ability to restore configurations from backups
+
+#### 13.4.2 Version Control Integration
+- **GIT COMPLIANCE**: All Opencode configurations MUST be tracked in git
+- **CONFIGURATION DEPLOYMENT**: Configurations deployed only after git commit
+- **VERSION MAINTENANCE**: Maintain version consistency between configurations
+- **ROLLBACK CAPABILITY**: Ensure ability to rollback to previous configurations
+
+### 13.5 Governance and Maintenance
+
+#### 13.5.1 Amendment Process
+- **EXPLICIT CONSENSUS**: Only through explicit consensus
+- **DOCUMENTATION UPDATE**: All amendments must be documented with revision history
+- **COMPLIANCE VERIFICATION**: Ensure all amendments comply with configuration location requirements
+- **BACKUP INTEGRATION**: Ensure amendments integrate with existing backup systems
+
+#### 13.5.2 Maintenance Requirements
+- **REGULAR AUDITS**: Regular verification of configuration location compliance
+- **BACKUP MAINTENANCE**: Regular maintenance of backup systems for configurations
+- **VERSION CONTROL MAINTENANCE**: Regular maintenance of version control systems for configurations
+- **FUNCTIONALITY MAINTENANCE**: Regular updates to ensure configurations work correctly
+
+--- *Established: December 30, 2025* *Section: Opencode Configuration Location Requirements* *Integration: Complete Opencode configuration management framework with zero tolerance for home directory configurations* *Enforcement: Mandatory project directory storage for all Opencode configurations*
