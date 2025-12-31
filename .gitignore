@@ -98,6 +98,8 @@ party-mode-*.yaml
 *.md
 !CONSTITUTION.md
 !MEMORY_INSTRUCTIONS.md
+!docs/**/*.md
+!SESSION_RESUME_CONTEXT.md
 
 # BMAD-generated files
 _bmad-output/
