@@ -794,6 +794,140 @@ Optimize system performance and infrastructure efficiency.
 
 ---
 
+### 4.9 Phase 9: Document & Image Memory (Priority: P2)
+**Timeline: 3-4 weeks**
+
+#### Objective
+Extend the memory system to store and retrieve information from documents and images, not just text conversations.
+
+#### Current Limitation
+The system only handles JSON text content. Users cannot:
+- Upload and remember PDF documentation
+- Store images with searchable descriptions
+- Extract text from screenshots or diagrams
+- Search across document content
+
+#### Tasks
+
+1. **Document ingestion pipeline**
+   - Parse PDF files (PyPDF2, pdfplumber)
+   - Parse Word documents (python-docx)
+   - Parse Markdown files
+   - Extract text, tables, and structure
+   - Chunk documents for embedding
+
+   ```python
+   @mcp.tool()
+   def store_document(
+       user_id: str,
+       domain: str,
+       file_path: str,           # Local file path
+       document_type: str,       # pdf, docx, md, txt
+       tags: Optional[List[str]] = None,
+   ) -> dict:
+       """Ingest a document into memory system"""
+       # 1. Read and parse document
+       # 2. Chunk into sections
+       # 3. Generate embeddings per chunk
+       # 4. Store with document metadata
+   ```
+
+2. **Image memory support**
+   - Store images with descriptions
+   - Generate image embeddings (CLIP model)
+   - OCR for text extraction (Tesseract)
+   - Screenshot analysis
+
+   ```python
+   @mcp.tool()
+   def store_image(
+       user_id: str,
+       domain: str,
+       image_path: str,
+       description: Optional[str] = None,  # User-provided or AI-generated
+       extract_text: bool = True,          # OCR
+       tags: Optional[List[str]] = None,
+   ) -> dict:
+       """Store an image in memory with searchable content"""
+       # 1. Read image
+       # 2. Generate CLIP embedding for visual search
+       # 3. Run OCR if requested
+       # 4. Store image reference + extracted content
+   ```
+
+3. **Multimodal search**
+   - Search by text across documents and images
+   - Search by image similarity (find similar diagrams)
+   - Combined text + visual search
+
+   ```python
+   @mcp.tool()
+   def search_documents(
+       user_id: str,
+       query: str,
+       document_types: Optional[List[str]] = None,  # pdf, image, etc.
+       domain: Optional[str] = None,
+   ) -> dict:
+       """Search across all document types"""
+   ```
+
+4. **File storage backend**
+   - Store actual files (not just metadata)
+   - Options: Local filesystem, MinIO/S3, or inline in ChromaDB
+   - File deduplication by content hash
+
+#### Technology Options
+
+| Capability | Option A | Option B |
+|------------|----------|----------|
+| PDF Parsing | PyPDF2 | pdfplumber (better tables) |
+| Image Embeddings | CLIP (OpenAI) | SigLIP (Google) |
+| OCR | Tesseract | EasyOCR |
+| File Storage | Local + paths | MinIO S3-compatible |
+| Document Chunking | LangChain splitters | Custom sliding window |
+
+#### New MCP Tools
+
+| Tool | Purpose |
+|------|---------|
+| `store_document` | Ingest PDF, Word, Markdown files |
+| `store_image` | Store images with embeddings + OCR |
+| `search_documents` | Search across all content types |
+| `get_document` | Retrieve original document |
+| `list_documents` | List stored documents by domain |
+
+#### Deliverables
+- [ ] Document parsing pipeline (PDF, Word, Markdown)
+- [ ] Image storage with CLIP embeddings
+- [ ] OCR integration for text extraction
+- [ ] Multimodal search capability
+- [ ] File storage backend
+- [ ] New MCP tools implemented
+- [ ] Documentation updated
+
+---
+
+### 4.10 Competitive Analysis Note
+
+**Open Source Alternatives:**
+
+| Project | MCP Support | Multi-Domain | Documents | Images | Self-Hosted |
+|---------|-------------|--------------|-----------|--------|-------------|
+| **Our System** | ✅ Native | ✅ Yes | ❌ Phase 9 | ❌ Phase 9 | ✅ Yes |
+| Mem0 | ❌ No | ❌ No | ✅ Yes | ❌ No | ✅ Yes |
+| Zep | ❌ No | ❌ No | ✅ Partial | ❌ No | ✅ Yes |
+| MemGPT | ❌ No | ❌ No | ✅ Yes | ❌ No | ✅ Yes |
+| LangChain Memory | ❌ No | ❌ No | ✅ Via loaders | ❌ No | ✅ Yes |
+
+**Our Unique Value:**
+- Only memory system with native MCP protocol support
+- Multi-domain organization for topic separation
+- Domain-specific keyword expansion
+- Fail-safe data protection
+- Full self-hosted infrastructure control
+
+---
+
 ## 5. Implementation Guides
 
 ### 5.1 Implementing User Isolation
