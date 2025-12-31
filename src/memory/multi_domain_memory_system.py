@@ -3,9 +3,12 @@
 Multi-Domain Memory System Core Implementation
 Implements structured memory storage for multiple domains: BMAD code, website info, religious discussions, electronics/maker
 
-Supports two storage backends:
-- ChromaDB (default): Enterprise-level vector database for semantic search
-- SQLite (fallback): Local file-based storage when ChromaDB is unavailable
+Storage Backend:
+- ChromaDB (REQUIRED): Enterprise-level vector database for semantic search on SARK:8001
+- SQLite: Only available with allow_fallback=True (NOT recommended for production)
+
+IMPORTANT: By default, the system will FAIL if ChromaDB is unavailable.
+This prevents silent data loss from storing data in SQLite that won't sync to ChromaDB.
 """
 
 import json
@@ -442,35 +445,58 @@ class MemoryStorage:
 
 
 class MemoryManager:
-    """High-level memory management system with ChromaDB or SQLite backend"""
+    """High-level memory management system with ChromaDB backend (required by default)"""
 
-    def __init__(self, storage_path: str = None, use_chromadb: bool = True):
+    def __init__(self, storage_path: str = None, use_chromadb: bool = True, allow_fallback: bool = False):
         """
         Initialize memory manager.
 
         Args:
-            storage_path: Path for SQLite fallback storage
-            use_chromadb: Whether to use ChromaDB (default True, falls back to SQLite if unavailable)
+            storage_path: Path for SQLite storage (only used if allow_fallback=True)
+            use_chromadb: Whether to use ChromaDB (default True)
+            allow_fallback: If False (default), raises error when ChromaDB unavailable.
+                           This prevents silent data loss from storing in wrong backend.
+                           Set to True only for local development/testing.
         """
         self.use_chromadb = use_chromadb and CHROMADB_AVAILABLE
+        self.allow_fallback = allow_fallback
         self._chromadb_storage = None
         self._sqlite_storage = None
 
-        # Try to initialize ChromaDB first
+        # Try to initialize ChromaDB
         if self.use_chromadb:
             try:
                 self._chromadb_storage = get_chromadb_storage()
                 logger.info("Using ChromaDB storage backend")
             except Exception as e:
-                logger.warning(f"ChromaDB initialization failed: {e}, falling back to SQLite")
-                self.use_chromadb = False
+                if not self.allow_fallback:
+                    # Fail explicitly to prevent data loss
+                    error_msg = (
+                        f"ChromaDB connection failed: {e}\n"
+                        f"ChromaDB is REQUIRED to prevent data loss.\n"
+                        f"Ensure ChromaDB is running at the configured host:port.\n"
+                        f"Set allow_fallback=True only for local development (NOT recommended for production)."
+                    )
+                    logger.error(error_msg)
+                    raise ConnectionError(error_msg) from e
+                else:
+                    logger.warning(f"ChromaDB initialization failed: {e}")
+                    logger.warning("FALLING BACK TO SQLITE - DATA WILL NOT SYNC TO CHROMADB!")
+                    self.use_chromadb = False
 
-        # Initialize SQLite as fallback
+        # Initialize SQLite only if fallback is explicitly allowed
         if not self.use_chromadb:
+            if not self.allow_fallback:
+                raise ConnectionError(
+                    "ChromaDB is required but not available. "
+                    "Ensure ChromaDB is running and CHROMADB_HOST/CHROMADB_PORT are configured. "
+                    "Set allow_fallback=True only for local development."
+                )
             if storage_path is None:
                 storage_path = os.environ.get("MCP_MEMORY_DB_PATH", "memory_system.db")
             self._sqlite_storage = MemoryStorage(storage_path)
-            logger.info(f"Using SQLite storage backend: {storage_path}")
+            logger.warning(f"USING SQLITE FALLBACK: {storage_path}")
+            logger.warning("WARNING: Data stored here will NOT be available in ChromaDB!")
 
         # For backward compatibility
         self.storage = self._sqlite_storage if self._sqlite_storage else None
