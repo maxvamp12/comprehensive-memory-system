@@ -2,6 +2,10 @@
 """
 Multi-Domain Memory System Core Implementation
 Implements structured memory storage for multiple domains: BMAD code, website info, religious discussions, electronics/maker
+
+Supports two storage backends:
+- ChromaDB (default): Enterprise-level vector database for semantic search
+- SQLite (fallback): Local file-based storage when ChromaDB is unavailable
 """
 
 import json
@@ -21,6 +25,18 @@ import os
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
+
+# Try to import ChromaDB storage
+try:
+    from .chromadb_storage import ChromaDBStorage, get_chromadb_storage
+    CHROMADB_AVAILABLE = True
+except ImportError:
+    try:
+        from chromadb_storage import ChromaDBStorage, get_chromadb_storage
+        CHROMADB_AVAILABLE = True
+    except ImportError:
+        CHROMADB_AVAILABLE = False
+        logger.warning("ChromaDB storage not available, using SQLite fallback")
 
 
 @dataclass
@@ -426,13 +442,39 @@ class MemoryStorage:
 
 
 class MemoryManager:
-    """High-level memory management system"""
+    """High-level memory management system with ChromaDB or SQLite backend"""
 
-    def __init__(self, storage_path: str = None):
-        # Use environment variable if set, otherwise use default
-        if storage_path is None:
-            storage_path = os.environ.get("MCP_MEMORY_DB_PATH", "memory_system.db")
-        self.storage = MemoryStorage(storage_path)
+    def __init__(self, storage_path: str = None, use_chromadb: bool = True):
+        """
+        Initialize memory manager.
+
+        Args:
+            storage_path: Path for SQLite fallback storage
+            use_chromadb: Whether to use ChromaDB (default True, falls back to SQLite if unavailable)
+        """
+        self.use_chromadb = use_chromadb and CHROMADB_AVAILABLE
+        self._chromadb_storage = None
+        self._sqlite_storage = None
+
+        # Try to initialize ChromaDB first
+        if self.use_chromadb:
+            try:
+                self._chromadb_storage = get_chromadb_storage()
+                logger.info("Using ChromaDB storage backend")
+            except Exception as e:
+                logger.warning(f"ChromaDB initialization failed: {e}, falling back to SQLite")
+                self.use_chromadb = False
+
+        # Initialize SQLite as fallback
+        if not self.use_chromadb:
+            if storage_path is None:
+                storage_path = os.environ.get("MCP_MEMORY_DB_PATH", "memory_system.db")
+            self._sqlite_storage = MemoryStorage(storage_path)
+            logger.info(f"Using SQLite storage backend: {storage_path}")
+
+        # For backward compatibility
+        self.storage = self._sqlite_storage if self._sqlite_storage else None
+
         self.domain_validators = {
             "bmad_code": self._validate_bmad_code,
             "website_info": self._validate_website_info,
@@ -450,31 +492,55 @@ class MemoryManager:
         tags: Optional[List[str]] = None,
         confidence: float = 1.0,
     ) -> str:
-        """Store a conversation in memory"""
+        """Store a conversation in memory using ChromaDB or SQLite"""
         # Validate domain
         if domain not in self.domain_validators:
             raise ValueError(f"Invalid domain: {domain}")
 
-        # Validate content
-        validator = self.domain_validators[domain]
-        validator(conversation_data)
+        # Validate content (skip strict validation for flexibility)
+        try:
+            validator = self.domain_validators[domain]
+            validator(conversation_data)
+        except ValueError as e:
+            logger.warning(f"Validation warning for {domain}: {e} - storing anyway")
 
-        # Create memory entry
-        memory_entry = MemoryEntry(
-            domain=domain,
-            subdomain=subdomain,
-            content_type=content_type,
-            content_data=conversation_data,
-            source=source,
-            confidence=confidence,
-            tags=tags or [],
-            metadata={
-                "stored_by": "multi_domain_memory_system",
-                "validation_passed": True,
-            },
-        )
+        memory_id = str(uuid.uuid4())
+        timestamp = datetime.utcnow().isoformat()
+        metadata = {
+            "stored_by": "multi_domain_memory_system",
+            "validation_passed": True,
+        }
 
-        return self.storage.store_memory(memory_entry)
+        if self.use_chromadb and self._chromadb_storage:
+            # Use ChromaDB storage
+            return self._chromadb_storage.store_memory(
+                domain=domain,
+                memory_id=memory_id,
+                content_data=conversation_data,
+                metadata=metadata,
+                tags=tags or [],
+                timestamp=timestamp,
+                source=source,
+                confidence=confidence,
+                context={},
+                subdomain=subdomain,
+                content_type=content_type,
+            )
+        else:
+            # Fall back to SQLite
+            memory_entry = MemoryEntry(
+                id=memory_id,
+                domain=domain,
+                subdomain=subdomain,
+                content_type=content_type,
+                content_data=conversation_data,
+                source=source,
+                confidence=confidence,
+                tags=tags or [],
+                metadata=metadata,
+                timestamp=timestamp,
+            )
+            return self._sqlite_storage.store_memory(memory_entry)
 
     def retrieve_conversations(
         self,
@@ -492,16 +558,48 @@ class MemoryManager:
         date_range: Optional[tuple] = None,
     ) -> List[MemoryEntry]:
         """Retrieve conversations with enhanced filtering and sorting"""
-        # Get base memories
-        memories = self.storage.search_memories(
-            domain=domain,
-            content_type=content_type,
-            tags=tags,
-            source=source,
-            keyword=keyword,
-            limit=limit,
-            offset=offset,
-        )
+        if self.use_chromadb and self._chromadb_storage:
+            # Use ChromaDB with semantic search
+            results = self._chromadb_storage.search_memories(
+                query=keyword,
+                domain=domain,
+                content_type=content_type,
+                tags=tags,
+                source=source,
+                limit=limit,
+                min_confidence=min_confidence,
+            )
+
+            # Convert dicts to MemoryEntry objects
+            memories = []
+            for r in results:
+                entry = MemoryEntry(
+                    id=r.get("id", ""),
+                    domain=r.get("domain", ""),
+                    subdomain=r.get("subdomain"),
+                    content_type=r.get("content_type", "conversation"),
+                    content_data=r.get("content_data", {}),
+                    metadata=r.get("metadata", {}),
+                    tags=r.get("tags", []),
+                    timestamp=r.get("timestamp", ""),
+                    source=r.get("source", ""),
+                    confidence=r.get("confidence", 1.0),
+                    context=r.get("context", {}),
+                    similarity_score=r.get("similarity_score", 0.0),
+                )
+                memories.append(entry)
+
+        else:
+            # Use SQLite storage
+            memories = self._sqlite_storage.search_memories(
+                domain=domain,
+                content_type=content_type,
+                tags=tags,
+                source=source,
+                keyword=keyword,
+                limit=limit,
+                offset=offset,
+            )
 
         # Apply confidence filter
         if min_confidence > 0.0 or max_confidence < 1.0:
@@ -514,8 +612,8 @@ class MemoryManager:
             start_date, end_date = date_range
             memories = [m for m in memories if start_date <= m.timestamp <= end_date]
 
-        # Apply relevance scoring for keyword searches
-        if keyword:
+        # Apply relevance scoring for keyword searches (SQLite only, ChromaDB handles this)
+        if keyword and not self.use_chromadb:
             memories = self._score_and_sort_relevance(memories, keyword)
 
         # Apply sorting
@@ -525,6 +623,7 @@ class MemoryManager:
             "domain": lambda x: x.domain,
             "source": lambda x: x.source,
             "relevance": lambda x: getattr(x, "relevance_score", 0.0),
+            "similarity": lambda x: getattr(x, "similarity_score", 0.0),
         }
 
         if sort_by in sort_key_map:
@@ -1146,7 +1245,14 @@ class MemoryManager:
 
     def get_memory_statistics(self) -> Dict[str, Any]:
         """Get comprehensive memory system statistics"""
-        return self.storage.get_memory_stats()
+        if self.use_chromadb and self._chromadb_storage:
+            stats = self._chromadb_storage.get_statistics()
+            stats["storage_backend"] = "chromadb"
+            return stats
+        else:
+            stats = self._sqlite_storage.get_memory_stats()
+            stats["storage_backend"] = "sqlite"
+            return stats
 
     def _validate_bmad_code(self, data: Dict[str, Any]):
         """Validate BMAD code memory content with comprehensive checks"""

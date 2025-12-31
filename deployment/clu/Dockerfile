@@ -1,12 +1,13 @@
 # MCP Memory System Server
 # Runs the FastMCP-based memory server in HTTP/SSE mode for network access
+# Uses ChromaDB on SARK for enterprise-level vector storage
 # Build from /opt/mcp-memory-system on CLU
 
 FROM python:3.12-slim
 
 LABEL maintainer="maxvamp"
-LABEL description="Multi-Domain Memory System MCP Server"
-LABEL version="1.0.0"
+LABEL description="Multi-Domain Memory System MCP Server with ChromaDB"
+LABEL version="2.0.0"
 
 # Set working directory
 WORKDIR /app
@@ -28,12 +29,18 @@ COPY src/memory/ /app/src/memory/
 # Copy the MCP server
 COPY memory-system-mcp-server.py /app/
 
-# Create data directory for SQLite database persistence
+# Create data directory for SQLite fallback persistence
 RUN mkdir -p /app/data
 
 # Set environment variables
 ENV PYTHONUNBUFFERED=1
 ENV PYTHONDONTWRITEBYTECODE=1
+
+# ChromaDB configuration - SARK hosts the vector database
+ENV CHROMADB_HOST=192.168.68.69
+ENV CHROMADB_PORT=8001
+
+# SQLite fallback path (used when ChromaDB is unavailable)
 ENV MCP_MEMORY_DB_PATH=/app/data/memory_system.db
 
 # Expose the MCP SSE port
