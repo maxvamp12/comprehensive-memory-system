@@ -97,6 +97,7 @@ activate-*.sh
 party-mode-*.yaml
 *.md
 !CONSTITUTION.md
+!MEMORY_INSTRUCTIONS.md
 
 # BMAD-generated files
 _bmad-output/

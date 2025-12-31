@@ -6,6 +6,10 @@
     "glm": {
       "name": "GLM (SARK Cluster - vLLM)",
       "npm": "@ai-sdk/openai-compatible",
+      "api": "http://192.168.68.69:8080",
+      "env": [
+        "GLM_API_KEY"
+      ],
       "options": {
         "baseURL": "http://192.168.68.69:8080/v1",
         "apiKey": "not-needed"
@@ -29,11 +33,391 @@
             "output": 16384
           },
           "modalities": {
-            "input": ["text"],
-            "output": ["text"]
+            "input": [
+              "text"
+            ],
+            "output": [
+              "text"
+            ]
           },
           "options": {}
         }
+      }
+    },
+    "opencode": {
+      "name": "OpenCode Local",
+      "options": {
+        "baseURL": "http://localhost:8080"
+      }
+    }
+  },
+  "mcp": {
+    "mcp-ssh": {
+      "type": "local",
+      "command": [
+        "npx",
+        "-y",
+        "@aiondadotcom/mcp-ssh"
+      ],
+      "enabled": true
+    },
+    "exa": {
+      "type": "remote",
+      "url": "https://mcp.exa.ai/mcp",
+      "enabled": true
+    },
+    "morph": {
+      "type": "local",
+      "command": [
+        "bunx",
+        "@morphllm/morphmcp"
+      ],
+      "enabled": true,
+      "environment": {
+        "ENABLED_TOOLS": "warp_grep"
+      }
+    },
+    "github": {
+      "type": "local",
+      "command": [
+        "docker",
+        "run",
+        "-i",
+        "--rm",
+        "-e",
+        "GITHUB_PERSONAL_ACCESS_TOKEN",
+        "ghcr.io/github/github-mcp-server"
+      ],
+      "enabled": true,
+      "environment": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "${GITHUB_TOKEN}"
+      }
+    },
+    "memory-system": {
+      "type": "local",
+      "command": [
+        "python3",
+        "/Volumes/Dev/git/CLU_CODE/comprehensive-memory-system/.opencode/mcp/memory-system-mcp-server.py"
+      ],
+      "enabled": true
+    }
+    
+  },
+  "lsp": {
+    "java": {
+      "enabled": true,
+      "command": [
+        "jdtls"
+      ],
+      "extensions": [
+        ".java",
+        ".jav",
+        ".class"
+      ],
+      "initialization": {
+        "java": {
+          "format": {
+            "enabled": true,
+            "url": "https://github.com/google/google-java-format",
+            "version": "1.18.1"
+          }
+        }
+      }
+    },
+    "c": {
+      "enabled": true,
+      "command": [
+        "clangd"
+      ],
+      "extensions": [
+        ".c",
+        ".h"
+      ],
+      "environment": {
+        "CLANGD_FLAGS": "--log=verbose"
+      }
+    },
+    "cpp": {
+      "enabled": true,
+      "command": [
+        "clangd"
+      ],
+      "extensions": [
+        ".cpp",
+        ".cxx",
+        ".cc",
+        ".hpp",
+        ".hxx",
+        ".hh"
+      ],
+      "environment": {
+        "CLANGD_FLAGS": "--log=verbose"
+      }
+    },
+    "csharp": {
+      "enabled": true,
+      "command": [
+        "omnisharp"
+      ],
+      "extensions": [
+        ".cs",
+        ".csx"
+      ],
+      "environment": {
+        "OMNISHARP": "1"
+      }
+    },
+    "rust": {
+      "enabled": true,
+      "command": [
+        "rust-analyzer"
+      ],
+      "extensions": [
+        ".rs"
+      ],
+      "initialization": {
+        "rust-analyzer": {
+          "cargo": {
+            "loadOutDirsFromCheck": true
+          },
+          "checkOnSave": {
+            "command": "clippy"
+          }
+        }
+      }
+    },
+    "swift": {
+      "enabled": true,
+      "command": [
+        "sourcekit-lsp"
+      ],
+      "extensions": [
+        ".swift",
+        ".swiftinterface"
+      ],
+      "environment": {
+        "SOURCEKIT_LSP_LOG_LEVEL": "info"
+      }
+    },
+    "sql": {
+      "enabled": true,
+      "command": [
+        "sqls"
+      ],
+      "extensions": [
+        ".sql",
+        ".ddl",
+        ".dml"
+      ],
+      "environment": {
+        "SQLS_CONNECTIONS": "mysql://user:pass@localhost:3306/db,postgresql://user:pass@localhost:5432/db"
+      }
+    },
+    "typescript": {
+      "enabled": true,
+      "command": [
+        "typescript-language-server",
+        "--stdio"
+      ],
+      "extensions": [
+        ".ts",
+        ".tsx",
+        ".js",
+        ".jsx",
+        ".mjs",
+        ".cjs"
+      ],
+      "environment": {
+        "TSSERVER_LOG_LEVEL": "verbose"
+      }
+    },
+    "javascript": {
+      "enabled": true,
+      "command": [
+        "typescript-language-server",
+        "--stdio"
+      ],
+      "extensions": [
+        ".js",
+        ".jsx",
+        ".mjs",
+        ".cjs"
+      ],
+      "environment": {
+        "TSSERVER_LOG_LEVEL": "verbose"
+      }
+    },
+    "python": {
+      "enabled": true,
+      "command": [
+        "pylsp"
+      ],
+      "extensions": [
+        ".py",
+        ".pyi",
+        ".pyw"
+      ],
+      "initialization": {
+        "pylsp": {
+          "plugins": {
+            "pyflakes": {
+              "enabled": true
+            },
+            "pycodestyle": {
+              "enabled": false
+            },
+            "flake8": {
+              "enabled": true,
+              "maxLineLength": 88
+            }
+          }
+        }
+      }
+    },
+    "go": {
+      "enabled": true,
+      "command": [
+        "gopls"
+      ],
+      "extensions": [
+        ".go"
+      ],
+      "environment": {
+        "GOPATH": "${GOPATH:-/tmp/gopath}"
+      }
+    },
+    "rexx": {
+      "enabled": true,
+      "command": [
+        "ls4rexx"
+      ],
+      "extensions": [
+        ".rex",
+        ".rexx",
+        ".zrx",
+        ".rxj"
+      ],
+      "environment": {
+        "LS4REXX_LOG_LEVEL": "info"
+      }
+    },
+    "bash": {
+      "enabled": true,
+      "command": [
+        "bash-language-server",
+        "start"
+      ],
+      "extensions": [
+        ".sh",
+        ".bash",
+        ".ksh",
+        ".zsh"
+      ],
+      "environment": {
+        "BASH_LANGUAGE_SERVER_LOG_LEVEL": "info"
+      }
+    },
+    "yaml": {
+      "enabled": true,
+      "command": [
+        "yaml-language-server",
+        "--stdio"
+      ],
+      "extensions": [
+        ".yaml",
+        ".yml"
+      ],
+      "environment": {
+        "YAML_LANGUAGE_SERVER_LOG_LEVEL": "info"
+      }
+    },
+    "json": {
+      "enabled": true,
+      "command": [
+        "vscode-json-language-server",
+        "--stdio"
+      ],
+      "extensions": [
+        ".json",
+        ".jsonc"
+      ],
+      "environment": {
+        "JSON_LS_LOG_LEVEL": "info"
+      }
+    },
+    "html": {
+      "enabled": true,
+      "command": [
+        "vscode-html-language-server",
+        "--stdio"
+      ],
+      "extensions": [
+        ".html",
+        ".htm",
+        ".xhtml"
+      ],
+      "environment": {
+        "HTML_LS_LOG_LEVEL": "info"
+      }
+    },
+    "css": {
+      "enabled": true,
+      "command": [
+        "vscode-css-language-server",
+        "--stdio"
+      ],
+      "extensions": [
+        ".css",
+        ".scss",
+        ".sass",
+        ".less"
+      ],
+      "environment": {
+        "CSS_LS_LOG_LEVEL": "info"
+      }
+    },
+    "dockerfile": {
+      "enabled": true,
+      "command": [
+        "dockerfile-language-server-nodejs",
+        "--stdio"
+      ],
+      "extensions": [
+        ".dockerfile",
+        "Dockerfile",
+        "docker-compose.yml"
+      ],
+      "environment": {
+        "DOCKER_LS_LOG_LEVEL": "info"
+      }
+    },
+    "toml": {
+      "enabled": true,
+      "command": [
+        "taplo",
+        "lsp"
+      ],
+      "extensions": [
+        ".toml"
+      ],
+      "environment": {
+        "TAPLO_LOG_LEVEL": "info"
+      }
+    },
+    "xml": {
+      "enabled": true,
+      "command": [
+        "vscode-xml-language-server",
+        "--stdio"
+      ],
+      "extensions": [
+        ".xml",
+        ".xsd",
+        ".xsl",
+        ".dtd"
+      ],
+      "environment": {
+        "XML_LS_LOG_LEVEL": "info"
       }
     }
   },
@@ -59,25 +443,26 @@
         "webfetch": "allow",
         "external_directory": "deny"
       }
+    },
+    "general": {
+      "model": "glm/GLM-4.5-Air",
+      "temperature": 0.7,
+      "description": "General purpose subagent for complex tasks"
     }
   },
   "disabled_providers": [
-    "opencode",
     "anthropic",
     "openai",
     "google",
     "github-copilot"
   ],
   "enabled_providers": [
-    "glm"
+    "glm",
+    "opencode"
   ],
   "autoupdate": false,
   "share": "manual",
-  "mcp": {
-    "mcp-ssh": {
-      "type": "local",
-      "command": ["npx", "-y", "@aiondadotcom/mcp-ssh"],
-      "enabled": true
-    }
-  }
+  "instructions": [
+    "MEMORY_INSTRUCTIONS.md"
+  ]
 }
