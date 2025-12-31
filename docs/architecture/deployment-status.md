@@ -32,7 +32,7 @@
 |---------|------|---------|--------|--------------|-------------|--------|
 | **MCP Memory Server** | CLU | 192.168.68.71:8200 | ✅ OPERATIONAL | ✅ SSE READY | <30ms | 99.9% |
 | **Memory Service** | CLU | 192.168.68.71:8080 | ✅ OPERATIONAL | ✅ PASSING | 26.5ms | 99.9% |
-| **Redis Caching** | CLU | 192.168.68.71:6379 | ✅ OPERATIONAL | ✅ PONG | <1ms | 100% |
+| **Redis Caching** | CLU | 192.168.68.71:6379 | ⚠️ DEPLOYED (NOT INTEGRATED) | ✅ PONG | <1ms | 100% |
 | **ChromaDB** | SARK | 192.168.68.69:8001 | ✅ OPERATIONAL | ✅ HEARTBEAT | 26.9ms | 99.9% |
 | **vLLM Head** | SARK | 192.168.68.69:8080 | ✅ OPERATIONAL | ✅ HEALTHY | 26.9ms | 99.9% |
 | **vLLM Worker** | CLU | 192.168.68.71 | ✅ OPERATIONAL | ✅ GPU READY | - | 99.9% |
@@ -112,6 +112,11 @@ curl -X POST http://192.168.68.71:8080/api/memory \
 ```
 
 #### Redis Caching (CLU:6379)
+**Status: DEPLOYED but NOT INTEGRATED into Memory System**
+
+Redis container is running and healthy, but the memory system does not currently use it.
+Integration is planned for Phase 8 (see `docs/engineering/security-analysis-and-roadmap.md`).
+
 ```bash
 # Health Check
 docker exec redis-caching redis-cli ping

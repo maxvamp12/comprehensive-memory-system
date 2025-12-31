@@ -747,14 +747,49 @@ Optimize system performance and infrastructure efficiency.
    - Implement connection pooling for ChromaDB HTTP API
    - Reduce connection overhead
 
-4. **Caching layer optimization**
-   - Cache frequently accessed memories in Redis
-   - Implement LRU eviction policy
+4. **Redis caching integration**
+   - **Current State**: Redis is DEPLOYED on CLU:6379 but NOT INTEGRATED
+   - Redis container running: `redis:7.2-alpine`
+   - Connection pool code exists in `src/caching/connection-pooling.py` (unused)
+   - Memory system has zero Redis references currently
+
+   **Integration tasks:**
+   - Connect memory system to Redis for caching
+   - Cache frequently accessed memories (reduce ChromaDB load)
+   - Cache embedding vectors (avoid regeneration)
+   - Implement TTL-based expiration
+   - Add cache invalidation on memory updates
+
+   **Example implementation:**
+   ```python
+   import redis
+   import json
+
+   redis_client = redis.Redis(host="192.168.68.71", port=6379)
+
+   def get_cached_memory(memory_id: str) -> Optional[dict]:
+       cached = redis_client.get(f"memory:{memory_id}")
+       return json.loads(cached) if cached else None
+
+   def cache_memory(memory_id: str, data: dict, ttl: int = 3600):
+       redis_client.setex(f"memory:{memory_id}", ttl, json.dumps(data))
+
+   def invalidate_memory(memory_id: str):
+       redis_client.delete(f"memory:{memory_id}")
+   ```
+
+5. **Embedding cache in Redis**
+   - Cache generated embeddings to avoid recomputation
+   - Key: hash of input text
+   - Value: embedding vector
+   - TTL: 24-48 hours (embeddings don't change)
 
 #### Deliverables
 - [ ] ChromaDB GPU acceleration enabled on CLU
 - [ ] Performance benchmarks documented
-- [ ] Caching layer improvements
+- [ ] Redis integrated into memory system
+- [ ] Embedding caching implemented
+- [ ] Cache hit/miss metrics added
 - [ ] Scalability testing results
 
 ---
